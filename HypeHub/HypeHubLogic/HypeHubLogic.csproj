@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="CQRS\Outfit\Commands\" />
+    <Folder Include="CQRS\Outfit\Queries\" />
+    <Folder Include="CQRS\Wardrobe\Commands\" />
+    <Folder Include="CQRS\Wardrobe\Queries\" />
+    <Folder Include="CQRS\Account\Commands\" />
+    <Folder Include="CQRS\Account\Queries\" />
+    <Folder Include="DTOs\" />
+    <Folder Include="Mappers\" />
+    <Folder Include="Validators\Account\" />
+    <Folder Include="Validators\Outfit\" />
+    <Folder Include="Validators\Wardrobe\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.7.1" />
+    <PackageReference Include="MediatR" Version="12.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HypeHubDAL\HypeHubDAL.csproj" />
+  </ItemGroup>
+
+</Project>
