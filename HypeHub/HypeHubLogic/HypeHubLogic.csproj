@@ -6,4 +6,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="CQRS\Outfit\Commands\" />
+    <Folder Include="CQRS\Outfit\Queries\" />
+    <Folder Include="CQRS\Wardrobe\Commands\" />
+    <Folder Include="CQRS\Wardrobe\Queries\" />
+    <Folder Include="CQRS\Account\Commands\" />
+    <Folder Include="CQRS\Account\Queries\" />
+    <Folder Include="DTOs\" />
+    <Folder Include="Mappers\" />
+    <Folder Include="Validators\Account\" />
+    <Folder Include="Validators\Outfit\" />
+    <Folder Include="Validators\Wardrobe\" />
+  </ItemGroup>
+
 </Project>
