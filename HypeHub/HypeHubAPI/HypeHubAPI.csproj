@@ -15,4 +15,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HypeHubLogic\HypeHubLogic.csproj" />
+  </ItemGroup>
+
 </Project>
