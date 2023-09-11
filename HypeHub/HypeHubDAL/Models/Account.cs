@@ -11,5 +11,5 @@ public class Account
     public AccountTypes AccountTypes { get; set; }
     public string? AvatarUrl {get; set;}
     public Wardrobe Wardrobe { get; set; }
-    public List<Outfit> Outfits { get; set; }
+    public List<Outfit> Outfits { get; set; } = new();
 }
