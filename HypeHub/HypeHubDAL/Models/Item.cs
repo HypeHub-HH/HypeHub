@@ -17,10 +17,11 @@ public class Item
     public DateTime? PurchaseDate { get; set; }
     public List<string> ItemPhotoUrls { get; init; } = new();
 
-    public Item(string name, Wardrobe wardrobe, CloathingType cloathingType, string? brand, string? model, string? colorway, decimal? price, DateTime? purchaseDate)
+    public Item(string name, Wardrobe wardrobe, Guid wardrobeId, CloathingType cloathingType, string? brand, string? model, string? colorway, decimal? price, DateTime? purchaseDate)
     {
         Id = Guid.NewGuid();
         Name = name;
+        WardrobeId = wardrobeId;
         Wardrobe = wardrobe;
         CloathingType = cloathingType;
         Brand = brand;
