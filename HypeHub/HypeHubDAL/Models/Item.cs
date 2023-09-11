@@ -15,14 +15,14 @@ public class Item
     public string? Colorway { get; set; }
     public decimal? Price { get; set; }
     public DateTime? PurchaseDate { get; set; }
-    public List<string> ItemPhotoUrls { get; init; } = new();
+    public List<ItemImage> Images { get; init; } = new();
+    public List<Account> Likes { get; init; } = new();
 
-    public Item(string name, Wardrobe wardrobe, Guid wardrobeId, CloathingType cloathingType, string? brand, string? model, string? colorway, decimal? price, DateTime? purchaseDate)
+    public Item(string name, Guid wardrobeId, CloathingType cloathingType, string? brand, string? model, string? colorway, decimal? price, DateTime? purchaseDate)
     {
         Id = Guid.NewGuid();
         Name = name;
         WardrobeId = wardrobeId;
-        Wardrobe = wardrobe;
         CloathingType = cloathingType;
         Brand = brand;
         Model = model;

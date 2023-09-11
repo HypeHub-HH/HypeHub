@@ -7,11 +7,9 @@ public class Wardrobe
     public Guid AccountId { get; init; }
     public List<Item> Items { get; init; } = new();
 
-    public Wardrobe(Account user, Guid userId)
+    public Wardrobe(Guid accountId)
     {
         Id = Guid.NewGuid();
-        Account = user;
-        AccountId = userId;
-        Items = new();
+        AccountId = accountId;
     }
 }
