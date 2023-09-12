@@ -6,7 +6,6 @@ public class Wardrobe
     public Account Account { get; init; }
     public Guid AccountId { get; init; }
     public List<Item> Items { get; init; } = new();
-
     public Wardrobe(Guid accountId)
     {
         Id = Guid.NewGuid();

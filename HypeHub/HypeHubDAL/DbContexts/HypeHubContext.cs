@@ -1,4 +1,5 @@
-﻿using HypeHubDAL.Models;
+﻿using HypeHubDAL.Generators;
+using HypeHubDAL.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace HypeHubDAL.DbContexts
@@ -16,6 +17,11 @@ namespace HypeHubDAL.DbContexts
  
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            var fakeGenerator = new FakeDataGenerator();
+            var numberOfAccounts = 20;
+            var numberOfItems = 10;
+            var fakeData = fakeGenerator.GenerateFakeData(numberOfAccounts, numberOfItems);
+
             modelBuilder.Entity<Account>(account =>
             {
                 account.HasKey(a => a.Id);
@@ -37,11 +43,15 @@ namespace HypeHubDAL.DbContexts
 
                 account.HasMany(a => a.LikedItems)
                 .WithMany(i => i.Likes);
+
+                account.HasData(fakeData.Accounts);
             });
 
             modelBuilder.Entity<AccountCredentials>(credential =>
             {
                 credential.HasKey(e => e.Id);
+
+                credential.HasData(fakeData.AccountsCredentials);
             });
 
             modelBuilder.Entity<Wardrobe>(wardrobe =>
@@ -51,6 +61,8 @@ namespace HypeHubDAL.DbContexts
                 wardrobe.HasMany(w => w.Items)
                 .WithOne(i => i.Wardrobe)
                 .HasForeignKey(i => i.WardrobeId);
+
+                wardrobe.HasData(fakeData.Wardrobes);
             });
 
             modelBuilder.Entity<Outfit>(outfit =>
@@ -64,6 +76,7 @@ namespace HypeHubDAL.DbContexts
                 .WithOne(oi => oi.Outfit)
                 .HasForeignKey(oi => oi.OutfitId);
 
+                outfit.HasData(fakeData.Outfits);
             });
 
             modelBuilder.Entity<Item>(item =>
@@ -73,16 +86,22 @@ namespace HypeHubDAL.DbContexts
                 item.HasMany(i => i.Images)
                 .WithOne(ii => ii.Item)
                 .HasForeignKey(ii => ii.ItemId);
+
+                item.HasData(fakeData.Items);
             });
 
             modelBuilder.Entity<OutfitImage>(oImage =>
             {
                 oImage.HasKey(oi => oi.Id);
+
+                oImage.HasData(fakeData.OutfitImages);
             });
 
-            modelBuilder.Entity<OutfitImage>(iImage =>
+            modelBuilder.Entity<ItemImage>(iImage =>
             {
                 iImage.HasKey(ii => ii.Id);
+
+                iImage.HasData(fakeData.ItemImages);
             });
         }
     }

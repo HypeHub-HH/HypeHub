@@ -6,10 +6,9 @@ public class OutfitImage
     public Outfit Outfit { get; init; }
     public Guid OutfitId { get; init; }
     public string Url { get; init; }
-
-    public OutfitImage(Guid id, Guid outfitId, string url)
+    public OutfitImage(Guid outfitId, string url)
     {
-        Id = id;
+        Id = Guid.NewGuid();
         OutfitId = outfitId;
         Url = url;
     }
