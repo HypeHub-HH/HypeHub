@@ -18,9 +18,10 @@ namespace HypeHubDAL.DbContexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var fakeGenerator = new FakeDataGenerator();
-            var numberOfAccounts = 20;
-            var numberOfItems = 10;
-            var fakeData = fakeGenerator.GenerateFakeData(numberOfAccounts, numberOfItems);
+            var numberOfAccounts = 2;
+            var numberOfItemsPerWardrobe = 1;
+            var numberOfItemsPerOutfit = 2;
+            var fakeData = fakeGenerator.GenerateFakeData(numberOfAccounts, numberOfItemsPerWardrobe, numberOfItemsPerOutfit);
 
             modelBuilder.Entity<Account>(account =>
             {
