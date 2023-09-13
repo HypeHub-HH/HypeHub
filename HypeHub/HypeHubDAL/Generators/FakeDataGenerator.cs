@@ -7,12 +7,12 @@ public class FakeDataGenerator
 {
     private readonly Random random = new Random();
 
-    public FakeDataGeneratorModel GenerateFakeData(int numberOfAccounts, int numberOfItemsPerAccount)
+    public FakeDataGeneratorModel GenerateFakeData(int numberOfAccounts, int numberOfItemsPerAccount, int numberOfOutfitsPerAccount)
     {
         var accounts = CreateRandomAccounts(numberOfAccounts);
         var accountCredentials = CreateAccountCredentialsForEveryAccount(accounts);
         var wardrobes = CreateWardrobeForEveryAccount(accounts);
-        var outfits = CreateTwoOutfitsForEveryAccount(accounts);
+        var outfits = CreateTwoOutfitsForEveryAccount(accounts, numberOfOutfitsPerAccount);
         var items = CreateItemsForEveryWardrobe(wardrobes, numberOfItemsPerAccount);
         var outfitImages = CreateImageForEveryOutfit(outfits);
         var imageImages = CreateImageForEveryItem(items);
@@ -50,13 +50,15 @@ public class FakeDataGenerator
         }
         return wardrobes;
     }
-    private List<Outfit> CreateTwoOutfitsForEveryAccount(List<Account> accounts)
+    private List<Outfit> CreateTwoOutfitsForEveryAccount(List<Account> accounts, int numberOfOutfitsPerAccount)
     {
         var outfits = new List<Outfit>();
         foreach (var account in accounts)
         {
-            outfits.Add(new Outfit(account.Id, $"Outfit{random.Next(1000)}"));
-            outfits.Add(new Outfit(account.Id, $"Outfit{random.Next(1000)}"));
+            for (int i = 0; i < numberOfOutfitsPerAccount; i++)
+            {
+                outfits.Add(new Outfit(account.Id, $"Outfit{random.Next(1000)}"));
+            }
         }
         return outfits;
     }
