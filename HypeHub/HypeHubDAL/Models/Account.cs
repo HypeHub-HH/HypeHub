@@ -9,8 +9,8 @@ public class Account
     public string Username { get; set; }
     public bool IsPrivate { get; set; }
     public AccountTypes AccountTypes { get; set; }
-    public Wardrobe Wardrobe { get; init; }
     public List<Outfit> Outfits { get; init; } = new();
+    public List<Item> Items { get; init; } = new();
     public string? AvatarUrl { get; set; }
 
     public Account(string username, bool isPrivate, AccountTypes accountTypes, string? avatarUrl)

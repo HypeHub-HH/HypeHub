@@ -7,8 +7,8 @@ public class Item
 {
     public Guid Id { get; init; }
     public string Name { get; set; }
-    public Wardrobe Wardrobe { get; init; }
-    public Guid WardrobeId { get; init; }
+    public Account Account { get; init; }
+    public Guid AccountId { get; init; }
     public List<Outfit> Outfits { get; } = new();
     public List<AccountItemLike> Likes { get; init; } = new();
     public CloathingType CloathingType { get; set; }
@@ -19,11 +19,11 @@ public class Item
     public DateTime? PurchaseDate { get; set; }
     public List<ItemImage> Images { get; init; } = new();
 
-    public Item(string name, Guid wardrobeId, CloathingType cloathingType, string? brand, string? model, string? colorway, decimal? price, DateTime? purchaseDate)
+    public Item(string name, Guid accountId, CloathingType cloathingType, string? brand, string? model, string? colorway, decimal? price, DateTime? purchaseDate)
     {
         Id = Guid.NewGuid();
         Name = name;
-        WardrobeId = wardrobeId;
+        AccountId = accountId;
         CloathingType = cloathingType;
         Brand = brand;
         Model = model;

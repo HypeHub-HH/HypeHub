@@ -11,13 +11,12 @@ public class FakeDataGenerator
     {
         var accounts = CreateRandomAccounts(numberOfAccounts);
         var accountCredentials = CreateAccountCredentialsForEveryAccount(accounts);
-        var wardrobes = CreateWardrobeForEveryAccount(accounts);
         var outfits = CreateTwoOutfitsForEveryAccount(accounts, numberOfOutfitsPerAccount);
-        var items = CreateItemsForEveryWardrobe(wardrobes, numberOfItemsPerAccount);
+        var items = CreateItemsForEveryAccount(accounts, numberOfItemsPerAccount);
         var outfitImages = CreateImageForEveryOutfit(outfits);
         var imageImages = CreateImageForEveryItem(items);
 
-        return new FakeDataGeneratorModel(accounts, accountCredentials, wardrobes, outfits,items, outfitImages,imageImages);
+        return new FakeDataGeneratorModel(accounts, accountCredentials, outfits,items, outfitImages,imageImages);
 
     }
     private List<Account> CreateRandomAccounts(int count)
@@ -41,15 +40,6 @@ public class FakeDataGenerator
         }
         return accountsCredentials;
     }
-    private List<Wardrobe> CreateWardrobeForEveryAccount(List<Account> accounts)
-    {
-        var wardrobes = new List<Wardrobe>();
-        foreach (var account in accounts)
-        {
-            wardrobes.Add(new Wardrobe(account.Id));
-        }
-        return wardrobes;
-    }
     private List<Outfit> CreateTwoOutfitsForEveryAccount(List<Account> accounts, int numberOfOutfitsPerAccount)
     {
         var outfits = new List<Outfit>();
@@ -62,12 +52,12 @@ public class FakeDataGenerator
         }
         return outfits;
     }
-    private List<Item> CreateItemsForEveryWardrobe(List<Wardrobe> wardrobes, int numberOfItemsPerWardrobe)
+    private List<Item> CreateItemsForEveryAccount(List<Account> accounts, int numberOfItemsPerAccount)
     {
         var items = new List<Item>();
-        foreach (var wardrobe in wardrobes)
+        foreach (var account in accounts)
         {
-            for (int i = 1; i <= numberOfItemsPerWardrobe; i++)
+            for (int i = 1; i <= numberOfItemsPerAccount; i++)
             {
                 string itemName = $"Item{i}";
                 Guid wardrobeId = Guid.NewGuid();
@@ -75,9 +65,9 @@ public class FakeDataGenerator
                 string brand = $"Brand{i}";
                 string model = $"Model{i}";
                 string colorway = $"Colorway{i}";
-                decimal? price = (decimal)(i * 10.0); // Assign a price (e.g., $10.0, $20.0, $30.0, ...)
-                DateTime? purchaseDate = DateTime.UtcNow.AddMonths(-i); // Purchase date in the past
-                items.Add(new Item(itemName, wardrobe.Id, cloathingType, brand, model, colorway, price, purchaseDate));
+                decimal? price = (decimal)(i * 10.0);
+                DateTime? purchaseDate = DateTime.UtcNow.AddMonths(-i);
+                items.Add(new Item(itemName, account.Id, cloathingType, brand, model, colorway, price, purchaseDate));
             }
         }
         return items;

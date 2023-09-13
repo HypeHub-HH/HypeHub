@@ -10,7 +10,6 @@ namespace HypeHubDAL.DbContexts
         public HypeHubContext(DbContextOptions<HypeHubContext> options) : base(options) { }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<AccountCredentials> AccountCredentials { get; set; }
-        public DbSet<Wardrobe> Wardrobes { get; set; }
         public DbSet<Outfit> Outfits { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<OutfitImage> OutfitImages { get; set; }
@@ -32,12 +31,12 @@ namespace HypeHubDAL.DbContexts
                 account.HasKey(a => a.Id);
 
                 account.HasOne(a => a.Credentials)
-                 .WithOne(c => c.Account)
-                 .HasForeignKey<AccountCredentials>(c => c.AccountId);
+                    .WithOne(c => c.Account)
+                    .HasForeignKey<AccountCredentials>(c => c.AccountId);
 
-                account.HasOne(a => a.Wardrobe)
-                .WithOne(w => w.Account)
-                .HasForeignKey<Wardrobe>(w => w.AccountId);
+                account.HasMany(a => a.Items)
+                    .WithOne(i => i.Account)
+                    .HasForeignKey(i => i.AccountId);
 
                 account.HasMany(a => a.Outfits)
                 .WithOne(o => o.Account)
@@ -51,17 +50,6 @@ namespace HypeHubDAL.DbContexts
                 credential.HasKey(e => e.Id);
 
                 credential.HasData(fakeData.AccountsCredentials);
-            });
-
-            modelBuilder.Entity<Wardrobe>(wardrobe =>
-            {
-                wardrobe.HasKey(e => e.Id);
-
-                wardrobe.HasMany(w => w.Items)
-                .WithOne(i => i.Wardrobe)
-                .HasForeignKey(i => i.WardrobeId);
-
-                wardrobe.HasData(fakeData.Wardrobes);
             });
 
             modelBuilder.Entity<AccountOutfitLike>(accountOutfitLike =>
