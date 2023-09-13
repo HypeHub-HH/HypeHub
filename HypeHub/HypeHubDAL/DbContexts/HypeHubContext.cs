@@ -1,5 +1,6 @@
 ﻿using HypeHubDAL.Generators;
 using HypeHubDAL.Models;
+using HypeHubDAL.Models.Relations;
 using Microsoft.EntityFrameworkCore;
 
 namespace HypeHubDAL.DbContexts
@@ -14,7 +15,10 @@ namespace HypeHubDAL.DbContexts
         public DbSet<Item> Items { get; set; }
         public DbSet<OutfitImage> OutfitImages { get; set; }
         public DbSet<ItemImage> ItemsImages { get; set; }
- 
+        public DbSet<AccountOutfitLike> AccountOutfitLikes { get; set; }
+        public DbSet<AccountItemLike> AccountItemLikes { get; set; }
+        public DbSet<OutfitItem> OutfitItems { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var fakeGenerator = new FakeDataGenerator();
@@ -38,12 +42,6 @@ namespace HypeHubDAL.DbContexts
                 .WithOne(o => o.Account)
                 .HasForeignKey(o => o.AccountId);
 
-                account.HasMany(a => a.LikedOutfits)
-                .WithMany(o => o.Likes);
-
-                account.HasMany(a => a.LikedItems)
-                .WithMany(i => i.Likes);
-
                 account.HasData(fakeData.Accounts);
             });
 
@@ -65,12 +63,23 @@ namespace HypeHubDAL.DbContexts
                 wardrobe.HasData(fakeData.Wardrobes);
             });
 
+            modelBuilder.Entity<AccountOutfitLike>(accountOutfitLike =>
+            {
+                accountOutfitLike.HasKey(aol => aol.Id);
+            });
+
             modelBuilder.Entity<Outfit>(outfit =>
             {
                 outfit.HasKey(e => e.Id);
 
+                outfit.HasMany(o => o.Likes).WithOne(aol => aol.Outfit).HasForeignKey(aol => aol.OutfitId);
+
                 outfit.HasMany(o => o.Items)
-                .WithMany(i => i.Outfits);
+                .WithMany(i => i.Outfits)
+                .UsingEntity<OutfitItem>(
+                    o => o.HasOne<Item>().WithMany().HasForeignKey(oi => oi.ItemId).OnDelete(DeleteBehavior.Restrict),
+                    i => i.HasOne<Outfit>().WithMany().HasForeignKey(oi => oi.OutfitId).OnDelete(DeleteBehavior.Cascade)
+                );
 
                 outfit.HasMany(o => o.Images)
                 .WithOne(oi => oi.Outfit)
@@ -79,9 +88,16 @@ namespace HypeHubDAL.DbContexts
                 outfit.HasData(fakeData.Outfits);
             });
 
+            modelBuilder.Entity<AccountItemLike>(accountItemLike =>
+            {
+                accountItemLike.HasKey(aoi => aoi.Id);
+            });
+
             modelBuilder.Entity<Item>(item =>
             {
                 item.HasKey(e => e.Id);
+
+                item.HasMany(i => i.Likes).WithOne(aol => aol.Item).HasForeignKey(aol => aol.ItemId);
 
                 item.HasMany(i => i.Images)
                 .WithOne(ii => ii.Item)

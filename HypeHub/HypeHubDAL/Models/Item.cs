@@ -1,4 +1,5 @@
-﻿using HypeHubDAL.Models.Types;
+﻿using HypeHubDAL.Models.Relations;
+using HypeHubDAL.Models.Types;
 
 namespace HypeHubDAL.Models;
 
@@ -8,7 +9,8 @@ public class Item
     public string Name { get; set; }
     public Wardrobe Wardrobe { get; init; }
     public Guid WardrobeId { get; init; }
-    public List<Outfit> Outfits { get; init; } = new();
+    public List<Outfit> Outfits { get; } = new();
+    public List<AccountItemLike> Likes { get; init; } = new();
     public CloathingType CloathingType { get; set; }
     public string? Brand { get; set; }
     public string? Model { get; set; }
@@ -16,7 +18,6 @@ public class Item
     public decimal? Price { get; set; }
     public DateTime? PurchaseDate { get; set; }
     public List<ItemImage> Images { get; init; } = new();
-    public List<Account> Likes { get; init; } = new();
 
     public Item(string name, Guid wardrobeId, CloathingType cloathingType, string? brand, string? model, string? colorway, decimal? price, DateTime? purchaseDate)
     {
