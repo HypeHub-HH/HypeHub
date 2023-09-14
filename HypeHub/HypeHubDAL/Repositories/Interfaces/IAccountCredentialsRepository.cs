@@ -2,4 +2,5 @@
 
 public interface IAccountCredentialsRepository
 {
+    Task<bool> CheckIfEmailAlreadyExistAsync(string email);
 }
