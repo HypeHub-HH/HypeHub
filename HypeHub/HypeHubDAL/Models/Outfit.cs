@@ -10,8 +10,8 @@ public class Outfit
     public string Name { get; init; }
     public List<Item> Items { get; } = new();
     public List<AccountOutfitLike> Likes { get; init; } = new();
-
     public List<OutfitImage> Images { get; init; } = new();
+
     public Outfit(Guid accountId, string name)
     {
         Id = Guid.NewGuid();

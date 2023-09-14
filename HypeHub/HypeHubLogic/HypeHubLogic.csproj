@@ -7,13 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DTOs\Account - Copy %282%29\**" />
+    <Compile Remove="DTOs\Account - Copy %283%29\**" />
+    <Compile Remove="DTOs\Account - Copy %284%29\**" />
+    <EmbeddedResource Remove="DTOs\Account - Copy %282%29\**" />
+    <EmbeddedResource Remove="DTOs\Account - Copy %283%29\**" />
+    <EmbeddedResource Remove="DTOs\Account - Copy %284%29\**" />
+    <None Remove="DTOs\Account - Copy %282%29\**" />
+    <None Remove="DTOs\Account - Copy %283%29\**" />
+    <None Remove="DTOs\Account - Copy %284%29\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="CQRS\Outfit\Commands\" />
     <Folder Include="CQRS\Outfit\Queries\" />
     <Folder Include="CQRS\Wardrobe\Commands\" />
     <Folder Include="CQRS\Wardrobe\Queries\" />
     <Folder Include="CQRS\Account\Commands\" />
     <Folder Include="CQRS\Account\Queries\" />
-    <Folder Include="DTOs\" />
     <Folder Include="Mappers\" />
     <Folder Include="Validators\Account\" />
     <Folder Include="Validators\Outfit\" />
