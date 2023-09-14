@@ -13,7 +13,7 @@ builder.Services.AddDbContext<HypeHubContext>(options =>
 {
     options.UseSqlServer(builder.Configuration["HypeHubDbKey"]);
 });
-
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
