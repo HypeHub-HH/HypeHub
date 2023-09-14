@@ -25,13 +25,13 @@
     <Folder Include="CQRS\Wardrobe\Queries\" />
     <Folder Include="CQRS\Account\Commands\" />
     <Folder Include="CQRS\Account\Queries\" />
-    <Folder Include="Mappers\" />
     <Folder Include="Validators\Account\" />
     <Folder Include="Validators\Outfit\" />
     <Folder Include="Validators\Wardrobe\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="FluentValidation" Version="11.7.1" />
     <PackageReference Include="MediatR" Version="12.1.1" />
   </ItemGroup>
