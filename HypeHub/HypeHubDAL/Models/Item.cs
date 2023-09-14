@@ -7,8 +7,8 @@ public class Item
 {
     public Guid Id { get; init; }
     public string Name { get; set; }
-    public Account Account { get; init; }
-    public Guid AccountId { get; init; }
+    public Account? Account { get; set; }
+    public Guid? AccountId { get; set; }
     public List<Outfit> Outfits { get; } = new();
     public List<AccountItemLike> Likes { get; init; } = new();
     public CloathingType CloathingType { get; set; }

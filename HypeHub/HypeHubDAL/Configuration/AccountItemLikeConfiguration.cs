@@ -9,5 +9,11 @@ public class AccountItemLikeConfiguration : IEntityTypeConfiguration<AccountItem
     public void Configure(EntityTypeBuilder<AccountItemLike> builder)
     {
         builder.HasKey(aoi => aoi.Id);
+
+        builder.Property(aoi => aoi.AccountId)
+            .IsRequired();
+
+        builder.Property(aoi => aoi.ItemId)
+            .IsRequired();
     }
 }
