@@ -1,3 +1,4 @@
+using HypeHubAPI.Configurations;
 using HypeHubDAL.DbContexts;
 using HypeHubDAL.Repositories;
 using HypeHubDAL.Repositories.Interfaces;
@@ -32,5 +33,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.AddGlobalExeptionsHandler();
 
 app.Run();

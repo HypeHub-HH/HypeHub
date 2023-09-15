@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using HypeHubDAL.Exeptions;
 using HypeHubDAL.Models;
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Item;
 using HypeHubLogic.Response;
 using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace HypeHubLogic.CQRS.Item.Commands.Post;
 

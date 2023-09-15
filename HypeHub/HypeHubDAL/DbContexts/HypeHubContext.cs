@@ -28,7 +28,7 @@ namespace HypeHubDAL.DbContexts
             var fakeData = fakeGenerator.GenerateFakeData(numberOfAccounts, numberOfItemsPerWardrobe, numberOfItemsPerOutfit);
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
+            
             modelBuilder.Entity<Account>().HasData(fakeData.Accounts);
             modelBuilder.Entity<AccountCredentials>().HasData(fakeData.AccountsCredentials);
             modelBuilder.Entity<Outfit>().HasData(fakeData.Outfits);

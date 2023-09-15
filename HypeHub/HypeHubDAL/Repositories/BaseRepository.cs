@@ -1,4 +1,5 @@
 ﻿using HypeHubDAL.DbContexts;
+using HypeHubDAL.Models;
 using HypeHubDAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,6 +37,16 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
         await Task.Run(() =>
         {
             _dbContext.Set<T>().Update(entity);
+        });
+        await _dbContext.SaveChangesAsync();
+        return entity;
+    }
+
+    public async Task<T> DeleteAsync(T entity)
+    {
+        await Task.Run(() =>
+        {
+            _dbContext.Set<T>().Remove(entity);
         });
         await _dbContext.SaveChangesAsync();
         return entity;
