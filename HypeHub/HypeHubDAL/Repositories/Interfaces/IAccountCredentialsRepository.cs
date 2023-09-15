@@ -1,6 +1,8 @@
-﻿namespace HypeHubDAL.Repositories.Interfaces;
+﻿using HypeHubDAL.Models;
 
-public interface IAccountCredentialsRepository
+namespace HypeHubDAL.Repositories.Interfaces;
+
+public interface IAccountCredentialsRepository : IBaseRepository<AccountCredentials>
 {
     Task<bool> CheckIfEmailAlreadyExistAsync(string email);
 }

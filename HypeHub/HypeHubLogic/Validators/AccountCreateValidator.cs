@@ -16,7 +16,7 @@ public class AccountCreateValidator : AbstractValidator<AccountCreateDTO>
             .NotEmpty()
             .WithMessage("Username must have a value.")
             .Length(4, 15)
-            .WithMessage("Username length must be between 4 and 15.")
+            .WithMessage("Username must not have less than 4 and more than 15 characters.")
             .MustAsync(CheckIfUsernameAlreadyExist)
             .WithMessage("Account with this Username already exist.");
 
@@ -26,11 +26,15 @@ public class AccountCreateValidator : AbstractValidator<AccountCreateDTO>
             .MustAsync(CheckIfBooleanValue)
             .WithMessage("IsPrivate must be a valid boolean value.");
 
-        RuleFor(ac => ac.AvatarUrl)
-            .MaximumLength(400)
-            .WithMessage("Maximum AvatarUrl length is 400.")
-            .Matches(@"^(https?://)?([\w-]+\.)+[\w-]+(/[\w-./?%&=]*)?$")
-            .WithMessage("AvatarUrl is not in a valid format."); ;
+        When(ac => ac.AvatarUrl != null, () =>
+        {
+            RuleFor(ac => ac.AvatarUrl)
+                .MaximumLength(400)
+                .WithMessage("AvatarUrl must not have more than 400 characters.")
+                .Matches(@"^(https?://)?([\w-]+\.)+[\w-]+(/[\w-./?%&=]*)?$")
+                .WithMessage("AvatarUrl is not in a valid format.");
+        });
+
     }
 
     private async Task<bool> CheckIfUsernameAlreadyExist(string username, CancellationToken cancellationToken)

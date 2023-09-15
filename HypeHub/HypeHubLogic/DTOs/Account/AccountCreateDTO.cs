@@ -1,6 +1,4 @@
-﻿using HypeHubLogic.DTOs.AccountCredentials;
-
-namespace HypeHubLogic.DTOs.Account;
+﻿namespace HypeHubLogic.DTOs.Account;
 
 public class AccountCreateDTO
 {

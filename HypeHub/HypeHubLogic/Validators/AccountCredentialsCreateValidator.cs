@@ -15,16 +15,14 @@ public class AccountCredentialsCreateValidator : AbstractValidator<AccountCreden
         RuleFor(ac => ac.Password)
             .NotEmpty()
             .WithMessage("Password must have a value.")
-            .MinimumLength(4)
-            .WithMessage("Maximum Password length is 4.")
-            .MaximumLength(255)
-            .WithMessage("Maximum Password length is 255.");
+            .Length(4, 30)
+            .WithMessage("Password must not have less than 4 and more than 30 characters.");
 
         RuleFor(ac => ac.Email)
             .NotEmpty()
             .WithMessage("Email must have a value.")
             .MaximumLength(255)
-            .WithMessage("Maximum Email length is 255.")
+            .WithMessage("Email must not have more than 255 characters.")
             .EmailAddress()
             .WithMessage("Email must be in a valid email format.")
             .MustAsync(CheckIfEmailAlreadyExist)
