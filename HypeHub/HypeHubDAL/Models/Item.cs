@@ -5,7 +5,7 @@ namespace HypeHubDAL.Models;
 
 public class Item
 {
-    public Guid Id { get; init; }
+    public Guid Id { get; set; }
     public string Name { get; set; }
     public Account Account { get; init; }
     public Guid AccountId { get; init; }

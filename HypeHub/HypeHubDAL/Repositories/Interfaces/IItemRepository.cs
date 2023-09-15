@@ -1,5 +1,7 @@
-﻿namespace HypeHubDAL.Repositories.Interfaces;
+﻿using HypeHubDAL.Models;
 
-public interface IItemRepository
+namespace HypeHubDAL.Repositories.Interfaces;
+
+public interface IItemRepository : IBaseRepository<Item>
 {
 }

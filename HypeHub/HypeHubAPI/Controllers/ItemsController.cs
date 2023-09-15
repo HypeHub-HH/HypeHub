@@ -1,4 +1,7 @@
-﻿using HypeHubLogic.CQRS.Item.Commands.Post;
+﻿
+using HypeHubDAL.Models;
+using HypeHubLogic.CQRS.Item.Commands.Post;
+using HypeHubLogic.CQRS.Item.Commands.Update;
 using HypeHubLogic.CQRS.Item.Queries;
 using HypeHubLogic.DTOs.Item;
 using MediatR;
@@ -11,9 +14,9 @@ namespace HypeHubAPI.Controllers;
 [ApiController]
 public class ItemsController : ControllerBase
 {
-    private readonly Mediator _mediator;
+    private readonly IMediator _mediator;
 
-    public ItemsController(Mediator mediator)
+    public ItemsController(IMediator mediator)
     {
         _mediator = mediator;
     }
@@ -22,7 +25,8 @@ public class ItemsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetItem(Guid id)
     {
-        var result = await _mediator.Send(new GetItemQuery(id));
+        var query = new GetItemQuery(id);
+        var result = await _mediator.Send(query);
         if (result is null) return NotFound();
         return Ok(result);
     }
@@ -31,16 +35,20 @@ public class ItemsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateItem([FromBody] ItemCreateDTO item)
     {
-        var result = await _mediator.Send(new CreateItemCommand(item));
-        return Ok();
+        var command = new CreateItemCommand(item);
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 
     // PUT api/<ItemsController>/5
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateItem([FromBody] ItemCreateDTO item)
+    public async Task<IActionResult> UpdateItem(Guid id, [FromBody] ItemCreateDTO item)
     {
-        return Ok();
+        var command = new UpdateItemCommand(item, id);
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
+
 
     // DELETE api/<ItemsController>/5
     [HttpDelete("{id}")]

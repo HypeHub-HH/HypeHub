@@ -31,12 +31,13 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
         return entity;
     }
 
-    public async Task UpdateAsync(T entity)
+    public async Task<T> UpdateAsync(T entity)
     {
         await Task.Run(() =>
         {
             _dbContext.Set<T>().Update(entity);
         });
         await _dbContext.SaveChangesAsync();
+        return entity;
     }
 }

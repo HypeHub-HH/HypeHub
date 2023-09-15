@@ -1,19 +1,23 @@
 using HypeHubDAL.DbContexts;
+using HypeHubDAL.Repositories;
+using HypeHubDAL.Repositories.Interfaces;
+using HypeHubLogic.CQRS.Item.Queries;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<HypeHubContext>(options =>
 {
     options.UseSqlServer(builder.Configuration["HypeHubDbKey"]);
 });
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly));
+builder.Services.AddAutoMapper(Assembly.Load("HypeHubLogic"));
+builder.Services.AddScoped<IItemRepository, ItemRepository>();
+builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssemblies(Assembly.Load("HypeHubLogic")));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -2,31 +2,41 @@
 
 namespace HypeHubLogic.Response;
 
-public class BaseResponse
-{
-    public bool IsSuccess { get; private set; }
-    public string? Message { get; private set; }
-    public List<string> Errors { get; private set; }
+public class BaseResponse<T>
+{       
+    public bool Success { get; set; }
+    public T Data { get; set; }
+    public string Message { get; set; }
+    public List<string> ValidationErrors { get; set; }
 
-    private BaseResponse(bool isSuccess, string message, List<string> errors)
+    public BaseResponse()
     {
-        IsSuccess = isSuccess;
+        ValidationErrors = new List<string>();
+        Success = true;
+    }
+    public BaseResponse(T data, string message = null)
+    {
+        ValidationErrors = new List<string>();
+        Success = true;
+        Data = data;
         Message = message;
-        Errors = errors;
     }
 
-    public static BaseResponse Success(string message = null)
+    public BaseResponse(string message, bool success)
     {
-        return new BaseResponse(true, message, null);
+        ValidationErrors = new List<string>();
+        Success = success;
+        Message = message;
     }
 
-    public static BaseResponse Failure(string message, List<string> errors = null)
+    public BaseResponse(ValidationResult validationResult)
     {
-        return new BaseResponse(false, message, errors);
-    }
+        ValidationErrors = new List<String>();
+        Success = validationResult.Errors.Count < 0;
+        foreach (var item in validationResult.Errors)
+        {
+            ValidationErrors.Add(item.ErrorMessage);
+        }
 
-    public static BaseResponse Failure(List<string> errors)
-    {
-        return new BaseResponse(false, null, errors);
     }
 }

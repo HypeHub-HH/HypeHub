@@ -16,4 +16,18 @@ public class ItemReadDTO
     public decimal? Price { get; init; }
     public DateTime? PurchaseDate { get; init; }
     public List<ItemImageReadDTO> Images { get; init; }
+
+    public ItemReadDTO(Guid id, string name, List<AccountItemLikeReadDTO> likes, CloathingType cloathingType, string? brand, string? model, string? colorway, decimal? price, DateTime? purchaseDate, List<ItemImageReadDTO> images)
+    {
+        Id = id;
+        Name = name;
+        Likes = likes;
+        CloathingType = cloathingType;
+        Brand = brand;
+        Model = model;
+        Colorway = colorway;
+        Price = price;
+        PurchaseDate = purchaseDate;
+        Images = images;
+    }
 }
