@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HypeHubDAL.Exeptions;
 using HypeHubDAL.Models.Types;
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Item;
@@ -20,6 +21,6 @@ public class GetItemQueryHandler : IRequestHandler<GetItemQuery, ItemReadDTO>
     public async Task<ItemReadDTO> Handle(GetItemQuery request, CancellationToken cancellationToken)
     {
         var item = await _itemRepository.GetByIdAsync(request.ItemId);
-        return _mapper.Map<ItemReadDTO>(item);
+        return _mapper.Map<ItemReadDTO>(item) ?? throw new NotFoundException("Item wasn't found in database");
     }
 }
