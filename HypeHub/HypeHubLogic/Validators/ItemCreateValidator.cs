@@ -1,6 +1,4 @@
 ﻿using FluentValidation;
-using HypeHubDAL.Models.Types;
-using HypeHubDAL.Repositories;
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Item;
 
@@ -18,19 +16,19 @@ public class ItemCreateValidator : AbstractValidator<ItemCreateDTO>
              .NotEmpty()
              .WithMessage("Name must have a value.")
              .Length(4, 30)
-             .WithMessage("Name must not have less than 4 and more than 50 characters.");
+             .WithMessage("Name must not have less than 4 and more than 30 characters.");
 
         RuleFor(ail => ail.AccountId)
             .NotEmpty()
             .WithMessage("AccountId must have a value.")
-            .MustAsync(BeValidGuid)
+            .MustAsync(CheckIfGuidValue)
             .WithMessage("AccountId must be a valid GUID.")
             .MustAsync(CheckIfAccountExist)
-            .WithMessage("There is no account with the given AccountId.");
+            .WithMessage("There is no account with the given Id.");
 
         RuleFor(ac => ac.CloathingType)
             .NotEmpty()
-            .WithMessage("IsPrivate must have a value.")
+            .WithMessage("CloathingType must have a value.")
             .IsInEnum()
             .WithMessage("CloathingType is not a valid enum value.");
 
@@ -66,8 +64,8 @@ public class ItemCreateValidator : AbstractValidator<ItemCreateDTO>
         return account != null;
     }
 
-    private async Task<bool> BeValidGuid(Guid value, CancellationToken cancellationToken)
+    private async Task<bool> CheckIfGuidValue<T>(T value, CancellationToken cancellationToken)
     {
-        return await Task.FromResult(value != Guid.Empty);
+        return await Task.FromResult(typeof(Guid) == value.GetType());
     }
 }

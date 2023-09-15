@@ -1,18 +1,22 @@
 ﻿using FluentValidation;
 using HypeHubDAL.Repositories.Interfaces;
-using HypeHubLogic.DTOs.AccountOutfitLike;
+using HypeHubLogic.DTOs.Outfit;
 
 namespace HypeHubLogic.Validators;
 
-public class AccountOutfitLikeCreateValidator : AbstractValidator<AccountOutfitLikeCreateDTO>
+public class OutfitCreateValidator : AbstractValidator<OutfitCreateDTO>
 {
     private readonly IAccountRepository _accountRepository;
-    private readonly IOutfitRepository _outfitRepository;
 
-    public AccountOutfitLikeCreateValidator(IAccountRepository accountRepository, IOutfitRepository outfitRepository)
+    public OutfitCreateValidator(IAccountRepository accountRepository)
     {
         _accountRepository = accountRepository;
-        _outfitRepository = outfitRepository;
+
+        RuleFor(ac => ac.Name)
+             .NotEmpty()
+             .WithMessage("Name must have a value.")
+             .Length(4, 30)
+             .WithMessage("Name must not have less than 4 and more than 30 characters.");
 
         RuleFor(ail => ail.AccountId)
             .NotEmpty()
@@ -21,26 +25,12 @@ public class AccountOutfitLikeCreateValidator : AbstractValidator<AccountOutfitL
             .WithMessage("AccountId must be a valid GUID.")
             .MustAsync(CheckIfAccountExist)
             .WithMessage("There is no account with the given Id.");
-
-        RuleFor(ail => ail.OutfitId)
-            .NotEmpty()
-            .WithMessage("OutfitId must have a value.")
-            .MustAsync(CheckIfGuidValue)
-            .WithMessage("OutfitId must be a valid GUID.")
-            .MustAsync(CheckIfOutfitExist)
-            .WithMessage("There is no outfit with the given Id.");
     }
 
     private async Task<bool> CheckIfAccountExist(Guid id, CancellationToken cancellationToken)
     {
         var account = await _accountRepository.GetByIdAsync(id);
         return account != null;
-    }
-
-    private async Task<bool> CheckIfOutfitExist(Guid id, CancellationToken cancellationToken)
-    {
-        var outfit = await _outfitRepository.GetByIdAsync(id);
-        return outfit != null;
     }
 
     private async Task<bool> CheckIfGuidValue<T>(T value, CancellationToken cancellationToken)

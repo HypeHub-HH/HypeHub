@@ -15,8 +15,8 @@ public class AccountCredentialsCreateValidator : AbstractValidator<AccountCreden
         RuleFor(ac => ac.Password)
             .NotEmpty()
             .WithMessage("Password must have a value.")
-            .Length(4, 30)
-            .WithMessage("Password must not have less than 4 and more than 30 characters.");
+            .Length(4, 255)
+            .WithMessage("Password must not have less than 4 and more than 255 characters.");
 
         RuleFor(ac => ac.Email)
             .NotEmpty()

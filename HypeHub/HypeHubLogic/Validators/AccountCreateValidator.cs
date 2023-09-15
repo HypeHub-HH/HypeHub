@@ -12,7 +12,7 @@ public class AccountCreateValidator : AbstractValidator<AccountCreateDTO>
     {
         _accountRepository = accountRepository;
 
-        RuleFor(ac => ac.Username)
+        RuleFor(a => a.Username)
             .NotEmpty()
             .WithMessage("Username must have a value.")
             .Length(4, 15)
@@ -20,15 +20,15 @@ public class AccountCreateValidator : AbstractValidator<AccountCreateDTO>
             .MustAsync(CheckIfUsernameAlreadyExist)
             .WithMessage("Account with this Username already exist.");
 
-        RuleFor(ac => ac.IsPrivate)
+        RuleFor(a => a.IsPrivate)
             .NotEmpty()
             .WithMessage("IsPrivate must have a value.")
             .MustAsync(CheckIfBooleanValue)
             .WithMessage("IsPrivate must be a valid boolean value.");
 
-        When(ac => ac.AvatarUrl != null, () =>
+        When(a => a.AvatarUrl != null, () =>
         {
-            RuleFor(ac => ac.AvatarUrl)
+            RuleFor(a => a.AvatarUrl)
                 .MaximumLength(400)
                 .WithMessage("AvatarUrl must not have more than 400 characters.")
                 .Matches(@"^(https?://)?([\w-]+\.)+[\w-]+(/[\w-./?%&=]*)?$")
@@ -42,9 +42,9 @@ public class AccountCreateValidator : AbstractValidator<AccountCreateDTO>
         return !await _accountRepository.CheckIfUsernameAlreadyExistAsync(username);
     }
 
-    private async Task<bool> CheckIfBooleanValue(bool IsPrivate, CancellationToken cancellationToken)
+    private async Task<bool> CheckIfBooleanValue<T>(T value, CancellationToken cancellationToken)
     {
-        return await Task.FromResult(IsPrivate == false || IsPrivate == true);
+        return await Task.FromResult(typeof(T) == typeof(bool));
     }
 }
 
