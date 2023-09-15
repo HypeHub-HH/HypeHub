@@ -10,12 +10,21 @@
     <Compile Remove="DTOs\Account - Copy %282%29\**" />
     <Compile Remove="DTOs\Account - Copy %283%29\**" />
     <Compile Remove="DTOs\Account - Copy %284%29\**" />
+    <Compile Remove="Validators\Account\**" />
+    <Compile Remove="Validators\Outfit\**" />
+    <Compile Remove="Validators\Wardrobe\**" />
     <EmbeddedResource Remove="DTOs\Account - Copy %282%29\**" />
     <EmbeddedResource Remove="DTOs\Account - Copy %283%29\**" />
     <EmbeddedResource Remove="DTOs\Account - Copy %284%29\**" />
+    <EmbeddedResource Remove="Validators\Account\**" />
+    <EmbeddedResource Remove="Validators\Outfit\**" />
+    <EmbeddedResource Remove="Validators\Wardrobe\**" />
     <None Remove="DTOs\Account - Copy %282%29\**" />
     <None Remove="DTOs\Account - Copy %283%29\**" />
     <None Remove="DTOs\Account - Copy %284%29\**" />
+    <None Remove="Validators\Account\**" />
+    <None Remove="Validators\Outfit\**" />
+    <None Remove="Validators\Wardrobe\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,14 +32,11 @@
     <Folder Include="CQRS\Outfit\Queries\" />
     <Folder Include="CQRS\Account\Commands\" />
     <Folder Include="CQRS\Account\Queries\" />
-    <Folder Include="Validators\Account\" />
-    <Folder Include="Validators\Outfit\" />
-    <Folder Include="Validators\Wardrobe\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
-    <PackageReference Include="FluentValidation" Version="11.7.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.7.1" />
     <PackageReference Include="MediatR" Version="12.1.1" />
   </ItemGroup>
 

@@ -2,7 +2,7 @@
 
 namespace HypeHubDAL.Repositories.Interfaces;
 
-public interface IOutfitRepository
+public interface IOutfitRepository : IBaseRepository<Outfit>
 {
     Task DeleteAsync(Outfit outfit);
 }
