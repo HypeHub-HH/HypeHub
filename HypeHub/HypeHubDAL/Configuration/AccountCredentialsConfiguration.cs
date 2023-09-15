@@ -1,7 +1,6 @@
 ﻿using HypeHubDAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 
 namespace HypeHubDAL.Configuration;
 
@@ -9,6 +8,20 @@ public class AccountCredentialsConfiguration : IEntityTypeConfiguration<AccountC
 {
     public void Configure(EntityTypeBuilder<AccountCredentials> builder)
     {
-        builder.HasKey(e => e.Id);
+        builder.HasKey(ac => ac.Id);
+
+        builder.Property(ac => ac.AccountId)
+            .IsRequired();
+
+        builder.HasIndex(ac => ac.Email)
+            .IsUnique();
+
+        builder.Property(ac => ac.Password)
+            .IsRequired()
+            .HasMaxLength(255);
+
+        builder.Property(ac => ac.Email)
+            .IsRequired()
+            .HasMaxLength(255);
     }
 }

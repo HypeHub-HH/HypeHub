@@ -9,5 +9,11 @@ public class AccountOutfitLikeConfiguration : IEntityTypeConfiguration<AccountOu
     public void Configure(EntityTypeBuilder<AccountOutfitLike> builder)
     {
         builder.HasKey(aol => aol.Id);
+
+        builder.Property(aol => aol.AccountId)
+            .IsRequired();
+
+        builder.Property(aol => aol.OutfitId)
+            .IsRequired();
     }
 }
