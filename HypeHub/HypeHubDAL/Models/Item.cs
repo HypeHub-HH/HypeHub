@@ -5,11 +5,11 @@ namespace HypeHubDAL.Models;
 
 public class Item
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; init; }
     public string Name { get; set; }
     public Account? Account { get; set; }
     public Guid? AccountId { get; set; }
-    public List<Outfit> Outfits { get; } = new();
+    public List<Outfit> Outfits { get; init; } = new();
     public List<AccountItemLike> Likes { get; init; } = new();
     public CloathingType CloathingType { get; set; }
     public string? Brand { get; set; }

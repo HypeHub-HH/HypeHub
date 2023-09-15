@@ -4,7 +4,7 @@ using HypeHubLogic.DTOs.AccountItemLike;
 
 namespace HypeHubLogic.DTOs.Item;
 
-public class ItemReadDTO
+public record ItemReadDTO
 {
     public Guid Id { get; init; }
     public string Name { get; init; }

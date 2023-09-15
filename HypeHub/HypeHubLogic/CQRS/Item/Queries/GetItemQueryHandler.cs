@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using HypeHubDAL.Exeptions;
-using HypeHubDAL.Models.Types;
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Item;
 using MediatR;

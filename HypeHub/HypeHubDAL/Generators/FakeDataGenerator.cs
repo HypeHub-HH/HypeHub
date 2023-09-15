@@ -17,8 +17,8 @@ public class FakeDataGenerator
         var imageImages = CreateImageForEveryItem(items);
 
         return new FakeDataGeneratorModel(accounts, accountCredentials, outfits,items, outfitImages,imageImages);
-
     }
+
     private List<Account> CreateRandomAccounts(int count)
     {
         var accounts = new List<Account>();
@@ -31,6 +31,7 @@ public class FakeDataGenerator
         }
         return accounts;
     }
+
     private List<AccountCredentials> CreateAccountCredentialsForEveryAccount(List<Account> accounts)
     {
         var accountsCredentials = new List<AccountCredentials>();
@@ -40,6 +41,7 @@ public class FakeDataGenerator
         }
         return accountsCredentials;
     }
+
     private List<Outfit> CreateTwoOutfitsForEveryAccount(List<Account> accounts, int numberOfOutfitsPerAccount)
     {
         var outfits = new List<Outfit>();
@@ -52,6 +54,7 @@ public class FakeDataGenerator
         }
         return outfits;
     }
+
     private List<Item> CreateItemsForEveryAccount(List<Account> accounts, int numberOfItemsPerAccount)
     {
         var items = new List<Item>();
@@ -72,6 +75,7 @@ public class FakeDataGenerator
         }
         return items;
     }
+
     private List<ItemImage> CreateImageForEveryItem(List<Item> items)
     {
         var images = new List<ItemImage>();
@@ -81,6 +85,7 @@ public class FakeDataGenerator
         }
         return images;
     }
+
     private List<OutfitImage> CreateImageForEveryOutfit(List<Outfit> outfits)
     {
         var images = new List<OutfitImage>();

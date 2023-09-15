@@ -1,6 +1,6 @@
 ﻿namespace HypeHubLogic.DTOs.AccountCredentials;
 
-public class AccountCredentialsReadDTO
+public record AccountCredentialsReadDTO
 {
     public string Email { get; init; }
 }

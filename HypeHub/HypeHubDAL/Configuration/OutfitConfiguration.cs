@@ -18,6 +18,10 @@ public class OutfitConfiguration : IEntityTypeConfiguration<Outfit>
             .IsRequired()
             .HasMaxLength(30);
 
+        builder.Property(i => i.CreationDate)
+            .IsRequired()
+            .HasColumnType("datetime2");
+
         builder.HasMany(o => o.Likes).
             WithOne(aol => aol.Outfit).
             HasForeignKey(aol => aol.OutfitId)

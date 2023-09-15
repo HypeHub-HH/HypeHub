@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using HypeHubDAL.Models;
 using HypeHubDAL.Repositories.Interfaces;
-using HypeHubLogic.CQRS.Item.Commands.Post;
 using HypeHubLogic.DTOs.Item;
 using HypeHubLogic.Response;
 using MediatR;

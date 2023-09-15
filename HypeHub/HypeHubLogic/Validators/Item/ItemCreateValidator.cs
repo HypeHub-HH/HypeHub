@@ -2,7 +2,7 @@
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Item;
 
-namespace HypeHubLogic.Validators;
+namespace HypeHubLogic.Validators.Item;
 
 public class ItemCreateValidator : AbstractValidator<ItemCreateDTO>
 {

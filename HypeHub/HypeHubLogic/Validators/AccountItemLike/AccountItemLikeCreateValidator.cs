@@ -1,18 +1,18 @@
 ﻿using FluentValidation;
 using HypeHubDAL.Repositories.Interfaces;
-using HypeHubLogic.DTOs.AccountOutfitLike;
+using HypeHubLogic.DTOs.AccountItemLike;
 
-namespace HypeHubLogic.Validators;
+namespace HypeHubLogic.Validators.AccountItemLike;
 
-public class AccountOutfitLikeCreateValidator : AbstractValidator<AccountOutfitLikeCreateDTO>
+public class AccountItemLikeCreateValidator : AbstractValidator<AccountItemLikeCreateDTO>
 {
     private readonly IAccountRepository _accountRepository;
-    private readonly IOutfitRepository _outfitRepository;
+    private readonly IItemRepository _itemRepository;
 
-    public AccountOutfitLikeCreateValidator(IAccountRepository accountRepository, IOutfitRepository outfitRepository)
+    public AccountItemLikeCreateValidator(IAccountRepository accountRepository, IItemRepository itemRepository)
     {
         _accountRepository = accountRepository;
-        _outfitRepository = outfitRepository;
+        _itemRepository = itemRepository;
 
         RuleFor(ail => ail.AccountId)
             .NotEmpty()
@@ -22,13 +22,13 @@ public class AccountOutfitLikeCreateValidator : AbstractValidator<AccountOutfitL
             .MustAsync(CheckIfAccountExist)
             .WithMessage("There is no account with the given Id.");
 
-        RuleFor(ail => ail.OutfitId)
+        RuleFor(ail => ail.ItemId)
             .NotEmpty()
-            .WithMessage("OutfitId must have a value.")
+            .WithMessage("ItemId must have a value.")
             .MustAsync(CheckIfGuidValue)
-            .WithMessage("OutfitId must be a valid GUID.")
-            .MustAsync(CheckIfOutfitExist)
-            .WithMessage("There is no outfit with the given Id.");
+            .WithMessage("ItemId must be a valid GUID.")
+            .MustAsync(CheckIfItemExist)
+            .WithMessage("There is no item with the given Id.");
     }
 
     private async Task<bool> CheckIfAccountExist(Guid id, CancellationToken cancellationToken)
@@ -37,10 +37,10 @@ public class AccountOutfitLikeCreateValidator : AbstractValidator<AccountOutfitL
         return account != null;
     }
 
-    private async Task<bool> CheckIfOutfitExist(Guid id, CancellationToken cancellationToken)
+    private async Task<bool> CheckIfItemExist(Guid id, CancellationToken cancellationToken)
     {
-        var outfit = await _outfitRepository.GetByIdAsync(id);
-        return outfit != null;
+        var item = await _itemRepository.GetByIdAsync(id);
+        return item != null;
     }
 
     private async Task<bool> CheckIfGuidValue<T>(T value, CancellationToken cancellationToken)

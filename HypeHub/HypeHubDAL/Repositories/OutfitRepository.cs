@@ -8,5 +8,4 @@ public class OutfitRepository : BaseRepository<Outfit>, IOutfitRepository
 {
     public OutfitRepository(HypeHubContext dbContext) : base(dbContext)
     { }
-
 }

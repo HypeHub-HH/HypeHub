@@ -2,7 +2,7 @@
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.AccountCredentials;
 
-namespace HypeHubLogic.Validators;
+namespace HypeHubLogic.Validators.AccountCredentials;
 
 public class AccountCredentialsCreateValidator : AbstractValidator<AccountCredentialsCreateDTO>
 {

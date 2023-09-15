@@ -2,7 +2,7 @@
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Account;
 
-namespace HypeHubLogic.Validators;
+namespace HypeHubLogic.Validators.Account;
 
 public class AccountCreateValidator : AbstractValidator<AccountCreateDTO>
 {
@@ -34,7 +34,6 @@ public class AccountCreateValidator : AbstractValidator<AccountCreateDTO>
                 .Matches(@"^(https?://)?([\w-]+\.)+[\w-]+(/[\w-./?%&=]*)?$")
                 .WithMessage("AvatarUrl is not in a valid format.");
         });
-
     }
 
     private async Task<bool> CheckIfUsernameAlreadyExist(string username, CancellationToken cancellationToken)

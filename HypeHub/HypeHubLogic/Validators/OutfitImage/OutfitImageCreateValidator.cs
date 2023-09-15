@@ -2,7 +2,7 @@
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.OutfitImage;
 
-namespace HypeHubLogic.Validators;
+namespace HypeHubLogic.Validators.OutfitImage;
 
 public class OutfitImageCreateValidator : AbstractValidator<OutfitImageCreateDTO>
 {

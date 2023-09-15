@@ -2,7 +2,7 @@
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.ItemImage;
 
-namespace HypeHubLogic.Validators;
+namespace HypeHubLogic.Validators.ItemImage;
 
 public class ItemImageCreateValidator : AbstractValidator<ItemImageCreateDTO>
 {

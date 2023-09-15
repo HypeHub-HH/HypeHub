@@ -2,7 +2,7 @@
 
 namespace HypeHubLogic.DTOs.Item;
 
-public class ItemCreateDTO
+public record ItemCreateDTO
 {
     public string Name { get; set; }
     public Guid AccountId { get; init; }

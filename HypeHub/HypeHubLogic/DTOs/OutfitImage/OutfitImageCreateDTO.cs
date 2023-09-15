@@ -1,6 +1,6 @@
 ﻿namespace HypeHubLogic.DTOs.OutfitImage;
 
-public class OutfitImageCreateDTO
+public record OutfitImageCreateDTO
 {
     public Guid OutfitId { get; init; }
     public string Url { get; init; }

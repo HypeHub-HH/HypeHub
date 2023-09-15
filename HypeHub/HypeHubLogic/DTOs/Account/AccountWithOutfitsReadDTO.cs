@@ -2,7 +2,7 @@
 
 namespace HypeHubLogic.DTOs.Account;
 
-public class AccountWithOutfitsReadDTO
+public record AccountWithOutfitsReadDTO
 {
     public Guid Id { get; init; }
     public string Username { get; init; }

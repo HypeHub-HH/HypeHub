@@ -2,7 +2,7 @@
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Outfit;
 
-namespace HypeHubLogic.Validators;
+namespace HypeHubLogic.Validators.Outfit;
 
 public class OutfitCreateValidator : AbstractValidator<OutfitCreateDTO>
 {

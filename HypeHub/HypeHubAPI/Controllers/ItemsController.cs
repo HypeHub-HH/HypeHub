@@ -1,13 +1,10 @@
-﻿
-using HypeHubDAL.Models;
-using HypeHubLogic.CQRS.Item.Commands.Delete;
+﻿using HypeHubLogic.CQRS.Item.Commands.Delete;
 using HypeHubLogic.CQRS.Item.Commands.Post;
 using HypeHubLogic.CQRS.Item.Commands.Update;
 using HypeHubLogic.CQRS.Item.Queries;
 using HypeHubLogic.DTOs.Item;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-
 
 namespace HypeHubAPI.Controllers;
 
@@ -22,7 +19,6 @@ public class ItemsController : ControllerBase
         _mediator = mediator;
     }
 
-    // GET api/<ItemsController>/5
     [HttpGet("{id}")]
     public async Task<IActionResult> GetItem(Guid id)
     {
@@ -30,7 +26,6 @@ public class ItemsController : ControllerBase
         return Ok(result);
     }
 
-    // POST api/<ItemsController>
     [HttpPost]
     public async Task<IActionResult> CreateItem([FromBody] ItemCreateDTO item)
     {
@@ -38,7 +33,6 @@ public class ItemsController : ControllerBase
         return Ok(result);
     }
 
-    // PUT api/<ItemsController>/5
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateItem(Guid id, [FromBody] ItemCreateDTO item)
     {
@@ -46,8 +40,6 @@ public class ItemsController : ControllerBase
         return Ok(result);
     }
 
-
-    // DELETE api/<ItemsController>/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteItem(Guid id)
     {

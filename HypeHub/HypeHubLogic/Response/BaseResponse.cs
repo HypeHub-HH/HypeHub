@@ -14,6 +14,7 @@ public class BaseResponse<T>
         ValidationErrors = new List<string>();
         Success = true;
     }
+
     public BaseResponse(T data, string message = null)
     {
         ValidationErrors = new List<string>();
@@ -37,6 +38,5 @@ public class BaseResponse<T>
         {
             ValidationErrors.Add(item.ErrorMessage);
         }
-
     }
 }
