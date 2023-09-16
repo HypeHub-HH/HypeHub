@@ -4,33 +4,39 @@ using HypeHubLogic.DTOs.Item;
 
 namespace HypeHubLogic.Validators.Item;
 
-public class ItemCreateValidator : AbstractValidator<ItemCreateDTO>
+public class ItemUpdateValidator : AbstractValidator<ItemUpdateDTO>
 {
-    private readonly IAccountRepository _accountRepository;
+    private readonly IItemRepository _itemRepository;
 
-    public ItemCreateValidator(IAccountRepository accountRepository)
+    public ItemUpdateValidator(IItemRepository itemRepository)
     {
-        _accountRepository = accountRepository;
+        _itemRepository = itemRepository;
 
-        RuleFor(i => i.Name)
-             .NotEmpty()
-             .WithMessage("Name must have a value.")
-             .Length(4, 30)
-             .WithMessage("Name must not have less than 4 and more than 30 characters.");
-
-        RuleFor(i => i.AccountId)
+        RuleFor(i => i.Id)
             .NotEmpty()
-            .WithMessage("AccountId must have a value.")
+            .WithMessage("Id must have a value.")
             .MustAsync(CheckIfGuidValue)
-            .WithMessage("AccountId must be a valid GUID.")
-            .MustAsync(CheckIfAccountExist)
-            .WithMessage("There is no account with the given Id.");
+            .WithMessage("Id must be a valid GUID.")
+            .MustAsync(CheckIfItemExist)
+            .WithMessage("There is no item with the given Id.");
 
-        RuleFor(i => i.CloathingType)
-            .NotEmpty()
-            .WithMessage("CloathingType must have a value.")
-            .IsInEnum()
-            .WithMessage("CloathingType is not a valid enum value.");
+        When(i => i.Name != null, () =>
+        {
+            RuleFor(i => i.Name)
+                .NotEmpty()
+                .WithMessage("Name must have a value.")
+                .Length(4, 30)
+                .WithMessage("Name must not have less than 4 and more than 30 characters.");
+        });
+
+        When(i => i.CloathingType != null, () =>
+        {
+            RuleFor(i => i.CloathingType)
+                .NotEmpty()
+                .WithMessage("CloathingType must have a value.")
+                .IsInEnum()
+                .WithMessage("CloathingType is not a valid enum value.");
+        });
 
         RuleFor(i => i.Brand)
             .MaximumLength(30)
@@ -58,10 +64,10 @@ public class ItemCreateValidator : AbstractValidator<ItemCreateDTO>
             .WithMessage("PurchaseDate must not be older than today");
     }
 
-    private async Task<bool> CheckIfAccountExist(Guid id, CancellationToken cancellationToken)
+    private async Task<bool> CheckIfItemExist(Guid id, CancellationToken cancellationToken)
     {
-        var account = await _accountRepository.GetByIdAsync(id);
-        return account != null;
+        var item = await _itemRepository.GetByIdAsync(id);
+        return item != null;
     }
 
     private async Task<bool> CheckIfGuidValue<T>(T value, CancellationToken cancellationToken)

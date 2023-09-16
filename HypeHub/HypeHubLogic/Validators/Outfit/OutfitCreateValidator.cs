@@ -12,13 +12,13 @@ public class OutfitCreateValidator : AbstractValidator<OutfitCreateDTO>
     {
         _accountRepository = accountRepository;
 
-        RuleFor(ac => ac.Name)
+        RuleFor(o => o.Name)
              .NotEmpty()
              .WithMessage("Name must have a value.")
              .Length(4, 30)
              .WithMessage("Name must not have less than 4 and more than 30 characters.");
 
-        RuleFor(ail => ail.AccountId)
+        RuleFor(o => o.AccountId)
             .NotEmpty()
             .WithMessage("AccountId must have a value.")
             .MustAsync(CheckIfGuidValue)

@@ -14,7 +14,7 @@ public class AccountOutfitLikeCreateValidator : AbstractValidator<AccountOutfitL
         _accountRepository = accountRepository;
         _outfitRepository = outfitRepository;
 
-        RuleFor(ail => ail.AccountId)
+        RuleFor(aol => aol.AccountId)
             .NotEmpty()
             .WithMessage("AccountId must have a value.")
             .MustAsync(CheckIfGuidValue)
@@ -22,7 +22,7 @@ public class AccountOutfitLikeCreateValidator : AbstractValidator<AccountOutfitL
             .MustAsync(CheckIfAccountExist)
             .WithMessage("There is no account with the given Id.");
 
-        RuleFor(ail => ail.OutfitId)
+        RuleFor(aol => aol.OutfitId)
             .NotEmpty()
             .WithMessage("OutfitId must have a value.")
             .MustAsync(CheckIfGuidValue)
