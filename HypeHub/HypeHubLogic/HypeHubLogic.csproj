@@ -22,8 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CQRS\Outfit\Commands\" />
-    <Folder Include="CQRS\Outfit\Queries\" />
     <Folder Include="CQRS\Account\Commands\" />
     <Folder Include="CQRS\Account\Queries\" />
   </ItemGroup>

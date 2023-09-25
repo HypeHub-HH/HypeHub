@@ -28,7 +28,6 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
         await _dbContext.Set<T>().AddAsync(entity);
         await _dbContext.SaveChangesAsync();
-
         return entity;
     }
 
@@ -42,13 +41,12 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
         return entity;
     }
 
-    public async Task<T> DeleteAsync(T entity)
+    public async Task DeleteAsync(T entity)
     {
         await Task.Run(() =>
         {
             _dbContext.Set<T>().Remove(entity);
         });
         await _dbContext.SaveChangesAsync();
-        return entity;
     }
 }
