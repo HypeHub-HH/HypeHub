@@ -2,6 +2,7 @@
 using HypeHubLogic.CQRS.Item.Commands.Post;
 using HypeHubLogic.CQRS.Item.Commands.Update;
 using HypeHubLogic.CQRS.Item.Queries;
+using HypeHubLogic.DTOs.AccountItemLike;
 using HypeHubLogic.DTOs.Item;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -40,10 +41,17 @@ public class ItemsController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPut("{id}/like")]
+    public async Task<IActionResult> LikeOrUnlikeItem([FromBody] AccountItemLikeCreateDTO accountItemLike)
+    {
+        await _mediator.Send(new LikeOrUnlikeItemCommand(accountItemLike));
+        return Ok();
+    }
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteItem(Guid id)
     {
-        var result = await _mediator.Send(new DeleteItemCommand(id));
-        return Ok(result);
+        await _mediator.Send(new DeleteItemCommand(id));
+        return Ok();
     }
 }
