@@ -9,6 +9,7 @@ namespace HypeHubDAL.DbContexts;
 public class HypeHubContext : DbContext
 {
     public HypeHubContext(DbContextOptions<HypeHubContext> options) : base(options) { }
+
     public DbSet<Account> Accounts { get; set; }
     public DbSet<AccountCredentials> AccountCredentials { get; set; }
     public DbSet<Outfit> Outfits { get; set; }
