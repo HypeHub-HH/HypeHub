@@ -33,10 +33,10 @@ public class ItemsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateItem(Guid id, [FromBody] ItemCreateDTO item)
+    [HttpPut()]
+    public async Task<IActionResult> UpdateItem([FromBody] ItemUpdateDTO item)
     {
-        var result = await _mediator.Send(new UpdateItemCommand(item, id));
+        var result = await _mediator.Send(new UpdateItemCommand(item));
         return Ok(result);
     }
 

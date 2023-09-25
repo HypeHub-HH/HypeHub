@@ -12,7 +12,7 @@ public class ItemConfiguration : IEntityTypeConfiguration<Item>
         builder.HasKey(i => i.Id);
 
         builder.Property(i => i.AccountId)
-            .IsRequired(false);
+            .IsRequired();
 
         builder.Property(i => i.Name)
             .IsRequired()

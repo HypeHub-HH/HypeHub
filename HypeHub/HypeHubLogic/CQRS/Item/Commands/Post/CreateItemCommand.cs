@@ -4,7 +4,7 @@ using MediatR;
 
 namespace HypeHubLogic.CQRS.Item.Commands.Post;
 
-public class CreateItemCommand : IRequest<BaseResponse<ItemReadDTO>>
+public class CreateItemCommand : IRequest<ItemReadDTO>
 {
     public ItemCreateDTO Item { get; init; }
 
