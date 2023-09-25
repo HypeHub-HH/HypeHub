@@ -40,7 +40,7 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder.HasMany(a => a.Items)
             .WithOne(i => i.Account)
             .HasForeignKey(i => i.AccountId)
-            .IsRequired(false);
+            .IsRequired();
 
         builder.HasMany(a => a.Outfits)
             .WithOne(o => o.Account)

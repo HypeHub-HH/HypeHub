@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HypeHubDAL.Exeptions;
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Item;
 using HypeHubLogic.Response;
@@ -20,7 +21,10 @@ public class DeleteItemCommandHandler : IRequestHandler<DeleteItemCommand, BaseR
     public async Task<BaseResponse<ItemReadDTO>> Handle(DeleteItemCommand request, CancellationToken cancellationToken)
     {
         var itemForDelete = await _itemRepository.GetByIdAsync(request.ItemId);
-
+        if(itemForDelete == null)
+        {
+            throw new NotFoundException($"There is no accout with given id:{request.ItemId}");
+        }
         var item = await _itemRepository.DeleteAsync(itemForDelete);
         var deletedItem = _mapper.Map<ItemReadDTO>(item);
 

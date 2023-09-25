@@ -1,27 +1,37 @@
 ﻿using AutoMapper;
+using FluentValidation;
+using HypeHubDAL.Exeptions;
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Item;
 using HypeHubLogic.Response;
+using HypeHubLogic.Validators.Item;
 using MediatR;
 
 namespace HypeHubLogic.CQRS.Item.Commands.Post;
 
-public class CreateItemCommandHandler : IRequestHandler<CreateItemCommand, BaseResponse<ItemReadDTO>>
+public class CreateItemCommandHandler : IRequestHandler<CreateItemCommand, ItemReadDTO>
 {
     private readonly IItemRepository _itemRepository;
     private readonly IMapper _mapper;
+    private readonly IValidator<ItemCreateDTO> _validator;
 
-    public CreateItemCommandHandler(IItemRepository itemRepository, IMapper mapper)
+    public CreateItemCommandHandler(IItemRepository itemRepository, IMapper mapper, IValidator<ItemCreateDTO> validator)
     {
         _itemRepository = itemRepository;
         _mapper = mapper;
+        _validator = validator;
     }
 
-    public async Task<BaseResponse<ItemReadDTO>> Handle(CreateItemCommand request, CancellationToken cancellationToken)
+    public async Task<ItemReadDTO> Handle(CreateItemCommand request, CancellationToken cancellationToken)
     {
+        var validationResult = await _validator.ValidateAsync(request.Item);
+        if (!validationResult.IsValid)
+        {
+            throw new ValidationFailedException("Validation failed", validationResult);
+        }
         var item = _mapper.Map<HypeHubDAL.Models.Item>(request.Item);
         item = await _itemRepository.AddAsync(item);
         var addedItem = _mapper.Map<ItemReadDTO>(item);
-        return new BaseResponse<ItemReadDTO>(addedItem);
+        return addedItem;
     }
 }

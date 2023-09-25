@@ -4,14 +4,12 @@ using MediatR;
 
 namespace HypeHubLogic.CQRS.Item.Commands.Update;
 
-public class UpdateItemCommand : IRequest<BaseResponse<ItemReadDTO>>
+public class UpdateItemCommand : IRequest<ItemReadDTO>
 {
-    public ItemCreateDTO Item { get; init; }
-    public Guid ItemId { get; init; }
+    public ItemUpdateDTO Item { get; init; }
 
-    public UpdateItemCommand(ItemCreateDTO item, Guid itemId)
+    public UpdateItemCommand(ItemUpdateDTO item)
     {
         Item = item;
-        ItemId = itemId;
     }
 }

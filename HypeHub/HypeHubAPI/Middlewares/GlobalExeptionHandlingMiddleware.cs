@@ -19,17 +19,18 @@ public class GlobalExeptionHandlingMiddleware
         {
             await _next(context);
         }
-        catch (Exception ex)
+        catch (BaseException ex)
         {
             await HandleExeptionAsync(context, ex);
         }
     }
 
-    private static Task HandleExeptionAsync(HttpContext context, Exception ex)
+    private static Task HandleExeptionAsync(HttpContext context, BaseException ex)
     {
         HttpStatusCode status;
         var stackTrace = string.Empty;
         string message = "";
+        List<string> errors = new();
 
         var exeptionType = ex.GetType();
 
@@ -57,6 +58,13 @@ public class GlobalExeptionHandlingMiddleware
             status = HttpStatusCode.NotImplemented;
             stackTrace = ex.StackTrace; //nie wysylac tego na front
         }
+        else if (exeptionType == typeof(HypeHubDAL.Exeptions.ValidationFailedException))
+        {
+            message = ex.Message;
+            status = HttpStatusCode.BadRequest;
+            errors = ex.Errors;
+            stackTrace = ex.StackTrace; //nie wysylac tego na front
+        }
         else
         {
             message = ex.Message;
@@ -64,7 +72,7 @@ public class GlobalExeptionHandlingMiddleware
             stackTrace = ex.StackTrace; //nie wysylac tego na front
         }
 
-        var exeptionResult = JsonSerializer.Serialize(new { message = message, status = status });
+        var exeptionResult = JsonSerializer.Serialize(new { message = message, status = status, errors = errors});
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)status;
 
