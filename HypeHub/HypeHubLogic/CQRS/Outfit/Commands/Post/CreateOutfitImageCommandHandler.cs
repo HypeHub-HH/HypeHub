@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using HypeHubDAL.Exeptions;
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.OutfitImage;
 using MediatR;

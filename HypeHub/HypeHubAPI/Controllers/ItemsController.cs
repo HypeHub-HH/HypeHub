@@ -30,20 +30,20 @@ public class ItemsController : ControllerBase
     public async Task<IActionResult> CreateItem([FromBody] ItemCreateDTO item)
     {
         var result = await _mediator.Send(new CreateItemCommand(item));
-        return Ok(result);
+        return CreatedAtAction(nameof(GetItem), new { id = result.Id }, result);
     }
 
     [HttpPut()]
     public async Task<IActionResult> UpdateItem([FromBody] ItemUpdateDTO item)
     {
         var result = await _mediator.Send(new UpdateItemCommand(item));
-        return Ok(result);
+        return CreatedAtAction(nameof(GetItem), new { id = result.Id }, result);
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteItem(Guid id)
     {
-        var result = await _mediator.Send(new DeleteItemCommand(id));
-        return Ok(result);
+        await _mediator.Send(new DeleteItemCommand(id));
+        return NoContent();
     }
 }
