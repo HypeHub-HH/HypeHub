@@ -2,9 +2,7 @@
 
 namespace HypeHubDAL.Repositories.Interfaces;
 
-public interface IAccountItemLikeRepository
+public interface IAccountItemLikeRepository : IBaseLikeRepository<AccountItemLike>
 {
-    Task<bool> AddAsync(AccountItemLike accountItemLike);
-    Task<bool> DeleteAsync(AccountItemLike accountItemLike);
-    Task<AccountItemLike> GetAsyncByAccountAndItemId(AccountItemLike accountItemid);
+    Task<AccountItemLike?> GetAsyncByAccountAndItemId(AccountItemLike accountItemLike);
 }

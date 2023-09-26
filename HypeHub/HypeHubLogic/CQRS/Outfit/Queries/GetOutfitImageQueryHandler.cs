@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HypeHubDAL.Exeptions;
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.OutfitImage;
 using MediatR;
@@ -18,7 +19,7 @@ public class GetOutfitImageQueryHandler : IRequestHandler<GetOutfitImageQuery, O
 
     public async Task<OutfitImageReadDTO> Handle(GetOutfitImageQuery request, CancellationToken cancellationToken)
     {
-        var outfitImage = await _outfitImageRepository.GetByIdAsync(request.OutfitImageId);
+        var outfitImage = await _outfitImageRepository.GetByIdAsync(request.OutfitImageId) ?? throw new NotFoundException("There is no image with the given Id.");
         return _mapper.Map<OutfitImageReadDTO>(outfitImage);
     }
 }

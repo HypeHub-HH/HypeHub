@@ -22,10 +22,7 @@ public class UpdateItemCommandHandler : IRequestHandler<UpdateItemCommand, ItemR
     public async Task<ItemReadDTO> Handle(UpdateItemCommand request, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(request.Item);
-        if (!validationResult.IsValid)
-        {
-            throw new ValidationFailedException("Validation failed", validationResult);
-        }
+        if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult);
         var itemForUpdate = await _itemRepository.GetByIdAsync(request.Item.Id);
         var update = request.Item;
 

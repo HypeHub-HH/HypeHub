@@ -1,7 +1,9 @@
-﻿using HypeHubLogic.CQRS.Outfit.Commands.Delete;
+﻿using HypeHubDAL.Models;
+using HypeHubLogic.CQRS.Outfit.Commands.Delete;
 using HypeHubLogic.CQRS.Outfit.Commands.Post;
 using HypeHubLogic.CQRS.Outfit.Commands.Update;
 using HypeHubLogic.CQRS.Outfit.Queries;
+using HypeHubLogic.DTOs.AccountOutfitLike;
 using HypeHubLogic.DTOs.Outfit;
 using HypeHubLogic.DTOs.OutfitImage;
 using MediatR;
@@ -48,6 +50,13 @@ public class OutfitsController : ControllerBase
         return NoContent();
     }
 
+    [HttpPut("{id}/like")]
+    public async Task<IActionResult> LikeOrUnlikeOutfit([FromBody] AccountOutfitLikeCreateDTO accountOutfitLike)
+    {
+        await _mediator.Send(new LikeOrUnlikeOutfitCommand(accountOutfitLike));
+        return Ok();
+    }
+
     [HttpGet("{outfitId}/Images")]
     public async Task<IActionResult> GetOutfitImages(Guid outfitId)
     {
@@ -66,7 +75,7 @@ public class OutfitsController : ControllerBase
     public async Task<IActionResult> CreateImage([FromBody] OutfitImageCreateDTO outfitImage)
     {
         var result = await _mediator.Send(new CreateOutfitImageCommand(outfitImage));
-        return CreatedAtAction(nameof(GetOutfitImage), new { id = result.Id }, result);
+        return CreatedAtAction(nameof(GetOutfitImage), new { outfitId = result.OutfitId, id = result.Id }, result);
     }
 
     [HttpDelete("{outfitId}/Images/{id}")]

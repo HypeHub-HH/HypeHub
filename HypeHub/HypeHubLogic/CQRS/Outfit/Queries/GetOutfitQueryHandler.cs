@@ -19,7 +19,7 @@ public class GetOutfitQueryHandler : IRequestHandler<GetOutfitQuery, OutfitReadD
 
     public async Task<OutfitReadDTO> Handle(GetOutfitQuery request, CancellationToken cancellationToken)
     {
-        var outfit = await _outfitRepository.GetByIdAsync(request.OutfitId);
-        return _mapper.Map<OutfitReadDTO>(outfit) ?? throw new NotFoundException("There is no outfit with the given Id.");
+        var outfit = await _outfitRepository.GetByIdAsync(request.OutfitId) ?? throw new NotFoundException("There is no outfit with the given Id.");
+        return _mapper.Map<OutfitReadDTO>(outfit);
     }
 }
