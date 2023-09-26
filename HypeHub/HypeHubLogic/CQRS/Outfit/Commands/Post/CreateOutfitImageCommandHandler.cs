@@ -9,13 +9,13 @@ namespace HypeHubLogic.CQRS.Outfit.Commands.Post;
 
 public class CreateOutfitImageCommandHandler : IRequestHandler<CreateOutfitImageCommand, OutfitImageReadDTO>
 {
-    private readonly IOutfitRepository _outfitRepository;
+    private readonly IOutfitImageRepository _outfitImageRepository;
     private readonly IMapper _mapper;
     private readonly IValidator<OutfitImageCreateDTO> _validator;
 
-    public CreateOutfitImageCommandHandler(IOutfitRepository outfitRepository, IMapper mapper, IValidator<OutfitImageCreateDTO> validator)
+    public CreateOutfitImageCommandHandler(IOutfitImageRepository outfitImageRepository, IMapper mapper, IValidator<OutfitImageCreateDTO> validator)
     {
-        _outfitRepository = outfitRepository;
+        _outfitImageRepository = outfitImageRepository;
         _mapper = mapper;
         _validator = validator;
     }
@@ -25,7 +25,7 @@ public class CreateOutfitImageCommandHandler : IRequestHandler<CreateOutfitImage
         var validationResult = await _validator.ValidateAsync(request.OutfitImage);
         if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult);
         var outfitImage = _mapper.Map<HypeHubDAL.Models.OutfitImage>(request.OutfitImage);
-        var createdOutfitImage = await _outfitRepository.AddOutfitImageAsync(request.OutfitId, outfitImage);
+        var createdOutfitImage = await _outfitImageRepository.AddAsync(outfitImage);
         return _mapper.Map<OutfitImageReadDTO>(createdOutfitImage);
     }
 }
