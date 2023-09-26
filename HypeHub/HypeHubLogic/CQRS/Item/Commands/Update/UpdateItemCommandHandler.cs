@@ -3,7 +3,6 @@ using FluentValidation;
 using HypeHubDAL.Exeptions;
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Item;
-using HypeHubLogic.Response;
 using MediatR;
 
 namespace HypeHubLogic.CQRS.Item.Commands.Update;
