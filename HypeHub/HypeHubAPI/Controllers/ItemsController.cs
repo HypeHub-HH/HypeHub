@@ -4,6 +4,7 @@ using HypeHubLogic.CQRS.Item.Commands.Update;
 using HypeHubLogic.CQRS.Item.Queries;
 using HypeHubLogic.DTOs.AccountItemLike;
 using HypeHubLogic.DTOs.Item;
+using HypeHubLogic.DTOs.ItemImage;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,6 +33,13 @@ public class ItemsController : ControllerBase
     {
         var result = await _mediator.Send(new CreateItemCommand(item));
         return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddPhotoToItem([FromBody] ItemImageCreateDTO item)
+    {
+        await _mediator.Send(new AddPhotoToItemCommand(item));
+        return Ok();
     }
 
     [HttpPut()]
