@@ -24,13 +24,10 @@ public class CreateItemCommandHandler : IRequestHandler<CreateItemCommand, ItemR
     public async Task<ItemReadDTO> Handle(CreateItemCommand request, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(request.Item);
-        if (!validationResult.IsValid)
-        {
-            throw new ValidationFailedException("Validation failed", validationResult);
-        }
+        if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult);
         var item = _mapper.Map<HypeHubDAL.Models.Item>(request.Item);
-        item = await _itemRepository.AddAsync(item);
-        var addedItem = _mapper.Map<ItemReadDTO>(item);
+        var createdItem = await _itemRepository.AddAsync(item);
+        var addedItem = _mapper.Map<ItemReadDTO>(createdItem);
         return addedItem;
     }
 }

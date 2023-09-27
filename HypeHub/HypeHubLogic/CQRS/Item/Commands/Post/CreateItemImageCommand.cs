@@ -3,10 +3,10 @@ using MediatR;
 
 namespace HypeHubLogic.CQRS.Item.Commands.Post;
 
-public class AddPhotoToItemCommand : IRequest
+public class CreateItemImageCommand : IRequest<ItemImageReadDTO>
 {
     public ItemImageCreateDTO ItemImage { get; set; }
-    public AddPhotoToItemCommand(ItemImageCreateDTO itemImage)
+    public CreateItemImageCommand(ItemImageCreateDTO itemImage)
     {
         ItemImage = itemImage;
     }

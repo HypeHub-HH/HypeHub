@@ -18,7 +18,7 @@ builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IOutfitRepository, OutfitRepository>();
 builder.Services.AddScoped<IAccountCredentialsRepository, AccountCredentialsRepository>();
 builder.Services.AddScoped<IAccountItemLikeRepository, AccountItemLikeRepository>();
-builder.Services.AddScoped<IAccountOutfitLikeRepository, AccountOutfitLikeRepository>();
+builder.Services.AddScoped<IItemImageRepository, ItemImageRepository>();
 builder.Services.AddScoped<IOutfitImageRepository, OutfitImageRepository>();
 builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssemblies(Assembly.Load("HypeHubLogic")));
 builder.Services.AddValidatorsFromAssembly(Assembly.Load("HypeHubLogic"));

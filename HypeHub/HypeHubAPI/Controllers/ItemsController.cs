@@ -1,7 +1,9 @@
-﻿using HypeHubLogic.CQRS.Item.Commands.Delete;
+﻿using HypeHubDAL.Models;
+using HypeHubLogic.CQRS.Item.Commands.Delete;
 using HypeHubLogic.CQRS.Item.Commands.Post;
 using HypeHubLogic.CQRS.Item.Commands.Update;
 using HypeHubLogic.CQRS.Item.Queries;
+using HypeHubLogic.CQRS.Outfit.Queries;
 using HypeHubLogic.DTOs.AccountItemLike;
 using HypeHubLogic.DTOs.Item;
 using HypeHubLogic.DTOs.ItemImage;
@@ -35,18 +37,45 @@ public class ItemsController : ControllerBase
         return CreatedAtAction(nameof(GetItem), new { id = result.Id }, result);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> AddPhotoToItem([FromBody] ItemImageCreateDTO item)
-    {
-        await _mediator.Send(new AddPhotoToItemCommand(item));
-        return Ok();
-    }
-
     [HttpPut()]
     public async Task<IActionResult> UpdateItem([FromBody] ItemUpdateDTO item)
     {
         var result = await _mediator.Send(new UpdateItemCommand(item));
         return CreatedAtAction(nameof(GetItem), new { id = result.Id }, result);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteItem(Guid id)
+    {
+        await _mediator.Send(new DeleteItemCommand(id));
+        return NoContent();
+    }
+    [HttpGet("{itemId}/Images")]
+    public async Task<IActionResult> GetItemImages(Guid itemId)
+    {
+        var result = await _mediator.Send(new GetItemImagesQuery(itemId));
+        return Ok(result);
+    }
+
+    [HttpGet("{itemId}/Images/{imageId}")]
+    public async Task<IActionResult> GetItemImage(Guid imageId)
+    {
+        var result = await _mediator.Send(new GetItemImageQuery(imageId));
+        return Ok(result);
+    }
+
+    [HttpPost("{itemId}/Images")]
+    public async Task<IActionResult> CreateImage([FromBody] ItemImageCreateDTO item)
+    {
+        await _mediator.Send(new CreateItemImageCommand(item));
+        return Ok();
+    }
+
+    [HttpDelete("{itemId}/Images/{imageId}")]
+    public async Task<IActionResult> DeleteImage(Guid imageId)
+    {
+        await _mediator.Send(new DeleteItemImageCommand(imageId));
+        return NoContent();
     }
 
     [HttpPut("{id}/like")]
@@ -56,10 +85,5 @@ public class ItemsController : ControllerBase
         return Ok();
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteItem(Guid id)
-    {
-        await _mediator.Send(new DeleteItemCommand(id));
-        return NoContent();
-    }
+
 }
