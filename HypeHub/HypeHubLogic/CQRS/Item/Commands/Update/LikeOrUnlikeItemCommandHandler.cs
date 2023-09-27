@@ -1,42 +1,36 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using HypeHubDAL.Exeptions;
 using HypeHubDAL.Repositories;
 using HypeHubDAL.Repositories.Interfaces;
+using HypeHubLogic.DTOs.AccountItemLike;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 
-namespace HypeHubLogic.CQRS.Item.Commands.Post;
+namespace HypeHubLogic.CQRS.Item.Commands.Update;
 
 public class LikeOrUnlikeItemCommandHandler : IRequestHandler<LikeOrUnlikeItemCommand>
 {
     private readonly IAccountItemLikeRepository _likeRepository;
-    private readonly IItemRepository _itemRepository;
-    private readonly IAccountRepository _accountRepository;
     private readonly IMapper _mapper;
+    private readonly IValidator<AccountItemLikeCreateDTO> _validator;
 
-    public LikeOrUnlikeItemCommandHandler(IAccountItemLikeRepository likeRepository, IItemRepository itemRepository, IAccountRepository accountRepository, IMapper mapper)
+    public LikeOrUnlikeItemCommandHandler(IAccountItemLikeRepository likeRepository, IMapper mapper, IValidator<AccountItemLikeCreateDTO> validator)
     {
         _likeRepository = likeRepository;
-        _itemRepository = itemRepository;
-        _accountRepository = accountRepository;
         _mapper = mapper;
+        _validator = validator;
     }
 
     public async Task Handle(LikeOrUnlikeItemCommand request, CancellationToken cancellationToken)
     {
-        if (await _accountRepository.GetByIdAsync(request.AccountItemLike.AccountId) == null)
-        {
-            throw new BadRequestException($"User with id:{request.AccountItemLike.AccountId} does not exist");
-        }
-        if(await _itemRepository.GetByIdAsync(request.AccountItemLike.ItemId) == null)
-        {
-            throw new BadRequestException($"Item with id:{request.AccountItemLike.AccountId} does not exist");
-        }
+        var validationResult = await _validator.ValidateAsync(request.AccountItemLike);
+        if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult);
         var accountItemLike = _mapper.Map<HypeHubDAL.Models.Relations.AccountItemLike>(request.AccountItemLike);
         var searchedAccountItemLike = await _likeRepository.GetAsyncByAccountAndItemId(accountItemLike);
         if (searchedAccountItemLike != null)
         {
-            await _likeRepository.DeleteAsync(searchedAccountItemLike);   
+            await _likeRepository.DeleteAsync(searchedAccountItemLike);
         }
         else
         {

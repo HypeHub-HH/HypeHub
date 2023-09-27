@@ -9,9 +9,9 @@ public class ItemImageRepository : BaseImageRepository<ItemImage>, IItemImageRep
     public ItemImageRepository(HypeHubContext dbContext) : base(dbContext)
     { }
 
-    public async Task<IReadOnlyList<ItemImage>> GetAllItemImagesAsync(Guid imageId)
+    public async Task<IReadOnlyList<ItemImage>> GetAllItemImagesAsync(Guid itemId)
     {
-        return await _dbContext.ItemsImages.Where(ItemImages => ItemImages.ItemId == imageId)
+        return await _dbContext.ItemsImages.Where(ItemImages => ItemImages.ItemId == itemId)
                                             .ToListAsync();
     }
 }
