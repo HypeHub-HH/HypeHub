@@ -15,8 +15,7 @@ public class DeleteOutfitCommandHandler : IRequestHandler<DeleteOutfitCommand>
 
     public async Task Handle(DeleteOutfitCommand request, CancellationToken cancellationToken)
     {
-        var outfit = await _outfitRepository.GetByIdAsync(request.OutfitId) ?? throw new NotFoundException("There is no outfit with the given Id.");
-
+        var outfit = await _outfitRepository.GetByIdAsync(request.OutfitId) ?? throw new NotFoundException($"There is no outfit with the given Id: {request.OutfitId}.");
         await _outfitRepository.DeleteAsync(outfit);
     }
 }

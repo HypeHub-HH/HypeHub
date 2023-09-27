@@ -17,16 +17,12 @@ public class AccountOutfitLikeCreateValidator : AbstractValidator<AccountOutfitL
         RuleFor(aol => aol.AccountId)
             .NotEmpty()
             .WithMessage("AccountId must have a value.")
-            .MustAsync(CheckIfGuidValue)
-            .WithMessage("AccountId must be a valid GUID.")
             .MustAsync(CheckIfAccountExist)
             .WithMessage("There is no account with the given Id.");
 
         RuleFor(aol => aol.OutfitId)
             .NotEmpty()
             .WithMessage("OutfitId must have a value.")
-            .MustAsync(CheckIfGuidValue)
-            .WithMessage("OutfitId must be a valid GUID.")
             .MustAsync(CheckIfOutfitExist)
             .WithMessage("There is no outfit with the given Id.");
     }
@@ -41,10 +37,5 @@ public class AccountOutfitLikeCreateValidator : AbstractValidator<AccountOutfitL
     {
         var outfit = await _outfitRepository.GetByIdAsync(id);
         return outfit != null;
-    }
-
-    private async Task<bool> CheckIfGuidValue<T>(T value, CancellationToken cancellationToken)
-    {
-        return await Task.FromResult(typeof(Guid) == value.GetType());
     }
 }

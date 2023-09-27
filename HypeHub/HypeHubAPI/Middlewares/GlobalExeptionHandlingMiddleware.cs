@@ -38,41 +38,23 @@ public class GlobalExeptionHandlingMiddleware
         {
             message = ex.Message;
             status = HttpStatusCode.NotFound;
-            stackTrace = ex.StackTrace; //nie wysylac tego na front
+            stackTrace = ex.StackTrace;
         }
-        else if (exeptionType == typeof(BadRequestException))
-        {
-            message = ex.Message;
-            status = HttpStatusCode.BadRequest;
-            stackTrace = ex.StackTrace; //nie wysylac tego na front
-        }
-        else if (exeptionType == typeof(HypeHubDAL.Exeptions.UnauthorizedAccessException))
-        {
-            message = ex.Message;
-            status = HttpStatusCode.Unauthorized;
-            stackTrace = ex.StackTrace; //nie wysylac tego na front
-        }
-        else if (exeptionType == typeof(HypeHubDAL.Exeptions.NotImplementedException))
-        {
-            message = ex.Message;
-            status = HttpStatusCode.NotImplemented;
-            stackTrace = ex.StackTrace; //nie wysylac tego na front
-        }
-        else if (exeptionType == typeof(HypeHubDAL.Exeptions.ValidationFailedException))
+        else if (exeptionType == typeof(ValidationFailedException))
         {
             message = ex.Message;
             status = HttpStatusCode.BadRequest;
             errors = ex.Errors;
-            stackTrace = ex.StackTrace; //nie wysylac tego na front
+            stackTrace = ex.StackTrace;
         }
         else
         {
             message = ex.Message;
             status = HttpStatusCode.InternalServerError;
-            stackTrace = ex.StackTrace; //nie wysylac tego na front
+            stackTrace = ex.StackTrace;
         }
 
-        var exeptionResult = JsonSerializer.Serialize(new { message = message, status = status, errors = errors});
+        var exeptionResult = JsonSerializer.Serialize(new { message = message, status = status, errors = errors });
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)status;
 

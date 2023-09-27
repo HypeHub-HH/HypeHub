@@ -23,7 +23,7 @@ public class CreateOutfitImageCommandHandler : IRequestHandler<CreateOutfitImage
     public async Task<OutfitImageReadDTO> Handle(CreateOutfitImageCommand request, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(request.OutfitImage);
-        if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult);
+        if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult.Errors.Select(error => error.ErrorMessage));
         var outfitImage = _mapper.Map<HypeHubDAL.Models.OutfitImage>(request.OutfitImage);
         var createdOutfitImage = await _outfitImageRepository.AddAsync(outfitImage);
         return _mapper.Map<OutfitImageReadDTO>(createdOutfitImage);

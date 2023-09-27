@@ -69,10 +69,10 @@ builder.Services
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = "apiWithAuthBackend",
-            ValidAudience = "apiWithAuthBackend",
+            ValidIssuer = builder.Configuration["TokenValidationParameters:ValidIssuer"],
+            ValidAudience = builder.Configuration["TokenValidationParameters:ValidAudience"],
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes("!SomethingSecret!")
+                Encoding.UTF8.GetBytes(builder.Configuration["IssuerSigningKey"])
             ),
         };
     });

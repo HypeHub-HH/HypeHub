@@ -15,8 +15,6 @@ public class OutfitImageCreateValidator : AbstractValidator<OutfitImageCreateDTO
         RuleFor(oi => oi.OutfitId)
             .NotEmpty()
             .WithMessage("OutfitId must have a value.")
-            .MustAsync(CheckIfGuidValue)
-            .WithMessage("OutfitId must be a valid GUID.")
             .MustAsync(CheckIfOutfitExist)
             .WithMessage("There is no outfit with the given Id.");
 
@@ -31,10 +29,5 @@ public class OutfitImageCreateValidator : AbstractValidator<OutfitImageCreateDTO
     {
         var account = await _outfitRepository.GetByIdAsync(id);
         return account != null;
-    }
-
-    private async Task<bool> CheckIfGuidValue<T>(T value, CancellationToken cancellationToken)
-    {
-        return await Task.FromResult(typeof(Guid) == value.GetType());
     }
 }

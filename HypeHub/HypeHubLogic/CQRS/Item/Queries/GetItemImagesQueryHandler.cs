@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using HypeHubDAL.Exeptions;
 using HypeHubDAL.Repositories.Interfaces;
-using HypeHubLogic.CQRS.Outfit.Queries;
 using HypeHubLogic.DTOs.ItemImage;
-using HypeHubLogic.DTOs.OutfitImage;
 using MediatR;
 
 namespace HypeHubLogic.CQRS.Item.Queries;
@@ -23,7 +21,7 @@ public class GetItemImagesQueryHandler : IRequestHandler<GetItemImagesQuery, Lis
 
     public async Task<List<ItemImageReadDTO>> Handle(GetItemImagesQuery request, CancellationToken cancellationToken)
     {
-        if (await _itemRepository.GetByIdAsync(request.ItemId) == null) throw new NotFoundException($"There is no item with given id:{request.ItemId}");
+        if (await _itemRepository.GetByIdAsync(request.ItemId) == null) throw new NotFoundException($"There is no item with the given id: {request.ItemId}.");
         var itemImages = await _itemImageRepository.GetAllItemImagesAsync(request.ItemId);
         return _mapper.Map<List<ItemImageReadDTO>>(itemImages);
     }

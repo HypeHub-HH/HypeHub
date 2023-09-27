@@ -15,8 +15,6 @@ public class AccountCredentialsUpdateValidator : AbstractValidator<AccountCreden
         RuleFor(ac => ac.Id)
             .NotEmpty()
             .WithMessage("Id must have a value.")
-            .MustAsync(CheckIfGuidValue)
-            .WithMessage("Id must be a valid GUID.")
             .MustAsync(CheckIfAccountCredentialsExist)
             .WithMessage("There is no credentials with the given Id.");
 
@@ -47,11 +45,6 @@ public class AccountCredentialsUpdateValidator : AbstractValidator<AccountCreden
     {
         var accountCredentials = await _accountCredentialsRepository.GetByIdAsync(id);
         return accountCredentials != null;
-    }
-
-    private async Task<bool> CheckIfGuidValue<T>(T value, CancellationToken cancellationToken)
-    {
-        return await Task.FromResult(typeof(Guid) == value.GetType());
     }
 
     private async Task<bool> CheckIfEmailAlreadyExist(string email, CancellationToken cancellationToken)

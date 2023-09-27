@@ -21,14 +21,10 @@ public class ItemCreateValidator : AbstractValidator<ItemCreateDTO>
         RuleFor(i => i.AccountId)
             .NotEmpty()
             .WithMessage("AccountId must have a value.")
-            .MustAsync(CheckIfGuidValue)
-            .WithMessage("AccountId must be a valid GUID.")
             .MustAsync(CheckIfAccountExist)
             .WithMessage("There is no account with the given Id.");
 
         RuleFor(i => i.CloathingType)
-            .NotEmpty()
-            .WithMessage("CloathingType must have a value.")
             .IsInEnum()
             .WithMessage("CloathingType is not a valid enum value.");
 
@@ -62,10 +58,5 @@ public class ItemCreateValidator : AbstractValidator<ItemCreateDTO>
     {
         var account = await _accountRepository.GetByIdAsync(id);
         return account != null;
-    }
-
-    private async Task<bool> CheckIfGuidValue<T>(T value, CancellationToken cancellationToken)
-    {
-        return await Task.FromResult(typeof(Guid) == value.GetType());
     }
 }

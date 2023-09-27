@@ -15,8 +15,7 @@ public class DeleteOutfitImageCommandHandler : IRequestHandler<DeleteOutfitImage
 
     public async Task Handle(DeleteOutfitImageCommand request, CancellationToken cancellationToken)
     {
-        var outfitImage = await _outfitImageRepository.GetByIdAsync(request.OutfitImageId) ?? throw new NotFoundException("There is no Image with the given Id.");
-
+        var outfitImage = await _outfitImageRepository.GetByIdAsync(request.OutfitImageId) ?? throw new NotFoundException($"There is no Image with the given Id: {request.OutfitImageId}.");
         await _outfitImageRepository.DeleteAsync(outfitImage);
     }
 }

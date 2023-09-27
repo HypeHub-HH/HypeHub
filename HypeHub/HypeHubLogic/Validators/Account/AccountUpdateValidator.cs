@@ -15,8 +15,6 @@ public class AccountUpdateValidator : AbstractValidator<AccountUpdateDTO>
         RuleFor(a => a.Id)
             .NotEmpty()
             .WithMessage("Id must have a value.")
-            .MustAsync(CheckIfGuidValue)
-            .WithMessage("Id must be a valid GUID.")
             .MustAsync(CheckIfAccountExist)
             .WithMessage("There is no account with the given Id.");
 
@@ -29,15 +27,6 @@ public class AccountUpdateValidator : AbstractValidator<AccountUpdateDTO>
                 .WithMessage("Username must not have less than 4 and more than 15 characters.")
                 .MustAsync(CheckIfUsernameAlreadyExist)
                 .WithMessage("Account with this Username already exist.");
-        });
-
-        When(a => a.IsPrivate != null, () =>
-        {
-            RuleFor(a => a.IsPrivate)
-                .NotEmpty()
-                .WithMessage("IsPrivate must have a value.")
-                .MustAsync(CheckIfBooleanValue)
-                .WithMessage("IsPrivate must be a valid boolean value.");
         });
 
         When(a => a.AvatarUrl != null, () =>
@@ -59,15 +48,5 @@ public class AccountUpdateValidator : AbstractValidator<AccountUpdateDTO>
     private async Task<bool> CheckIfUsernameAlreadyExist(string username, CancellationToken cancellationToken)
     {
         return !await _accountRepository.CheckIfUsernameAlreadyExistAsync(username);
-    }
-
-    private async Task<bool> CheckIfGuidValue<T>(T value, CancellationToken cancellationToken)
-    {
-        return await Task.FromResult(typeof(Guid) == value.GetType());
-    }
-
-    private async Task<bool> CheckIfBooleanValue<T>(T value, CancellationToken cancellationToken)
-    {
-        return await Task.FromResult(typeof(T) == typeof(bool));
     }
 }

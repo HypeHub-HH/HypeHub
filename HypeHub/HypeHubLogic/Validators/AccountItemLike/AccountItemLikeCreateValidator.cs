@@ -17,16 +17,12 @@ public class AccountItemLikeCreateValidator : AbstractValidator<AccountItemLikeC
         RuleFor(ail => ail.AccountId)
             .NotEmpty()
             .WithMessage("AccountId must have a value.")
-            .MustAsync(CheckIfGuidValue)
-            .WithMessage("AccountId must be a valid GUID.")
             .MustAsync(CheckIfAccountExist)
             .WithMessage("There is no account with the given Id.");
 
         RuleFor(ail => ail.ItemId)
             .NotEmpty()
             .WithMessage("ItemId must have a value.")
-            .MustAsync(CheckIfGuidValue)
-            .WithMessage("ItemId must be a valid GUID.")
             .MustAsync(CheckIfItemExist)
             .WithMessage("There is no item with the given Id.");
     }
@@ -41,10 +37,5 @@ public class AccountItemLikeCreateValidator : AbstractValidator<AccountItemLikeC
     {
         var item = await _itemRepository.GetByIdAsync(id);
         return item != null;
-    }
-
-    private async Task<bool> CheckIfGuidValue<T>(T value, CancellationToken cancellationToken)
-    {
-        return await Task.FromResult(typeof(Guid) == value.GetType());
     }
 }

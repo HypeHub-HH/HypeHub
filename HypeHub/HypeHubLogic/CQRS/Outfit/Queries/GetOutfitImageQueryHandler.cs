@@ -19,7 +19,7 @@ public class GetOutfitImageQueryHandler : IRequestHandler<GetOutfitImageQuery, O
 
     public async Task<OutfitImageReadDTO> Handle(GetOutfitImageQuery request, CancellationToken cancellationToken)
     {
-        var outfitImage = await _outfitImageRepository.GetByIdAsync(request.OutfitImageId) ?? throw new NotFoundException("There is no image with the given Id.");
+        var outfitImage = await _outfitImageRepository.GetByIdAsync(request.OutfitImageId) ?? throw new NotFoundException($"There is no image with the given Id: {request.OutfitImageId}.");
         return _mapper.Map<OutfitImageReadDTO>(outfitImage);
     }
 }

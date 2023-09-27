@@ -23,7 +23,7 @@ public class LikeOrUnlikeItemCommandHandler : IRequestHandler<LikeOrUnlikeItemCo
     public async Task Handle(LikeOrUnlikeItemCommand request, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(request.AccountItemLike);
-        if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult);
+        if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult.Errors.Select(error => error.ErrorMessage));
         var accountItemLike = _mapper.Map<HypeHubDAL.Models.Relations.AccountItemLike>(request.AccountItemLike);
         var searchedAccountItemLike = await _likeRepository.GetAsyncByAccountAndItemId(accountItemLike);
 

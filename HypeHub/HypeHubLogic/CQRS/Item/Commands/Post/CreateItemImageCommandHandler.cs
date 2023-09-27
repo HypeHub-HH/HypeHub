@@ -24,7 +24,7 @@ public class CreateItemImageCommandHandler : IRequestHandler<CreateItemImageComm
     public async Task<ItemImageReadDTO> Handle(CreateItemImageCommand request, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(request.ItemImage);
-        if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult);
+        if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult.Errors.Select(error => error.ErrorMessage));
         var itemImage = _mapper.Map<ItemImage>(request.ItemImage);
         var createdItemImage = await _imageItemRepository.AddAsync(itemImage);
         return _mapper.Map<ItemImageReadDTO>(createdItemImage);

@@ -4,15 +4,13 @@ public class BaseException : Exception
 {
     public List<string> Errors { get; set; } = new();
 
-    public BaseException(string msg) : base(msg)
-    {
-    }
+    public BaseException(string msg) : base(msg) { }
 
-    public BaseException(string msg, FluentValidation.Results.ValidationResult validationResult) : base(msg)
+    public BaseException(string msg, IEnumerable<string> errors) : base(msg)
     {
-        foreach (var item in validationResult.Errors)
+        foreach (var error in errors)
         {
-            Errors.Add(item.ErrorMessage);
+            Errors.Add(error);
         }
     }
 }

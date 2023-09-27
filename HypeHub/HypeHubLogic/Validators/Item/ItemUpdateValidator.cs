@@ -15,8 +15,6 @@ public class ItemUpdateValidator : AbstractValidator<ItemUpdateDTO>
         RuleFor(i => i.Id)
             .NotEmpty()
             .WithMessage("Id must have a value.")
-            .MustAsync(CheckIfGuidValue)
-            .WithMessage("Id must be a valid GUID.")
             .MustAsync(CheckIfItemExist)
             .WithMessage("There is no item with the given Id.");
 
@@ -68,10 +66,5 @@ public class ItemUpdateValidator : AbstractValidator<ItemUpdateDTO>
     {
         var item = await _itemRepository.GetByIdAsync(id);
         return item != null;
-    }
-
-    private async Task<bool> CheckIfGuidValue<T>(T value, CancellationToken cancellationToken)
-    {
-        return await Task.FromResult(typeof(Guid) == value.GetType());
     }
 }

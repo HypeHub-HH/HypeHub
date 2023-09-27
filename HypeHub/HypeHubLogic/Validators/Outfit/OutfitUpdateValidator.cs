@@ -15,8 +15,6 @@ public class OutfitUpdateValidator : AbstractValidator<OutfitUpdateDTO>
         RuleFor(o => o.Id)
             .NotEmpty()
             .WithMessage("Id must have a value.")
-            .MustAsync(CheckIfGuidValue)
-            .WithMessage("Id must be a valid GUID.")
             .MustAsync(CheckIfOutfitExist)
             .WithMessage("There is no outfit with the given Id.");
 
@@ -34,10 +32,5 @@ public class OutfitUpdateValidator : AbstractValidator<OutfitUpdateDTO>
     {
         var outfit = await _outfitRepository.GetByIdAsync(id);
         return outfit != null;
-    }
-
-    private async Task<bool> CheckIfGuidValue<T>(T value, CancellationToken cancellationToken)
-    {
-        return await Task.FromResult(typeof(Guid) == value.GetType());
     }
 }
