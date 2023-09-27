@@ -23,7 +23,7 @@ public class GetItemImagesQueryHandler : IRequestHandler<GetItemImagesQuery, Lis
 
     public async Task<List<ItemImageReadDTO>> Handle(GetItemImagesQuery request, CancellationToken cancellationToken)
     {
-        if (_itemRepository.GetByIdAsync(request.ItemId) == null) throw new NotFoundException($"There is no item with given id:{request.ItemId}");
+        if (await _itemRepository.GetByIdAsync(request.ItemId) == null) throw new NotFoundException($"There is no item with given id:{request.ItemId}");
         var itemImages = await _itemImageRepository.GetAllItemImagesAsync(request.ItemId);
         return _mapper.Map<List<ItemImageReadDTO>>(itemImages);
     }
