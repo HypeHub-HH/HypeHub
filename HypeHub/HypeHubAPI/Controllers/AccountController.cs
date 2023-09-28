@@ -21,8 +21,6 @@ namespace HypeHubAPI.Controllers
             _mediator = mediator;
         }
 
-
-        // GET: api/<AccountController>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAccount(Guid id)
         {
@@ -30,22 +28,11 @@ namespace HypeHubAPI.Controllers
             return Ok(result);
         }
 
-        // POST api/<AccountController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpGet("Search")]
+        public async Task<IActionResult> GetSearchedAccounts([FromQuery] string searchedUsername)
         {
-        }
-
-        // PUT api/<AccountController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<AccountController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            var result = await _mediator.Send(new GetSearchedAccountsQuery(searchedUsername));
+            return Ok(result);
         }
     }
 }

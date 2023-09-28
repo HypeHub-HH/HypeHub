@@ -17,6 +17,16 @@ public class AccountRepository : BaseRepository<Account>, IAccountRepository
 
     public async Task<Account> GetAccountWithOutfits(Guid id)
     {
-        return await _dbContext.Accounts.Include(a => a.Outfits).ThenInclude(o => o.Images).FirstOrDefaultAsync(a => a.Id == id);
+        return await _dbContext.Accounts
+            .Include(a => a.Outfits)
+            .ThenInclude(o => o.Images)
+            .Include(a => a.Outfits)
+            .ThenInclude(o => o.Likes)
+            .FirstOrDefaultAsync(a => a.Id == id);
     }
+    public async Task<List<Account>> GetSearchedAccounts(string searchedString)
+    {
+        return await _dbContext.Accounts.Where(a => a.Username.StartsWith(searchedString)).ToListAsync();
+    }
+
 }

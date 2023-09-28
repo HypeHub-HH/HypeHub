@@ -7,7 +7,7 @@ using Microsoft.Identity.Client;
 
 namespace HypeHubLogic.CQRS.Account.Queries;
 
-public class GetAccountQueryHandler : IRequestHandler<GetAccountQuery, AccountReadDTO>
+public class GetAccountQueryHandler : IRequestHandler<GetAccountQuery, AccountWithOutfitsReadDTO>
 {
     private readonly IAccountRepository _accountRepository;
     private readonly IMapper _mapper;
@@ -18,10 +18,10 @@ public class GetAccountQueryHandler : IRequestHandler<GetAccountQuery, AccountRe
         _mapper = mapper;
     }
 
-    public async Task<AccountReadDTO> Handle(GetAccountQuery request, CancellationToken cancellationToken)
+    public async Task<AccountWithOutfitsReadDTO> Handle(GetAccountQuery request, CancellationToken cancellationToken)
     {
         var account = await _accountRepository.GetAccountWithOutfits(request.AccountId) ?? throw new NotFoundException($"There is no account with the given ID: {request.AccountId}.");
-        var mappedAccount = _mapper.Map<AccountReadDTO>(account);
+        var mappedAccount = _mapper.Map<AccountWithOutfitsReadDTO>(account);
         return mappedAccount;
     }
 }
