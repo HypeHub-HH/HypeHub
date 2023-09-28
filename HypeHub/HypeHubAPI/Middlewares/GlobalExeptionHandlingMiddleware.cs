@@ -47,6 +47,13 @@ public class GlobalExeptionHandlingMiddleware
             errors = ex.Errors;
             stackTrace = ex.StackTrace;
         }
+        else if (exeptionType == typeof(WrongCredentialsException))
+        {
+            message = ex.Message;
+            status = HttpStatusCode.Unauthorized;
+            errors = ex.Errors;
+            stackTrace = ex.StackTrace;
+        }
         else
         {
             message = ex.Message;

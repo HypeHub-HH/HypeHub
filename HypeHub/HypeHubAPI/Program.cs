@@ -10,6 +10,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
+using HypeHubLogic.Services.Interfaces;
+using HypeHubLogic.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +20,8 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(option =>
 {
-    option.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo API", Version = "v1" });
+    option.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+
     option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
@@ -55,6 +58,7 @@ builder.Services.AddScoped<IAccountItemLikeRepository, AccountItemLikeRepository
 builder.Services.AddScoped<IAccountOutfitLikeRepository, AccountOutfitLikeRepository>();
 builder.Services.AddScoped<IItemImageRepository, ItemImageRepository>();
 builder.Services.AddScoped<IOutfitImageRepository, OutfitImageRepository>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssemblies(Assembly.Load("HypeHubLogic")));
 builder.Services.AddValidatorsFromAssembly(Assembly.Load("HypeHubLogic"));
 

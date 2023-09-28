@@ -6,6 +6,7 @@ using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Registration;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using System.Data;
 
 namespace HypeHubLogic.CQRS.Authentication.Commands.Post;
 
@@ -34,11 +35,10 @@ public class RegisterAccountCommandHandler : IRequestHandler<RegisterAccountComm
         var user = new IdentityUser { UserName = userName, Email = email };
         var result = await _userManager.CreateAsync(user, password);
         if (!result.Succeeded) throw new InternalIdentityServerException("Server failed", result.Errors.Select(error => error.Description));
-
+        var addRoleResult = await _userManager.AddToRoleAsync(user, "User");
+        if (!addRoleResult.Succeeded) throw new InternalIdentityServerException("Server failed", result.Errors.Select(error => error.Description));
         var account = new Account(userName, false, HypeHubDAL.Models.Types.AccountTypes.User, null);
         var createdAccount = _accountRepository.AddAsync(account);
-
         return _mapper.Map<RegistrationReadDTO>(request.RegistrationCreateDTO);
     }
-
 }

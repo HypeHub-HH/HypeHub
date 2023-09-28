@@ -1,5 +1,4 @@
-﻿using HypeHubDAL.Models;
-using HypeHubLogic.CQRS.Outfit.Commands.Delete;
+﻿using HypeHubLogic.CQRS.Outfit.Commands.Delete;
 using HypeHubLogic.CQRS.Outfit.Commands.Post;
 using HypeHubLogic.CQRS.Outfit.Commands.Update;
 using HypeHubLogic.CQRS.Outfit.Queries;
@@ -7,6 +6,7 @@ using HypeHubLogic.DTOs.AccountOutfitLike;
 using HypeHubLogic.DTOs.Outfit;
 using HypeHubLogic.DTOs.OutfitImage;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HypeHubAPI.Controllers;
@@ -23,6 +23,7 @@ public class OutfitsController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<IActionResult> GetOutfit(Guid id)
     {
         var result = await _mediator.Send(new GetOutfitQuery(id));
@@ -30,6 +31,7 @@ public class OutfitsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> CreateOutfit([FromBody] OutfitCreateDTO outfit)
     {
         var result = await _mediator.Send(new CreateOutfitCommand(outfit));
@@ -37,6 +39,7 @@ public class OutfitsController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize]
     public async Task<IActionResult> UpdateOutfit([FromBody] OutfitUpdateDTO outfit)
     {
         var result = await _mediator.Send(new UpdateOutfitCommand(outfit));
@@ -44,6 +47,7 @@ public class OutfitsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> DeleteOutfit(Guid id)
     {
         await _mediator.Send(new DeleteOutfitCommand(id));
@@ -51,6 +55,7 @@ public class OutfitsController : ControllerBase
     }
 
     [HttpPut("{id}/like")]
+    [Authorize]
     public async Task<IActionResult> LikeOrUnlikeOutfit([FromBody] AccountOutfitLikeCreateDTO accountOutfitLike)
     {
         await _mediator.Send(new LikeOrUnlikeOutfitCommand(accountOutfitLike));
@@ -58,6 +63,7 @@ public class OutfitsController : ControllerBase
     }
 
     [HttpGet("{outfitId}/Images")]
+    [Authorize]
     public async Task<IActionResult> GetOutfitImages(Guid outfitId)
     {
         var result = await _mediator.Send(new GetOutfitImagesQuery(outfitId));
@@ -65,6 +71,7 @@ public class OutfitsController : ControllerBase
     }
 
     [HttpGet("{outfitId}/Images/{Id}")]
+    [Authorize]
     public async Task<IActionResult> GetOutfitImage(Guid Id)
     {
         var result = await _mediator.Send(new GetOutfitImageQuery(Id));
@@ -72,6 +79,7 @@ public class OutfitsController : ControllerBase
     }
 
     [HttpPost("{outfitId}/Images")]
+    [Authorize]
     public async Task<IActionResult> CreateImage([FromBody] OutfitImageCreateDTO outfitImage)
     {
         var result = await _mediator.Send(new CreateOutfitImageCommand(outfitImage));
@@ -79,6 +87,7 @@ public class OutfitsController : ControllerBase
     }
 
     [HttpDelete("{outfitId}/Images/{id}")]
+    [Authorize]
     public async Task<IActionResult> DeleteImage(Guid id)
     {
         await _mediator.Send(new DeleteOutfitImageCommand(id));

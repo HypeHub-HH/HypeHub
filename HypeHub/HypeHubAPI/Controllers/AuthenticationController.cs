@@ -1,5 +1,4 @@
-﻿using HypeHubDAL.Models;
-using HypeHubLogic.CQRS.Authentication.Commands.Post;
+﻿using HypeHubLogic.CQRS.Authentication.Commands.Post;
 using HypeHubLogic.DTOs.Logging;
 using HypeHubLogic.DTOs.Registration;
 using MediatR;

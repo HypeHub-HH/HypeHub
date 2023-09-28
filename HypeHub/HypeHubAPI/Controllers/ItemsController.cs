@@ -1,13 +1,12 @@
-﻿using HypeHubDAL.Models;
-using HypeHubLogic.CQRS.Item.Commands.Delete;
+﻿using HypeHubLogic.CQRS.Item.Commands.Delete;
 using HypeHubLogic.CQRS.Item.Commands.Post;
 using HypeHubLogic.CQRS.Item.Commands.Update;
 using HypeHubLogic.CQRS.Item.Queries;
-using HypeHubLogic.CQRS.Outfit.Queries;
 using HypeHubLogic.DTOs.AccountItemLike;
 using HypeHubLogic.DTOs.Item;
 using HypeHubLogic.DTOs.ItemImage;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HypeHubAPI.Controllers;
@@ -24,6 +23,7 @@ public class ItemsController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<IActionResult> GetItem(Guid id)
     {
         var result = await _mediator.Send(new GetItemQuery(id));
@@ -31,6 +31,7 @@ public class ItemsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> CreateItem([FromBody] ItemCreateDTO item)
     {
         var result = await _mediator.Send(new CreateItemCommand(item));
@@ -38,6 +39,7 @@ public class ItemsController : ControllerBase
     }
 
     [HttpPut()]
+    [Authorize]
     public async Task<IActionResult> UpdateItem([FromBody] ItemUpdateDTO item)
     {
         var result = await _mediator.Send(new UpdateItemCommand(item));
@@ -45,12 +47,15 @@ public class ItemsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> DeleteItem(Guid id)
     {
         await _mediator.Send(new DeleteItemCommand(id));
         return NoContent();
     }
+
     [HttpGet("{itemId}/Images")]
+    [Authorize]
     public async Task<IActionResult> GetItemImages(Guid itemId)
     {
         var result = await _mediator.Send(new GetItemImagesQuery(itemId));
@@ -58,6 +63,7 @@ public class ItemsController : ControllerBase
     }
 
     [HttpGet("{itemId}/Images/{imageId}")]
+    [Authorize]
     public async Task<IActionResult> GetItemImage(Guid imageId)
     {
         var result = await _mediator.Send(new GetItemImageQuery(imageId));
@@ -65,6 +71,7 @@ public class ItemsController : ControllerBase
     }
 
     [HttpPost("{itemId}/Images")]
+    [Authorize]
     public async Task<IActionResult> CreateImage([FromBody] ItemImageCreateDTO item)
     {
         await _mediator.Send(new CreateItemImageCommand(item));
@@ -72,6 +79,7 @@ public class ItemsController : ControllerBase
     }
 
     [HttpDelete("{itemId}/Images/{imageId}")]
+    [Authorize]
     public async Task<IActionResult> DeleteImage(Guid imageId)
     {
         await _mediator.Send(new DeleteItemImageCommand(imageId));
@@ -79,6 +87,7 @@ public class ItemsController : ControllerBase
     }
 
     [HttpPut("{id}/like")]
+    [Authorize]
     public async Task<IActionResult> LikeOrUnlikeItem([FromBody] AccountItemLikeCreateDTO accountItemLike)
     {
         await _mediator.Send(new LikeOrUnlikeItemCommand(accountItemLike));
