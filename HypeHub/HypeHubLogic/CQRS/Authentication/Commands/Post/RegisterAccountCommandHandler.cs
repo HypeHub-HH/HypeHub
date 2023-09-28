@@ -37,7 +37,7 @@ public class RegisterAccountCommandHandler : IRequestHandler<RegisterAccountComm
         if (!result.Succeeded) throw new InternalIdentityServerException("Server failed", result.Errors.Select(error => error.Description));
         var addRoleResult = await _userManager.AddToRoleAsync(user, "User");
         if (!addRoleResult.Succeeded) throw new InternalIdentityServerException("Server failed", result.Errors.Select(error => error.Description));
-        var account = new Account(userName, false, HypeHubDAL.Models.Types.AccountTypes.User, null);
+        var account = new HypeHubDAL.Models.Account(userName, false, HypeHubDAL.Models.Types.AccountTypes.User, null);
         var createdAccount = _accountRepository.AddAsync(account);
         return _mapper.Map<RegistrationReadDTO>(request.RegistrationCreateDTO);
     }

@@ -62,7 +62,7 @@ public class ItemsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("{itemId}/Images/{imageId}")]
+    [HttpGet("Images/{imageId}")]
     [Authorize]
     public async Task<IActionResult> GetItemImage(Guid imageId)
     {
@@ -78,7 +78,7 @@ public class ItemsController : ControllerBase
         return Ok();
     }
 
-    [HttpDelete("{itemId}/Images/{imageId}")]
+    [HttpDelete("Images/{imageId}")]
     [Authorize]
     public async Task<IActionResult> DeleteImage(Guid imageId)
     {

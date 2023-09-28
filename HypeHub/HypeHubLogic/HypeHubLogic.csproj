@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="CQRS\Account\Commands\" />
-    <Folder Include="CQRS\Account\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

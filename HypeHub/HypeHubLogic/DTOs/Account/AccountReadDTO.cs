@@ -1,8 +1,12 @@
-﻿namespace HypeHubLogic.DTOs.Account;
+﻿using HypeHubDAL.Models.Types;
+using HypeHubLogic.DTOs.Outfit;
 
-public record AccountReadDTO
+namespace HypeHubLogic.DTOs.Account;
+
+public class AccountReadDTO
 {
     public Guid Id { get; init; }
-    public string Username { get; init; }
-    public string? AvatarUrl { get; init; }
+    public string Username { get; set; }
+    public List<OutfitGeneralReadDTO> Outfits { get; set; }
+    public string? AvatarUrl { get; set; }
 }

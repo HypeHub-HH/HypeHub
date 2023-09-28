@@ -23,12 +23,12 @@ public class OutfitsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [Authorize]
     public async Task<IActionResult> GetOutfit(Guid id)
     {
         var result = await _mediator.Send(new GetOutfitQuery(id));
         return Ok(result);
     }
+
 
     [HttpPost]
     [Authorize]
@@ -70,7 +70,7 @@ public class OutfitsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("{outfitId}/Images/{Id}")]
+    [HttpGet("Images/{Id}")]
     [Authorize]
     public async Task<IActionResult> GetOutfitImage(Guid Id)
     {
@@ -86,7 +86,7 @@ public class OutfitsController : ControllerBase
         return CreatedAtAction(nameof(GetOutfitImage), new { outfitId = result.OutfitId, id = result.Id }, result);
     }
 
-    [HttpDelete("{outfitId}/Images/{id}")]
+    [HttpDelete("Images/{id}")]
     [Authorize]
     public async Task<IActionResult> DeleteImage(Guid id)
     {

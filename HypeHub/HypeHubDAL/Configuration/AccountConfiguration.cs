@@ -46,5 +46,8 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
             .WithOne(o => o.Account)
             .HasForeignKey(o => o.AccountId)
             .IsRequired();
+
+        //builder.Navigation(a => a.Outfits).AutoInclude();
+        //builder.Navigation(a => a.Items).AutoInclude();
     }
 }

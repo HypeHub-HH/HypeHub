@@ -9,7 +9,6 @@ using HypeHubLogic.DTOs.Item;
 using HypeHubLogic.DTOs.ItemImage;
 using HypeHubLogic.DTOs.Outfit;
 using HypeHubLogic.DTOs.OutfitImage;
-using HypeHubLogic.DTOs.Registration;
 
 namespace HypeHubLogic.Mappers;
 
@@ -17,16 +16,15 @@ public class MapProfile : Profile
 {
     public MapProfile()
     {
-        CreateMap<Account, AccountReadDTO>();
+        CreateMap<Account, AccountGeneralInfoReadDTO>();
         CreateMap<Account, AccountWithCredentialsReadDTO>();
         CreateMap<Account, AccountWithOutfitsReadDTO>();
         CreateMap<Account, AccountWithItemsReadDTO>();
         CreateMap<AccountCreateDTO, Account>();
+        CreateMap<Account, AccountReadDTO>();
 
         CreateMap<AccountCredentials, AccountCredentialsReadDTO>();
         CreateMap<AccountCredentialsCreateDTO, AccountCredentials>();
-
-        CreateMap<RegistrationCreateDTO, RegistrationReadDTO>();
 
         CreateMap<AccountItemLike, AccountItemLikeReadDTO>();
         CreateMap<AccountItemLikeCreateDTO, AccountItemLike>();
@@ -41,6 +39,8 @@ public class MapProfile : Profile
         CreateMap<ItemImageCreateDTO, ItemImage>();
 
         CreateMap<Outfit, OutfitReadDTO>();
+        CreateMap<Outfit, OutfitGeneralReadDTO>()
+            .ForMember(dest => dest.Likes, opt => opt.MapFrom(src => src.Items.Count));
         CreateMap<OutfitCreateDTO, Outfit>();
 
         CreateMap<OutfitImage, OutfitImageReadDTO>();

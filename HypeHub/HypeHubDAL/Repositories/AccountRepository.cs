@@ -14,4 +14,9 @@ public class AccountRepository : BaseRepository<Account>, IAccountRepository
     {
         return await _dbContext.Accounts.AnyAsync(a => a.Username.Equals(username));
     }
+
+    public async Task<Account> GetAccountWithOutfits(Guid id)
+    {
+        return await _dbContext.Accounts.Include(a => a.Outfits).ThenInclude(o => o.Images).FirstOrDefaultAsync(a => a.Id == id);
+    }
 }
