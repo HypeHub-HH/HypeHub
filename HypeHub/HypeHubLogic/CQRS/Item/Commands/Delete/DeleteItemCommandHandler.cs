@@ -16,7 +16,7 @@ public class DeleteItemCommandHandler : IRequestHandler<DeleteItemCommand>
 
     public async Task Handle(DeleteItemCommand request, CancellationToken cancellationToken)
     {
-        var item = await _itemRepository.GetByIdAsync(request.ItemId) ?? throw new NotFoundException($"There is no item with the given Id: {request.ItemId}.");
+        var item = await _itemRepository.GetByIdAsync(request.ItemId) ?? throw new NotFoundException($"There is no item with the given ID: {request.ItemId}.");
         await _itemRepository.DeleteAsync(item);
     }
 }

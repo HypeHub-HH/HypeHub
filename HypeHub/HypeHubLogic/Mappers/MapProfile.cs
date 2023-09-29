@@ -9,6 +9,7 @@ using HypeHubLogic.DTOs.Item;
 using HypeHubLogic.DTOs.ItemImage;
 using HypeHubLogic.DTOs.Outfit;
 using HypeHubLogic.DTOs.OutfitImage;
+using HypeHubLogic.DTOs.Registration;
 
 namespace HypeHubLogic.Mappers;
 
@@ -45,5 +46,7 @@ public class MapProfile : Profile
 
         CreateMap<OutfitImage, OutfitImageReadDTO>();
         CreateMap<OutfitImageCreateDTO, OutfitImage>();
+
+        CreateMap<RegistrationCreateDTO, RegistrationReadDTO>();
     }
 }

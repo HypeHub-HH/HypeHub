@@ -1,7 +1,9 @@
 ﻿using HypeHubDAL.Repositories.Interfaces;
+using HypeHubLogic.CQRS.Account.Commands.Delete;
 using HypeHubLogic.CQRS.Account.Queries;
 using HypeHubLogic.CQRS.Authentication.Commands.Post;
 using HypeHubLogic.CQRS.Item.Queries;
+using HypeHubLogic.DTOs.Account;
 using HypeHubLogic.DTOs.Registration;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +35,13 @@ namespace HypeHubAPI.Controllers
         {
             var result = await _mediator.Send(new GetSearchedAccountsQuery(searchedUsername));
             return Ok(result);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAccount([FromBody] Guid id)
+        {
+            await _mediator.Send(new DeleteAccountCommand(id));
+            return NoContent();
         }
     }
 }
