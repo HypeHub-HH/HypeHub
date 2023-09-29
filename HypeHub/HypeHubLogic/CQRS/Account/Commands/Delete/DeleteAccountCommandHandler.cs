@@ -18,9 +18,8 @@ public class DeleteAccountCommandHandler : IRequestHandler<DeleteAccountCommand>
 
     public async Task Handle(DeleteAccountCommand request, CancellationToken cancellationToken)
     {
-        //TBD
-        var account = await _accountRepository.GetByIdAsync(request.AccountId) ?? throw new NotFoundException($"There is no account with the given ID: {request.AccountId}.");
-        var accountFromIdentity = await _userManager.FindByEmailAsync(account.Credentials.Email) ?? throw new NotFoundException($"There is no account with the email: {account.Credentials.Email} for given ID");
+        var account = await _accountRepository.GetByIdAsync(request.AccountId) ?? throw new NotFoundException($"There is no account with the given Id: {request.AccountId}.");
+        var accountFromIdentity = await _userManager.FindByIdAsync(account.CredentialsId) ?? throw new NotFoundException($"There is no credentials with the given Id: {account.CredentialsId}");
         await _accountRepository.DeleteAsync(account);
         await _userManager.DeleteAsync(accountFromIdentity);
     }

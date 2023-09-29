@@ -26,7 +26,7 @@ public class RegistrationCreateValidator : AbstractValidator<RegistrationCreateD
         RuleFor(r => r.Password)
             .NotEmpty()
             .WithMessage("Password must have a value.")
-            .Length(4, 255)
+            .Length(6, 255)
             .WithMessage("Password must not have less than 4 and more than 255 characters.");
 
         RuleFor(r => r.Email)

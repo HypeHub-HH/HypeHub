@@ -1,10 +1,9 @@
 ﻿using HypeHubLogic.DTOs.Outfit;
-using HypeHubLogic.DTOs.OutfitImage;
 using MediatR;
 
 namespace HypeHubLogic.CQRS.Outfit.Queries;
 
-public class GetLatestOutfitsQuery : IRequest<OutfitWithAccountAndImagesAndLikesCountReadDTO>
+public class GetLatestOutfitsQuery : IRequest<List<OutfitWithAccountAndImagesAndLikesCountReadDTO>>
 {
     public int Page { get; init; }
     public int Count { get; init; }

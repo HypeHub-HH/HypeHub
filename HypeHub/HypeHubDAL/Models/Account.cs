@@ -5,7 +5,7 @@ namespace HypeHubDAL.Models;
 public class Account
 {
     public Guid Id { get; init; }
-    public AccountCredentials Credentials { get; init; }
+    public string CredentialsId { get; init; }
     public string Username { get; set; }
     public bool IsPrivate { get; set; }
     public AccountTypes AccountTypes { get; set; }
@@ -13,9 +13,10 @@ public class Account
     public List<Item> Items { get; init; } = new();
     public string? AvatarUrl { get; set; }
 
-    public Account(string username, bool isPrivate, AccountTypes accountTypes, string? avatarUrl)
+    public Account(string credentialsId, string username, bool isPrivate, AccountTypes accountTypes, string? avatarUrl)
     {
         Id = Guid.NewGuid();
+        CredentialsId = credentialsId;
         Username = username;
         IsPrivate = isPrivate;
         AccountTypes = accountTypes;

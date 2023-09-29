@@ -37,4 +37,4 @@ public class AccountController : ControllerBase
         return NoContent();
     }
 }
-}
+

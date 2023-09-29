@@ -36,7 +36,7 @@ public class ItemsController : ControllerBase
         return CreatedAtAction(nameof(GetItem), new { id = result.Id }, result);
     }
 
-    [HttpPut()]
+    [HttpPut]
     public async Task<IActionResult> UpdateItem([FromBody] ItemUpdateDTO item)
     {
         var result = await _mediator.Send(new UpdateItemCommand(item));

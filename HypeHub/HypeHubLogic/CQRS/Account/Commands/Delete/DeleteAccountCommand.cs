@@ -1,5 +1,4 @@
-﻿using HypeHubLogic.DTOs.Account;
-using MediatR;
+﻿using MediatR;
 
 namespace HypeHubLogic.CQRS.Account.Commands.Delete;
 
