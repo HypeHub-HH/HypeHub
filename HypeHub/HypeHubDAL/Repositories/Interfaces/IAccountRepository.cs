@@ -5,8 +5,6 @@ namespace HypeHubDAL.Repositories.Interfaces;
 public interface IAccountRepository : IBaseRepository<Account>
 {
     Task<bool> CheckIfUsernameAlreadyExistAsync(string username);
-
-    Task<Account> GetAccountWithOutfits(Guid id);
-
-    Task<List<Account>> GetSearchedAccounts(string searchedString);
+    Task<Account?> GetAccountWithOutfitsAsync(Guid accountId);
+    Task<List<Account>> GetSearchedAccountsAsync(string searchedString);
 }

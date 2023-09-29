@@ -3,7 +3,7 @@ using MediatR;
 
 namespace HypeHubLogic.CQRS.Outfit.Commands.Post;
 
-public class CreateOutfitCommand : IRequest<OutfitReadDTO>
+public class CreateOutfitCommand : IRequest<OutfitGenerallReadDTO>
 {
     public OutfitCreateDTO Outfit { get; init; }
 

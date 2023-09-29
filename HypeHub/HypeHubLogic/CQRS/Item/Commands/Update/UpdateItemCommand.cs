@@ -3,7 +3,7 @@ using MediatR;
 
 namespace HypeHubLogic.CQRS.Item.Commands.Update;
 
-public class UpdateItemCommand : IRequest<ItemReadDTO>
+public class UpdateItemCommand : IRequest<ItemGenerallReadDTO>
 {
     public ItemUpdateDTO Item { get; init; }
 

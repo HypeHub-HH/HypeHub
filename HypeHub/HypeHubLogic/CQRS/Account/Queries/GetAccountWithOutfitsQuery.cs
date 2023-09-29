@@ -3,10 +3,10 @@ using MediatR;
 
 namespace HypeHubLogic.CQRS.Account.Queries;
 
-public class GetAccountQuery : IRequest<AccountWithOutfitsReadDTO>
+public class GetAccountWithOutfitsQuery : IRequest<AccountWithOutfitsReadDTO>
 {
     public Guid AccountId { get; set; }
-    public GetAccountQuery(Guid accountId)
+    public GetAccountWithOutfitsQuery(Guid accountId)
     {
         AccountId = accountId;
     }

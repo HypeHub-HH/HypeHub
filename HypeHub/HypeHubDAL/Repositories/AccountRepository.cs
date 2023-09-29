@@ -15,18 +15,17 @@ public class AccountRepository : BaseRepository<Account>, IAccountRepository
         return await _dbContext.Accounts.AnyAsync(a => a.Username.Equals(username));
     }
 
-    public async Task<Account> GetAccountWithOutfits(Guid id)
+    public async Task<Account?> GetAccountWithOutfitsAsync(Guid accountId)
     {
         return await _dbContext.Accounts
             .Include(a => a.Outfits)
             .ThenInclude(o => o.Images)
             .Include(a => a.Outfits)
             .ThenInclude(o => o.Likes)
-            .FirstOrDefaultAsync(a => a.Id == id);
+            .SingleOrDefaultAsync(a => a.Id == accountId);
     }
-    public async Task<List<Account>> GetSearchedAccounts(string searchedString)
+    public async Task<List<Account>> GetSearchedAccountsAsync(string searchedString)
     {
         return await _dbContext.Accounts.Where(a => a.Username.StartsWith(searchedString)).ToListAsync();
     }
-
 }

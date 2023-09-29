@@ -3,7 +3,7 @@ using MediatR;
 
 namespace HypeHubLogic.CQRS.Item.Commands.Post;
 
-public class CreateItemCommand : IRequest<ItemReadDTO>
+public class CreateItemCommand : IRequest<ItemGenerallReadDTO>
 {
     public ItemCreateDTO Item { get; init; }
 

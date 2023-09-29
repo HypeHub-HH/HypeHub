@@ -54,7 +54,7 @@ namespace HypeHubDAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("44dec59d-3839-4b89-88a2-1527775d450d"),
+                            Id = new Guid("053135ab-a8e4-41c4-9e87-7e70982028ee"),
                             AccountTypes = "User",
                             AvatarUrl = "https://example.com/avatar/user1.png",
                             IsPrivate = 0,
@@ -62,7 +62,7 @@ namespace HypeHubDAL.Migrations
                         },
                         new
                         {
-                            Id = new Guid("733aefec-d039-4fa3-9af6-db6a57819622"),
+                            Id = new Guid("ba8f19b2-193d-4f17-8b30-9112a8001142"),
                             AccountTypes = "User",
                             IsPrivate = 1,
                             Username = "User2"
@@ -101,17 +101,17 @@ namespace HypeHubDAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("de93be8b-2ac5-4dd6-8ce1-e808a05429cc"),
-                            AccountId = new Guid("44dec59d-3839-4b89-88a2-1527775d450d"),
+                            Id = new Guid("3a0be4b8-2b2a-44cc-8d53-789f9441b1a9"),
+                            AccountId = new Guid("053135ab-a8e4-41c4-9e87-7e70982028ee"),
                             Email = "User1@gmail.com",
-                            Password = "hasłoMasło521"
+                            Password = "hasłoMasło651"
                         },
                         new
                         {
-                            Id = new Guid("f82c1929-02ec-449e-b0d0-6667e6979139"),
-                            AccountId = new Guid("733aefec-d039-4fa3-9af6-db6a57819622"),
+                            Id = new Guid("82360feb-1e74-4e0b-893a-f678b408c063"),
+                            AccountId = new Guid("ba8f19b2-193d-4f17-8b30-9112a8001142"),
                             Email = "User2@gmail.com",
-                            Password = "hasłoMasło520"
+                            Password = "hasłoMasło289"
                         });
                 });
 
@@ -160,27 +160,27 @@ namespace HypeHubDAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("49ea5e99-81db-48ad-b5a7-4865788fffbb"),
-                            AccountId = new Guid("44dec59d-3839-4b89-88a2-1527775d450d"),
+                            Id = new Guid("c84fb656-955a-4d73-ad41-44099f34ec5a"),
+                            AccountId = new Guid("053135ab-a8e4-41c4-9e87-7e70982028ee"),
                             Brand = "Brand1",
                             CloathingType = "Torso",
                             Colorway = "Colorway1",
                             Model = "Model1",
                             Name = "Item1",
                             Price = 10m,
-                            PurchaseDate = new DateTime(2023, 8, 28, 10, 7, 34, 352, DateTimeKind.Utc).AddTicks(9568)
+                            PurchaseDate = new DateTime(2023, 8, 28, 15, 45, 1, 89, DateTimeKind.Utc).AddTicks(2275)
                         },
                         new
                         {
-                            Id = new Guid("7a925b34-9613-47aa-a108-db9cd4dd5384"),
-                            AccountId = new Guid("733aefec-d039-4fa3-9af6-db6a57819622"),
+                            Id = new Guid("4911a837-9945-4de6-a7b8-69699202cbc9"),
+                            AccountId = new Guid("ba8f19b2-193d-4f17-8b30-9112a8001142"),
                             Brand = "Brand1",
                             CloathingType = "Torso",
                             Colorway = "Colorway1",
                             Model = "Model1",
                             Name = "Item1",
                             Price = 10m,
-                            PurchaseDate = new DateTime(2023, 8, 28, 10, 7, 34, 352, DateTimeKind.Utc).AddTicks(9603)
+                            PurchaseDate = new DateTime(2023, 8, 28, 15, 45, 1, 89, DateTimeKind.Utc).AddTicks(2308)
                         });
                 });
 
@@ -206,14 +206,14 @@ namespace HypeHubDAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6a466515-d1b7-4360-af69-56ae03a5384d"),
-                            ItemId = new Guid("49ea5e99-81db-48ad-b5a7-4865788fffbb"),
+                            Id = new Guid("54b0f528-c0a4-42ee-98fa-78a8fa96ff37"),
+                            ItemId = new Guid("c84fb656-955a-4d73-ad41-44099f34ec5a"),
                             Url = "exampleURL"
                         },
                         new
                         {
-                            Id = new Guid("73632c2e-9c35-45c3-998b-73a089ba195f"),
-                            ItemId = new Guid("7a925b34-9613-47aa-a108-db9cd4dd5384"),
+                            Id = new Guid("7fa67b53-0365-4295-b066-9a4d867121b7"),
+                            ItemId = new Guid("4911a837-9945-4de6-a7b8-69699202cbc9"),
                             Url = "exampleURL"
                         });
                 });
@@ -244,31 +244,31 @@ namespace HypeHubDAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d90447a1-23df-4da0-ac01-dba9687ab872"),
-                            AccountId = new Guid("44dec59d-3839-4b89-88a2-1527775d450d"),
-                            CreationDate = new DateTime(2023, 9, 28, 12, 7, 34, 352, DateTimeKind.Local).AddTicks(9412),
-                            Name = "Outfit224"
+                            Id = new Guid("1e13b80c-88ee-4870-bd3c-e3c46c592b59"),
+                            AccountId = new Guid("053135ab-a8e4-41c4-9e87-7e70982028ee"),
+                            CreationDate = new DateTime(2023, 9, 28, 17, 45, 1, 89, DateTimeKind.Local).AddTicks(2076),
+                            Name = "Outfit559"
                         },
                         new
                         {
-                            Id = new Guid("3c0af110-3845-4d78-a9fb-97d0bcfaa44b"),
-                            AccountId = new Guid("44dec59d-3839-4b89-88a2-1527775d450d"),
-                            CreationDate = new DateTime(2023, 9, 28, 12, 7, 34, 352, DateTimeKind.Local).AddTicks(9471),
-                            Name = "Outfit642"
+                            Id = new Guid("1f710cdb-8262-424d-b079-8d3537ee5b60"),
+                            AccountId = new Guid("053135ab-a8e4-41c4-9e87-7e70982028ee"),
+                            CreationDate = new DateTime(2023, 9, 28, 17, 45, 1, 89, DateTimeKind.Local).AddTicks(2169),
+                            Name = "Outfit397"
                         },
                         new
                         {
-                            Id = new Guid("f6713d77-8f71-4aa8-af65-9b05387a0aab"),
-                            AccountId = new Guid("733aefec-d039-4fa3-9af6-db6a57819622"),
-                            CreationDate = new DateTime(2023, 9, 28, 12, 7, 34, 352, DateTimeKind.Local).AddTicks(9475),
-                            Name = "Outfit899"
+                            Id = new Guid("cbbaad43-f8bd-4349-bd20-1a8fb9875f20"),
+                            AccountId = new Guid("ba8f19b2-193d-4f17-8b30-9112a8001142"),
+                            CreationDate = new DateTime(2023, 9, 28, 17, 45, 1, 89, DateTimeKind.Local).AddTicks(2175),
+                            Name = "Outfit782"
                         },
                         new
                         {
-                            Id = new Guid("d809216b-f731-4382-9e3a-e6970417e607"),
-                            AccountId = new Guid("733aefec-d039-4fa3-9af6-db6a57819622"),
-                            CreationDate = new DateTime(2023, 9, 28, 12, 7, 34, 352, DateTimeKind.Local).AddTicks(9479),
-                            Name = "Outfit450"
+                            Id = new Guid("4961cf46-27f0-4600-835e-a38df2996526"),
+                            AccountId = new Guid("ba8f19b2-193d-4f17-8b30-9112a8001142"),
+                            CreationDate = new DateTime(2023, 9, 28, 17, 45, 1, 89, DateTimeKind.Local).AddTicks(2179),
+                            Name = "Outfit715"
                         });
                 });
 
@@ -294,26 +294,26 @@ namespace HypeHubDAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("9ee7ee2f-0a0c-4ab3-92ed-bdd1c5dc3e56"),
-                            OutfitId = new Guid("d90447a1-23df-4da0-ac01-dba9687ab872"),
+                            Id = new Guid("d162b263-5bfc-4de8-a625-07f64d2cec58"),
+                            OutfitId = new Guid("1e13b80c-88ee-4870-bd3c-e3c46c592b59"),
                             Url = "exampleURL"
                         },
                         new
                         {
-                            Id = new Guid("2ee0f829-7717-4f51-bfd3-e83212422e5d"),
-                            OutfitId = new Guid("3c0af110-3845-4d78-a9fb-97d0bcfaa44b"),
+                            Id = new Guid("5218e490-4b0d-45ce-8a96-d5728f522942"),
+                            OutfitId = new Guid("1f710cdb-8262-424d-b079-8d3537ee5b60"),
                             Url = "exampleURL"
                         },
                         new
                         {
-                            Id = new Guid("d9d510f5-f42e-4899-b9f7-297a0135c6fa"),
-                            OutfitId = new Guid("f6713d77-8f71-4aa8-af65-9b05387a0aab"),
+                            Id = new Guid("d92a6dd5-10a4-45c6-83d4-d2a262b612af"),
+                            OutfitId = new Guid("cbbaad43-f8bd-4349-bd20-1a8fb9875f20"),
                             Url = "exampleURL"
                         },
                         new
                         {
-                            Id = new Guid("ac764d02-5879-4850-adfa-35b5b2789c31"),
-                            OutfitId = new Guid("d809216b-f731-4382-9e3a-e6970417e607"),
+                            Id = new Guid("bb121807-fda2-4cd6-b5e2-ea5c0fb6ebb0"),
+                            OutfitId = new Guid("4961cf46-27f0-4600-835e-a38df2996526"),
                             Url = "exampleURL"
                         });
                 });

@@ -7,7 +7,7 @@ using MediatR;
 
 namespace HypeHubLogic.CQRS.Outfit.Commands.Update;
 
-public class UpdateOutfitCommandHandler : IRequestHandler<UpdateOutfitCommand, OutfitReadDTO>
+public class UpdateOutfitCommandHandler : IRequestHandler<UpdateOutfitCommand, OutfitGenerallReadDTO>
 {
     private readonly IOutfitRepository _outfitRepository;
     private readonly IMapper _mapper;
@@ -20,13 +20,13 @@ public class UpdateOutfitCommandHandler : IRequestHandler<UpdateOutfitCommand, O
         _validator = validator;
     }
 
-    public async Task<OutfitReadDTO> Handle(UpdateOutfitCommand request, CancellationToken cancellationToken)
+    public async Task<OutfitGenerallReadDTO> Handle(UpdateOutfitCommand request, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(request.Outfit);
         if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult.Errors.Select(error => error.ErrorMessage));
         var currentOutfit = await _outfitRepository.GetByIdAsync(request.Outfit.Id) ?? throw new NotFoundException($"There is no outfit with the given Id: {request.Outfit.Id}.");
         currentOutfit.Name = request.Outfit.Name;
         var updatedOutfit = await _outfitRepository.UpdateAsync(currentOutfit);
-        return _mapper.Map<OutfitReadDTO>(updatedOutfit);
+        return _mapper.Map<OutfitGenerallReadDTO>(updatedOutfit);
     }
 }

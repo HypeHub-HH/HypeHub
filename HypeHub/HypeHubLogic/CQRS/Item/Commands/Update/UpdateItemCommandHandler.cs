@@ -9,7 +9,7 @@ using MediatR;
 
 namespace HypeHubLogic.CQRS.Item.Commands.Update;
 
-public class UpdateItemCommandHandler : IRequestHandler<UpdateItemCommand, ItemReadDTO>
+public class UpdateItemCommandHandler : IRequestHandler<UpdateItemCommand, ItemGenerallReadDTO>
 {
     private readonly IItemRepository _itemRepository;
     private readonly IMapper _mapper;
@@ -21,7 +21,7 @@ public class UpdateItemCommandHandler : IRequestHandler<UpdateItemCommand, ItemR
         _validator = validator;
     }
 
-    public async Task<ItemReadDTO> Handle(UpdateItemCommand request, CancellationToken cancellationToken)
+    public async Task<ItemGenerallReadDTO> Handle(UpdateItemCommand request, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(request.Item);
         if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult.Errors.Select(error => error.ErrorMessage));
@@ -37,7 +37,7 @@ public class UpdateItemCommandHandler : IRequestHandler<UpdateItemCommand, ItemR
         itemForUpdate.PurchaseDate = update.PurchaseDate;
 
         var item = await _itemRepository.UpdateAsync(itemForUpdate);
-        var updatedItem = _mapper.Map<ItemReadDTO>(item);
+        var updatedItem = _mapper.Map<ItemGenerallReadDTO>(item);
 
         return updatedItem;
     }

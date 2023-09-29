@@ -84,6 +84,4 @@ public class ItemsController : ControllerBase
         await _mediator.Send(new LikeOrUnlikeItemCommand(accountItemLike));
         return Ok();
     }
-
-
 }
