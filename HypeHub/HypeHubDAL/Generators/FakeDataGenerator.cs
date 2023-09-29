@@ -16,7 +16,7 @@ public class FakeDataGenerator
         var outfitImages = CreateImageForEveryOutfit(outfits);
         var imageImages = CreateImageForEveryItem(items);
 
-        return new FakeDataGeneratorModel(accounts, accountCredentials, outfits,items, outfitImages,imageImages);
+        return new FakeDataGeneratorModel(accounts, accountCredentials, outfits, items, outfitImages, imageImages);
     }
 
     private List<Account> CreateRandomAccounts(int count)
@@ -27,7 +27,7 @@ public class FakeDataGenerator
             string username = $"User{i}";
             bool isPrivate = i % 2 == 0;
             string avatarUrl = isPrivate ? null : $"https://example.com/avatar/user{i}.png";
-            accounts.Add(new Account(username, isPrivate, AccountTypes.User, avatarUrl));
+            accounts.Add(new Account("", username, isPrivate, AccountTypes.User, avatarUrl));
         }
         return accounts;
     }

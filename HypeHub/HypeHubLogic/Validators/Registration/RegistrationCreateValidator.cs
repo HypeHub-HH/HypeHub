@@ -27,7 +27,15 @@ public class RegistrationCreateValidator : AbstractValidator<RegistrationCreateD
             .NotEmpty()
             .WithMessage("Password must have a value.")
             .Length(6, 255)
-            .WithMessage("Password must not have less than 4 and more than 255 characters.");
+            .WithMessage("Password must not have less than 4 and more than 255 characters.")
+            .Matches(@"[A-Z]")
+            .WithMessage("Password must contain at least one uppercase letter.")
+            .Matches(@"[a-z]")
+            .WithMessage("Password must contain at least one lowercase letter.")
+            .Matches(@"\d")
+            .WithMessage("Password must contain at least one digit.")
+            .Matches(@"\W")
+            .WithMessage("Password must contain at least one non-alphanumeric character.");
 
         RuleFor(r => r.Email)
              .NotEmpty()

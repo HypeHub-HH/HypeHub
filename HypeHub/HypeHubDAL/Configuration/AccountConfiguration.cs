@@ -32,11 +32,6 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
             .IsRequired(false)
             .HasMaxLength(400);
 
-        builder.HasOne(a => a.Credentials)
-            .WithOne(c => c.Account)
-            .HasForeignKey<AccountCredentials>(c => c.AccountId)
-            .IsRequired();
-
         builder.HasMany(a => a.Items)
             .WithOne(i => i.Account)
             .HasForeignKey(i => i.AccountId)
