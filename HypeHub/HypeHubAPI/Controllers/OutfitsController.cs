@@ -28,10 +28,17 @@ public class OutfitsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("/{id}/AllInformation")]
-    public async Task<IActionResult> GetAccountWithOutfitAndHisItems(Guid id)
+    [HttpGet("{id}/AllInformation")]
+    public async Task<IActionResult> GetOutfitWithAccountAndLikesAndImagesAndItems(Guid id)
     {
         var result = await _mediator.Send(new GetOutfitWithAccountAndLikesAndImagesAndItemsQuery(id));
+        return Ok(result);
+    }
+
+    [HttpGet("Latest")]
+    public async Task<IActionResult> GetLatestOutfits([FromQuery] int page, int count)
+    {
+        var result = await _mediator.Send(new GetLatestOutfitsQuery(page, count));
         return Ok(result);
     }
 
