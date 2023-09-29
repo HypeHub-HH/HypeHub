@@ -2,7 +2,7 @@
 
 namespace HypeHubLogic.DTOs.Item;
 
-public record ItemUpdateDTO
+public record ItemGenerallReadDTO
 {
     public Guid Id { get; init; }
     public string Name { get; init; }

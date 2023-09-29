@@ -6,7 +6,6 @@ using HypeHubLogic.DTOs.AccountOutfitLike;
 using HypeHubLogic.DTOs.Outfit;
 using HypeHubLogic.DTOs.OutfitImage;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HypeHubAPI.Controllers;
@@ -29,6 +28,12 @@ public class OutfitsController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("/{id}/AllInformation")]
+    public async Task<IActionResult> GetAccountWithOutfitAndHisItems(Guid id)
+    {
+        var result = await _mediator.Send(new GetOutfitWithAccountAndLikesAndImagesAndItemsQuery(id));
+        return Ok(result);
+    }
 
     [HttpPost]
     public async Task<IActionResult> CreateOutfit([FromBody] OutfitCreateDTO outfit)

@@ -19,7 +19,7 @@ public class GetSearchedAccountsQueryHandler : IRequestHandler<GetSearchedAccoun
 
     public async Task<List<AccountGeneralInfoReadDTO>> Handle(GetSearchedAccountsQuery request, CancellationToken cancellationToken)
     {
-        var account = await _accountRepository.GetSearchedAccounts(request.SearchedString);
+        var account = await _accountRepository.GetSearchedAccountsAsync(request.SearchedString);
         var mappedAccounts = _mapper.Map<List<AccountGeneralInfoReadDTO>>(account);
         return mappedAccounts;
     }

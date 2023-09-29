@@ -18,14 +18,11 @@ public class ItemUpdateValidator : AbstractValidator<ItemUpdateDTO>
             .MustAsync(CheckIfItemExist)
             .WithMessage("There is no item with the given Id.");
 
-        When(i => i.Name != null, () =>
-        {
-            RuleFor(i => i.Name)
-                .NotEmpty()
-                .WithMessage("Name must have a value.")
-                .Length(4, 30)
-                .WithMessage("Name must not have less than 4 and more than 30 characters.");
-        });
+        RuleFor(i => i.Name)
+           .NotEmpty()
+           .WithMessage("Name must have a value.")
+           .Length(4, 30)
+           .WithMessage("Name must not have less than 4 and more than 30 characters.");
 
         When(i => i.CloathingType != null, () =>
         {

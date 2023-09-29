@@ -1,10 +1,8 @@
-﻿using HypeHubLogic.DTOs.AccountOutfitLike;
-using HypeHubLogic.DTOs.Item;
-using HypeHubLogic.DTOs.OutfitImage;
+﻿using HypeHubLogic.DTOs.OutfitImage;
 
 namespace HypeHubLogic.DTOs.Outfit;
 
-public class OutfitGeneralReadDTO
+public record OutfitWithImagesAndLikesCountReadDTO
 {
     public Guid Id { get; init; }
     public string Name { get; init; }

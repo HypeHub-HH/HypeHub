@@ -19,9 +19,7 @@ public class MapProfile : Profile
         CreateMap<Account, AccountGeneralInfoReadDTO>();
         CreateMap<Account, AccountWithCredentialsReadDTO>();
         CreateMap<Account, AccountWithOutfitsReadDTO>();
-        CreateMap<Account, AccountWithItemsReadDTO>();
         CreateMap<AccountCreateDTO, Account>();
-        CreateMap<Account, AccountWithOutfitsReadDTO>();
 
         CreateMap<AccountCredentials, AccountCredentialsReadDTO>();
         CreateMap<AccountCredentialsCreateDTO, AccountCredentials>();
@@ -32,15 +30,17 @@ public class MapProfile : Profile
         CreateMap<AccountOutfitLike, AccountOutfitLikeReadDTO>();
         CreateMap<AccountOutfitLikeCreateDTO, AccountOutfitLike>();
 
-        CreateMap<Item, ItemReadDTO>();
+        CreateMap<Item, ItemGenerallReadDTO>();
+        CreateMap<Item, ItemWithImagesAndLikesReadDTO>();
         CreateMap<ItemCreateDTO, Item>();
 
         CreateMap<ItemImage, ItemImageReadDTO>();
         CreateMap<ItemImageCreateDTO, ItemImage>();
 
-        CreateMap<Outfit, OutfitReadDTO>();
-        CreateMap<Outfit, OutfitGeneralReadDTO>()
+        CreateMap<Outfit, OutfitGenerallReadDTO>();
+        CreateMap<Outfit, OutfitWithImagesAndLikesCountReadDTO>()
             .ForMember(dest => dest.Likes, opt => opt.MapFrom(src => src.Likes.Count()));
+        CreateMap<Outfit, OutfitWithAccountAndImagesAndLikesAndItemsReadDTO>();
         CreateMap<OutfitCreateDTO, Outfit>();
 
         CreateMap<OutfitImage, OutfitImageReadDTO>();
