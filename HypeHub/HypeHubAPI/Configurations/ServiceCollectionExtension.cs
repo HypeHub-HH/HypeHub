@@ -21,7 +21,7 @@ public static class ServiceCollectionExtension
                 options.User.RequireUniqueEmail = true;
                 options.Password.RequireDigit = true;
                 options.Password.RequiredLength = 6;
-                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireUppercase = true;
                 options.Password.RequireLowercase = true;
             })
