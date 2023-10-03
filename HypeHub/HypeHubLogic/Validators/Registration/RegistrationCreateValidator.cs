@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using HypeHubDAL.Models;
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Registration;
 using Microsoft.AspNetCore.Identity;
@@ -8,9 +9,9 @@ namespace HypeHubLogic.Validators.Registration;
 public class RegistrationCreateValidator : AbstractValidator<RegistrationCreateDTO>
 {
     private readonly IAccountRepository _accountRepository;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public RegistrationCreateValidator(IAccountRepository accountRepository, UserManager<IdentityUser> userManager)
+    public RegistrationCreateValidator(IAccountRepository accountRepository, UserManager<ApplicationUser> userManager)
     {
         _accountRepository = accountRepository;
         _userManager = userManager;

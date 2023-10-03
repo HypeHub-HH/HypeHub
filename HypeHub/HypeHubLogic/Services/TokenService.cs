@@ -6,13 +6,13 @@ using Microsoft.IdentityModel.Tokens;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace HypeHubLogic.Services;
 
 public class TokenService : ITokenService
 {
-    private const int ExpirationMinutes = 30;
     private readonly IConfiguration _configuration;
 
     public TokenService(IConfiguration configuration)
@@ -22,7 +22,8 @@ public class TokenService : ITokenService
 
     public string CreateToken(IdentityUser user, IList<string> roles)
     {
-        var expiration = DateTime.UtcNow.AddMinutes(ExpirationMinutes);
+        _ = int.TryParse(_configuration["JWT:TokenValidityInMinutes"], out int expirationMinutes);
+        var expiration = DateTime.UtcNow.AddMinutes(expirationMinutes);
         var token = CreateJwtToken(
             CreateClaims(user, roles),
             CreateSigningCredentials(),
@@ -35,8 +36,8 @@ public class TokenService : ITokenService
     private JwtSecurityToken CreateJwtToken(List<Claim> claims, SigningCredentials credentials,
         DateTime expiration) =>
         new(
-            _configuration["TokenValidationParameters:ValidIssuer"],
-            _configuration["TokenValidationParameters:ValidAudience"],
+            _configuration["JWT:ValidIssuer"],
+            _configuration["JWT:ValidAudience"],
             claims,
             expires: expiration,
             signingCredentials: credentials
@@ -79,5 +80,33 @@ public class TokenService : ITokenService
             ),
             SecurityAlgorithms.HmacSha256
         );
+    }
+
+
+    public string GenerateRefreshToken()
+    {
+        var randomNumber = new byte[32];
+        using var rng = RandomNumberGenerator.Create();
+        rng.GetBytes(randomNumber);
+        return Convert.ToBase64String(randomNumber);
+    }
+
+    public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
+    {
+        var tokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = false,
+            ValidateIssuer = false,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["IssuerSigningKey"])),
+            ValidateLifetime = false
+        };
+        var tokenHandler = new JwtSecurityTokenHandler();
+        SecurityToken securityToken;
+        var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
+        var jwtSecurityToken = securityToken as JwtSecurityToken;
+        if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+            throw new SecurityTokenException("Invalid token");
+        return principal;
     }
 }

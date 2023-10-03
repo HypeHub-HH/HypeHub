@@ -1,4 +1,5 @@
 ﻿using HypeHubDAL.Exeptions;
+using HypeHubDAL.Models;
 using HypeHubDAL.Repositories.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -8,9 +9,9 @@ namespace HypeHubLogic.CQRS.Account.Commands.Delete;
 public class DeleteAccountCommandHandler : IRequestHandler<DeleteAccountCommand>
 {
     private readonly IAccountRepository _accountRepository;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public DeleteAccountCommandHandler(IAccountRepository accountRepository, UserManager<IdentityUser> userManager)
+    public DeleteAccountCommandHandler(IAccountRepository accountRepository, UserManager<ApplicationUser> userManager)
     {
         _accountRepository = accountRepository;
         _userManager = userManager;
