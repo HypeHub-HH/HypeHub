@@ -1,7 +1,9 @@
-﻿using HypeHubLogic.CQRS.Authentication.Commands.Post;
+﻿using HypeHubDAL.Models;
+using HypeHubLogic.CQRS.Authentication.Commands.Post;
 using HypeHubLogic.DTOs.Logging;
 using HypeHubLogic.DTOs.Registration;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HypeHubAPI.Controllers;
@@ -29,5 +31,20 @@ public class AuthenticationController : ControllerBase
     {
         var result = await _mediator.Send(new LoginAccountCommand(loggingCreateDTO));
         return Ok(result);
+    }
+
+    [HttpPost("RefreshToken")]
+    public async Task<IActionResult> RefreshToken([FromBody] Token token)
+    {
+        var result = await _mediator.Send(new RefreshTokenCommand(token));
+        return Ok(result);
+    }
+
+    [HttpPost("RevokeToken/{username}")]
+    [Authorize]
+    public async Task<IActionResult> RevokeToken(string username)
+    {
+        await _mediator.Send(new RevokeTokenCommand(username));
+        return NoContent();
     }
 }

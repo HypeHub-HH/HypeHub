@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using HypeHubDAL.Models;
 
 namespace HypeHubAPI.Configurations;
 
@@ -15,7 +16,7 @@ public static class ServiceCollectionExtension
     public static IServiceCollection AddIdentity(this IServiceCollection services)
     {
         services
-            .AddIdentityCore<IdentityUser>(options =>
+            .AddIdentityCore<ApplicationUser>(options =>
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.User.RequireUniqueEmail = true;
@@ -43,8 +44,8 @@ public static class ServiceCollectionExtension
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = configuration["TokenValidationParameters:ValidIssuer"],
-                    ValidAudience = configuration["TokenValidationParameters:ValidAudience"],
+                    ValidIssuer = configuration["JWT:ValidIssuer"],
+                    ValidAudience = configuration["JWT:ValidAudience"],
                     IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(configuration["IssuerSigningKey"])
             ),
