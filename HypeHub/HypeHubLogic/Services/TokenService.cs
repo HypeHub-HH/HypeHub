@@ -1,6 +1,6 @@
 ﻿using HypeHubDAL.Exeptions;
+using HypeHubDAL.Models;
 using HypeHubLogic.Services.Interfaces;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Globalization;
@@ -20,7 +20,7 @@ public class TokenService : ITokenService
         _configuration = configuration;
     }
 
-    public string CreateToken(IdentityUser user, IList<string> roles)
+    public string CreateToken(ApplicationUser user, IList<string> roles)
     {
         _ = int.TryParse(_configuration["JWT:TokenValidityInMinutes"], out int expirationMinutes);
         var expiration = DateTime.UtcNow.AddMinutes(expirationMinutes);
@@ -43,7 +43,7 @@ public class TokenService : ITokenService
             signingCredentials: credentials
         );
 
-    private List<Claim> CreateClaims(IdentityUser user, IList<string> roles)
+    private List<Claim> CreateClaims(ApplicationUser user, IList<string> roles)
     {
         try
         {
@@ -52,7 +52,7 @@ public class TokenService : ITokenService
                 new Claim("sub", "TokenForTheApiWithAuth"),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)),
-                new Claim(ClaimTypes.Name, user.Id),
+                new Claim(ClaimTypes.Name, user.Id)
             };
             if (roles.Count != 0)
             {

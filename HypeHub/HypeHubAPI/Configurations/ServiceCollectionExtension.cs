@@ -50,6 +50,11 @@ public static class ServiceCollectionExtension
                 Encoding.UTF8.GetBytes(configuration["IssuerSigningKey"])
             ),
                 };
+            })
+            .AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
             });
         return services;
     }

@@ -1,10 +1,13 @@
 ﻿using HypeHubDAL.Exeptions;
 using HypeHubDAL.Models;
+using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Logging;
 using HypeHubLogic.Services.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Identity.Client;
+using System.Security.Claims;
 
 namespace HypeHubLogic.CQRS.Authentication.Commands.Post;
 
@@ -13,12 +16,14 @@ public class LoginAccountCommandHandler : IRequestHandler<LoginAccountCommand, L
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ITokenService _tokenService;
     private readonly IConfiguration _configuration;
+    private readonly IAccountRepository _accountRepository;
 
-    public LoginAccountCommandHandler(UserManager<ApplicationUser> userManager, ITokenService tokenService, IConfiguration configuration)
+    public LoginAccountCommandHandler(UserManager<ApplicationUser> userManager, ITokenService tokenService, IConfiguration configuration, IAccountRepository accountRepository)
     {
         _userManager = userManager;
         _tokenService = tokenService;
         _configuration = configuration;
+        _accountRepository = accountRepository;
     }
 
     public async Task<LoggingReadDTO> Handle(LoginAccountCommand request, CancellationToken cancellationToken)
@@ -42,7 +47,9 @@ public class LoginAccountCommandHandler : IRequestHandler<LoginAccountCommand, L
         managedUser.RefreshTokenExpiryTime = DateTime.Now.AddDays(refreshTokenValidityInDays);
 
         await _userManager.UpdateAsync(managedUser);
+        var userId = Guid.Parse(managedUser.Id);
+        var account = await _accountRepository.GetByIdAsync(userId);
 
-        return new LoggingReadDTO() { Token = accessToken, RefreshToken = refreshToken };
+        return new LoggingReadDTO() { AccountId = userId, UserName = account.Username, Email = managedUser.Email, AvatarURL = account.AvatarUrl, Token = accessToken, RefreshToken = refreshToken };
     }
 }

@@ -47,4 +47,11 @@ public class AuthenticationController : ControllerBase
         await _mediator.Send(new RevokeTokenCommand(username));
         return NoContent();
     }
+
+    [HttpPost("GoogleAuthenticate")]
+    public async Task<IActionResult> GoogleAuthenticate([FromBody] string token)
+    {
+        var result = await _mediator.Send(new GoogleAuthenticateCommand(token));
+        return Ok(result);
+    }
 }

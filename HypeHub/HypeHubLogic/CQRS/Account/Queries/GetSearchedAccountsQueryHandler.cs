@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using HypeHubDAL.Exeptions;
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Account;
 using MediatR;

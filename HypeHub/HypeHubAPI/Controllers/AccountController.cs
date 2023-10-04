@@ -30,6 +30,13 @@ public class AccountController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("Username")]
+    public async Task<IActionResult> CheckIfUsernameExist([FromQuery] string username)
+    {
+        var result = await _mediator.Send(new CheckIfUsernameAlreadyExistQuery(username));
+        return Ok(result);
+    }
+
     [HttpDelete]
     public async Task<IActionResult> DeleteAccount([FromBody] Guid id)
     {
