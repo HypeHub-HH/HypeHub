@@ -22,13 +22,13 @@ public class FakeDataGenerator
     private List<Account> CreateRandomAccounts(int count)
     {
         var accounts = new List<Account>();
-        for (int i = 1; i <= count; i++)
-        {
-            string username = $"User{i}";
-            bool isPrivate = i % 2 == 0;
-            string avatarUrl = isPrivate ? null : $"https://example.com/avatar/user{i}.png";
-            accounts.Add(new Account("", username, isPrivate, AccountTypes.User, avatarUrl));
-        }
+        //for (int i = 1; i <= count; i++)
+        //{
+        //    string username = $"User{i}";
+        //    bool isPrivate = i % 2 == 0;
+        //    string avatarUrl = isPrivate ? null : $"https://example.com/avatar/user{i}.png";
+        //    accounts.Add(new Account("", username, isPrivate, AccountTypes.User, avatarUrl));
+        //}
         return accounts;
     }
 

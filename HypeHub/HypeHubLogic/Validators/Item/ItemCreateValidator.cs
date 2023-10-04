@@ -20,9 +20,9 @@ public class ItemCreateValidator : AbstractValidator<ItemCreateDTO>
 
         RuleFor(i => i.AccountId)
             .NotEmpty()
-            .WithMessage("AccountId must have a value.")
-            .MustAsync(CheckIfAccountExist)
-            .WithMessage("There is no account with the given Id.");
+            .WithMessage("AccountId must have a value.");
+            //.MustAsync(CheckIfAccountExist)
+            //.WithMessage("There is no account with the given Id.");
 
         RuleFor(i => i.CloathingType)
             .IsInEnum()

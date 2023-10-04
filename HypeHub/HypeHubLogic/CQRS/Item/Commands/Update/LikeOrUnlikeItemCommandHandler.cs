@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using FluentValidation;
 using HypeHubDAL.Exeptions;
+using HypeHubDAL.Models.Relations;
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.AccountItemLike;
 using MediatR;
+using System.Security.Claims;
 
 namespace HypeHubLogic.CQRS.Item.Commands.Update;
 
@@ -22,11 +25,12 @@ public class LikeOrUnlikeItemCommandHandler : IRequestHandler<LikeOrUnlikeItemCo
 
     public async Task Handle(LikeOrUnlikeItemCommand request, CancellationToken cancellationToken)
     {
-        var validationResult = await _validator.ValidateAsync(request.AccountItemLike);
+        var accountId = Guid.Parse(request.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);
+        var accountItemLikeDTO = new AccountItemLikeCreateDTO(request.ItemId, accountId);
+        var validationResult = await _validator.ValidateAsync(accountItemLikeDTO);
         if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult.Errors.Select(error => error.ErrorMessage));
-        var accountItemLike = _mapper.Map<HypeHubDAL.Models.Relations.AccountItemLike>(request.AccountItemLike);
+        var accountItemLike = _mapper.Map<AccountItemLike>(accountItemLikeDTO);
         var searchedAccountItemLike = await _likeRepository.GetAsyncByAccountAndItemId(accountItemLike);
-
         if (searchedAccountItemLike != null) await _likeRepository.DeleteAsync(searchedAccountItemLike);
         else await _likeRepository.AddAsync(accountItemLike);
     }

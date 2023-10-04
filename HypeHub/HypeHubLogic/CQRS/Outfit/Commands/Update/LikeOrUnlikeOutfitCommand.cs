@@ -1,14 +1,16 @@
 ﻿using HypeHubLogic.DTOs.AccountOutfitLike;
 using MediatR;
+using System.Security.Claims;
 
 namespace HypeHubLogic.CQRS.Outfit.Commands.Update;
 
 public class LikeOrUnlikeOutfitCommand : IRequest
 {
-    public AccountOutfitLikeCreateDTO AccountOutfitLike { get; init; }
-
-    public LikeOrUnlikeOutfitCommand(AccountOutfitLikeCreateDTO accountOutfitLike)
+    public Guid OutfitId { get; init; }
+    public IEnumerable<Claim> Claims { get; init; }
+    public LikeOrUnlikeOutfitCommand(Guid outfitId, IEnumerable<Claim> claims)
     {
-        AccountOutfitLike = accountOutfitLike;
+        OutfitId = outfitId;
+        Claims = claims;
     }
 }

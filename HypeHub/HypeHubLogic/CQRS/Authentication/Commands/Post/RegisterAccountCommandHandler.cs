@@ -3,6 +3,7 @@ using FluentValidation;
 using HypeHubDAL.Exeptions;
 using HypeHubDAL.Models;
 using HypeHubDAL.Repositories.Interfaces;
+using HypeHubDAL.Models.Types;
 using HypeHubLogic.DTOs.Registration;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -29,16 +30,19 @@ public class RegisterAccountCommandHandler : IRequestHandler<RegisterAccountComm
     {
         var validationResult = await _validator.ValidateAsync(request.RegistrationCreateDTO);
         if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult.Errors.Select(error => error.ErrorMessage));
+
         var userName = request.RegistrationCreateDTO.Username;
         var email = request.RegistrationCreateDTO.Email;
         var password = request.RegistrationCreateDTO.Password;
-        var user = new IdentityUser { UserName = userName, Email = email, EmailConfirmed = false };
+        var userId = Guid.NewGuid();
+        var user = new IdentityUser { UserName = userName, Email = email, EmailConfirmed = false, Id = userId.ToString()};
         var result = await _userManager.CreateAsync(user, password);
         if (!result.Succeeded) throw new InternalIdentityServerException("Server failed", result.Errors.Select(error => error.Description));
+
         var credentialsId = user.Id;
         var addRoleResult = await _userManager.AddToRoleAsync(user, "User");
         if (!addRoleResult.Succeeded) throw new InternalIdentityServerException("Server failed", result.Errors.Select(error => error.Description));
-        var account = new HypeHubDAL.Models.Account(credentialsId, userName, false, HypeHubDAL.Models.Types.AccountTypes.User, null);
+        var account = new HypeHubDAL.Models.Account(userId,credentialsId, userName, false, AccountTypes.User, null);
         var createdAccount = _accountRepository.AddAsync(account);
         return _mapper.Map<RegistrationReadDTO>(request.RegistrationCreateDTO);
     }

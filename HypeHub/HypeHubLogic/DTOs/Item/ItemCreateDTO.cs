@@ -5,7 +5,7 @@ namespace HypeHubLogic.DTOs.Item;
 public record ItemCreateDTO
 {
     public string Name { get; set; }
-    public Guid AccountId { get; init; }
+    public Guid AccountId { get; set; }
     public CloathingType CloathingType { get; init; }
     public string? Brand { get; init; }
     public string? Model { get; init; }

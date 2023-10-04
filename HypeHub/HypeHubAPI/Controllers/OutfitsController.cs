@@ -45,28 +45,28 @@ public class OutfitsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateOutfit([FromBody] OutfitCreateDTO outfit)
     {
-        var result = await _mediator.Send(new CreateOutfitCommand(outfit));
+        var result = await _mediator.Send(new CreateOutfitCommand(outfit, HttpContext.User.Claims));
         return CreatedAtAction(nameof(GetOutfit), new { id = result.Id }, result);
     }
 
     [HttpPut]
     public async Task<IActionResult> UpdateOutfit([FromBody] OutfitUpdateDTO outfit)
     {
-        var result = await _mediator.Send(new UpdateOutfitCommand(outfit));
+        var result = await _mediator.Send(new UpdateOutfitCommand(outfit, HttpContext.User.Claims));
         return CreatedAtAction(nameof(GetOutfit), new { id = result.Id }, result);
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteOutfit(Guid id)
     {
-        await _mediator.Send(new DeleteOutfitCommand(id));
+        await _mediator.Send(new DeleteOutfitCommand(id, HttpContext.User.Claims));
         return NoContent();
     }
 
     [HttpPut("Like")]
-    public async Task<IActionResult> LikeOrUnlikeOutfit([FromBody] AccountOutfitLikeCreateDTO accountOutfitLike)
+    public async Task<IActionResult> LikeOrUnlikeOutfit([FromBody] Guid outfitId)
     {
-        await _mediator.Send(new LikeOrUnlikeOutfitCommand(accountOutfitLike));
+        await _mediator.Send(new LikeOrUnlikeOutfitCommand(outfitId, HttpContext.User.Claims));
         return Ok();
     }
 
@@ -87,14 +87,14 @@ public class OutfitsController : ControllerBase
     [HttpPost("{outfitId}/Images")]
     public async Task<IActionResult> CreateImage([FromBody] OutfitImageCreateDTO outfitImage)
     {
-        var result = await _mediator.Send(new CreateOutfitImageCommand(outfitImage));
+        var result = await _mediator.Send(new CreateOutfitImageCommand(outfitImage, HttpContext.User.Claims));
         return CreatedAtAction(nameof(GetOutfitImage), new { outfitId = result.OutfitId, id = result.Id }, result);
     }
 
     [HttpDelete("Images/{id}")]
     public async Task<IActionResult> DeleteImage(Guid id)
     {
-        await _mediator.Send(new DeleteOutfitImageCommand(id));
+        await _mediator.Send(new DeleteOutfitImageCommand(id, HttpContext.User.Claims));
         return NoContent();
     }
 }

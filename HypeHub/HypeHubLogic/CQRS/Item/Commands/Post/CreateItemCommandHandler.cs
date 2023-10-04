@@ -4,6 +4,7 @@ using HypeHubDAL.Exeptions;
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Item;
 using MediatR;
+using System.Security.Claims;
 
 namespace HypeHubLogic.CQRS.Item.Commands.Post;
 
@@ -22,6 +23,8 @@ public class CreateItemCommandHandler : IRequestHandler<CreateItemCommand, ItemG
 
     public async Task<ItemGenerallReadDTO> Handle(CreateItemCommand request, CancellationToken cancellationToken)
     {
+        var userId = Guid.Parse(request.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);
+        //request.Item.AccountId = userId;
         var validationResult = await _validator.ValidateAsync(request.Item);
         if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult.Errors.Select(error => error.ErrorMessage));
         var item = _mapper.Map<HypeHubDAL.Models.Item>(request.Item);

@@ -13,13 +13,13 @@ public class Account
     public List<Item> Items { get; init; } = new();
     public string? AvatarUrl { get; set; }
 
-    public Account(string credentialsId, string username, bool isPrivate, AccountTypes accountTypes, string? avatarUrl)
+    public Account(Guid id, string credentialsId, string username, bool isPrivate, AccountTypes accountTypes, string? avatarUrl)
     {
-        Id = Guid.NewGuid();
+        Id = id;
         CredentialsId = credentialsId;
         Username = username;
         IsPrivate = isPrivate;
         AccountTypes = accountTypes;
-        AvatarUrl = avatarUrl;
+        AvatarUrl = avatarUrl;    
     }
 }

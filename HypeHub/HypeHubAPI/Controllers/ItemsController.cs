@@ -8,6 +8,7 @@ using HypeHubLogic.DTOs.ItemImage;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HypeHubAPI.Controllers;
 
@@ -30,23 +31,26 @@ public class ItemsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> CreateItem([FromBody] ItemCreateDTO item)
     {
-        var result = await _mediator.Send(new CreateItemCommand(item));
+        var result = await _mediator.Send(new CreateItemCommand(item, HttpContext.User.Claims));
         return CreatedAtAction(nameof(GetItem), new { id = result.Id }, result);
     }
 
     [HttpPut]
+    [Authorize]
     public async Task<IActionResult> UpdateItem([FromBody] ItemUpdateDTO item)
     {
-        var result = await _mediator.Send(new UpdateItemCommand(item));
+        var result = await _mediator.Send(new UpdateItemCommand(item, HttpContext.User.Claims));
         return CreatedAtAction(nameof(GetItem), new { id = result.Id }, result);
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> DeleteItem(Guid id)
     {
-        await _mediator.Send(new DeleteItemCommand(id));
+        await _mediator.Send(new DeleteItemCommand(id, HttpContext.User.Claims));
         return NoContent();
     }
 
@@ -65,23 +69,26 @@ public class ItemsController : ControllerBase
     }
 
     [HttpPost("{itemId}/Images")]
+    [Authorize]
     public async Task<IActionResult> CreateImage([FromBody] ItemImageCreateDTO item)
     {
-        await _mediator.Send(new CreateItemImageCommand(item));
+        await _mediator.Send(new CreateItemImageCommand(item, HttpContext.User.Claims));
         return Ok();
     }
 
     [HttpDelete("Images/{imageId}")]
+    [Authorize]
     public async Task<IActionResult> DeleteImage(Guid imageId)
     {
-        await _mediator.Send(new DeleteItemImageCommand(imageId));
+        await _mediator.Send(new DeleteItemImageCommand(imageId, HttpContext.User.Claims));
         return NoContent();
     }
 
     [HttpPut("{id}/like")]
-    public async Task<IActionResult> LikeOrUnlikeItem([FromBody] AccountItemLikeCreateDTO accountItemLike)
+    [Authorize]
+    public async Task<IActionResult> LikeOrUnlikeItem([FromBody] Guid itemId)
     {
-        await _mediator.Send(new LikeOrUnlikeItemCommand(accountItemLike));
+        await _mediator.Send(new LikeOrUnlikeItemCommand(itemId, HttpContext.User.Claims));
         return Ok();
     }
 }

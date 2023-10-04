@@ -28,4 +28,16 @@ public class AccountRepository : BaseRepository<Account>, IAccountRepository
     {
         return await _dbContext.Accounts.Where(a => a.Username.StartsWith(searchedString)).ToListAsync();
     }
+
+    public async Task<List<Guid>> GetAllOutfitIdsForAccount(Guid accountId)
+    {
+        return await _dbContext.Accounts
+                     .Where(a => a.Id == accountId)
+                     .Include(a => a.Items)
+                     .Include(a => a.Outfits)
+                     .SelectMany(a => a.Items.Select(o => o.Id).Concat(a.Outfits.Select(o => o.Id)))
+                     .ToListAsync();
+                     
+                     
+    }
 }
