@@ -2,13 +2,11 @@
 using HypeHubLogic.CQRS.Item.Commands.Post;
 using HypeHubLogic.CQRS.Item.Commands.Update;
 using HypeHubLogic.CQRS.Item.Queries;
-using HypeHubLogic.DTOs.AccountItemLike;
 using HypeHubLogic.DTOs.Item;
 using HypeHubLogic.DTOs.ItemImage;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace HypeHubAPI.Controllers;
 

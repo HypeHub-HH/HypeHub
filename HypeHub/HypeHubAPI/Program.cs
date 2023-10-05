@@ -3,9 +3,9 @@ using FluentValidation;
 using System.Reflection;
 using HypeHubLogic.Services.Interfaces;
 using HypeHubLogic.Services;
-using Microsoft.AspNetCore.Authorization;
-using HypeHubAPI;
 using HypeHubLogic.Validators;
+using Serilog;
+using Serilog.Ui.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +21,8 @@ builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromA
 builder.Services.AddValidatorsFromAssembly(Assembly.Load("HypeHubLogic"));
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddIdentity();
-
+builder.Host.AddSerilog();
+builder.Services.AddUISerilog(builder.Configuration);
 
 var app = builder.Build();
 
@@ -31,9 +32,23 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseSerilogRequestLogging();
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSerilogUi();
+
+
 app.MapControllers();
 app.AddGlobalExeptionsHandler();
-app.Run();
+try
+{
+    Log.Information("Starting up application.");
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application start-up failed!");
+}

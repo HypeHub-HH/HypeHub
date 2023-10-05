@@ -8,6 +8,8 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using HypeHubDAL.Models;
+using Serilog.Ui.Web;
+using Serilog.Ui.MsSqlServerProvider;
 
 namespace HypeHubAPI.Configurations;
 
@@ -110,5 +112,9 @@ public static class ServiceCollectionExtension
                 }
             });
         });
+    }
+    public static void AddUISerilog(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddSerilogUi(options => options.UseSqlServer(configuration["LogsDbKey"], "Logs"));
     }
 }
