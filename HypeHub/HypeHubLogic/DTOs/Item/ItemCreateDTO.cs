@@ -5,7 +5,6 @@ namespace HypeHubLogic.DTOs.Item;
 public record ItemCreateDTO
 {
     public string Name { get; set; }
-    public Guid AccountId { get; set; }
     public CloathingType CloathingType { get; init; }
     public string? Brand { get; init; }
     public string? Model { get; init; }
@@ -13,10 +12,9 @@ public record ItemCreateDTO
     public decimal? Price { get; init; }
     public DateTime? PurchaseDate { get; init; }
 
-    public ItemCreateDTO(string name, Guid accountId, CloathingType cloathingType, string? brand, string? model, string? colorway, decimal? price, DateTime? purchaseDate)
+    public ItemCreateDTO(string name, CloathingType cloathingType, string? brand, string? model, string? colorway, decimal? price, DateTime? purchaseDate)
     {
         Name = name;
-        AccountId = accountId;
         CloathingType = cloathingType;
         Brand = brand;
         Model = model;

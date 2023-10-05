@@ -64,7 +64,7 @@ public class GlobalExeptionHandlingMiddleware
         else if (exeptionType == typeof(UnauthorizedAccessException))
         {
             message = ex.Message;
-            status = HttpStatusCode.BadRequest;
+            status = HttpStatusCode.Unauthorized;
             errors = ex.Errors;
             stackTrace = ex.StackTrace;
         }

@@ -23,7 +23,6 @@ public class OutfitsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [Authorize]
     public async Task<IActionResult> GetOutfit(Guid id)
     {
         var result = await _mediator.Send(new GetOutfitQuery(id));
@@ -45,6 +44,7 @@ public class OutfitsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> CreateOutfit([FromBody] OutfitCreateDTO outfit)
     {
         var result = await _mediator.Send(new CreateOutfitCommand(outfit, HttpContext.User.Claims));
@@ -52,6 +52,7 @@ public class OutfitsController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize]
     public async Task<IActionResult> UpdateOutfit([FromBody] OutfitUpdateDTO outfit)
     {
         var result = await _mediator.Send(new UpdateOutfitCommand(outfit, HttpContext.User.Claims));
@@ -59,6 +60,7 @@ public class OutfitsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize]
     public async Task<IActionResult> DeleteOutfit(Guid id)
     {
         await _mediator.Send(new DeleteOutfitCommand(id, HttpContext.User.Claims));
@@ -66,6 +68,7 @@ public class OutfitsController : ControllerBase
     }
 
     [HttpPut("Like")]
+    [Authorize]
     public async Task<IActionResult> LikeOrUnlikeOutfit([FromBody] Guid outfitId)
     {
         await _mediator.Send(new LikeOrUnlikeOutfitCommand(outfitId, HttpContext.User.Claims));
@@ -87,6 +90,7 @@ public class OutfitsController : ControllerBase
     }
 
     [HttpPost("{outfitId}/Images")]
+    [Authorize]
     public async Task<IActionResult> CreateImage([FromBody] OutfitImageCreateDTO outfitImage)
     {
         var result = await _mediator.Send(new CreateOutfitImageCommand(outfitImage, HttpContext.User.Claims));
@@ -94,6 +98,7 @@ public class OutfitsController : ControllerBase
     }
 
     [HttpDelete("Images/{id}")]
+    [Authorize]
     public async Task<IActionResult> DeleteImage(Guid id)
     {
         await _mediator.Send(new DeleteOutfitImageCommand(id, HttpContext.User.Claims));
