@@ -4,6 +4,7 @@ using HypeHubDAL.Exeptions;
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Outfit;
 using MediatR;
+using System.Security.Claims;
 
 namespace HypeHubLogic.CQRS.Outfit.Commands.Post;
 
@@ -22,9 +23,10 @@ public class CreateOutfitCommandHandler : IRequestHandler<CreateOutfitCommand, O
 
     public async Task<OutfitGenerallReadDTO> Handle(CreateOutfitCommand request, CancellationToken cancellationToken)
     {
+        var userId = Guid.Parse(request.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);
         var validationResult = await _validator.ValidateAsync(request.Outfit);
         if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult.Errors.Select(error => error.ErrorMessage));
-        var outfit = _mapper.Map<HypeHubDAL.Models.Outfit>(request.Outfit);
+        var outfit = new HypeHubDAL.Models.Outfit(userId, request.Outfit.Name);
         var createdOutfit = await _outfitRepository.AddAsync(outfit);
         return _mapper.Map<OutfitGenerallReadDTO>(createdOutfit);
     }

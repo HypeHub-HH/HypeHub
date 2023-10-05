@@ -19,11 +19,4 @@ public class OwnershipValidator : IOwnershipValidator
         var ownedOutfitsAndItems = await _accountRepository.GetAllOutfitIdsForAccount(userId);
         return ownedOutfitsAndItems.Exists(a => a == subjectId);
     }
-
-    //public async Task<bool> ValidateOwnership(Guid , Guid subjectId)
-    //{
-    //    var userId = Guid.Parse(claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);
-    //    var ownedOutfitsAndItems = await _accountRepository.GetAllOutfitIdsForAccount(userId);
-    //    return ownedOutfitsAndItems.Exists(a => a == subjectId);
-    //}
 }

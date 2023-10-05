@@ -33,7 +33,8 @@ public class MapProfile : Profile
 
         CreateMap<Item, ItemGenerallReadDTO>();
         CreateMap<Item, ItemWithImagesAndLikesReadDTO>();
-        CreateMap<ItemCreateDTO, Item>();
+        CreateMap<ItemCreateDTO, Item>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src));
 
         CreateMap<ItemImage, ItemImageReadDTO>();
         CreateMap<ItemImageCreateDTO, ItemImage>();
