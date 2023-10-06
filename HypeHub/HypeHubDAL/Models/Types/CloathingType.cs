@@ -2,10 +2,8 @@
 
 public enum CloathingType
 {
-    Head,
     Torso,
-    Hand,
     Legs,
-    Shoes,
-    Others
+    Footwear,
+    Accesories
 }
