@@ -6,4 +6,11 @@ public class AccountOutfitLike
     public Outfit Outfit { get; init; }
     public Guid OutfitId { get; init; }
     public Guid AccountId { get; init; }
+
+    public AccountOutfitLike(Guid id, Guid outfitId, Guid accountId)
+    {
+        Id = Guid.NewGuid();
+        OutfitId = outfitId;
+        AccountId = accountId;
+    }
 }

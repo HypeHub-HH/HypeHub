@@ -26,7 +26,7 @@ public class CreateItemCommandHandler : IRequestHandler<CreateItemCommand, ItemG
         var userId = Guid.Parse(request.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);
         var validationResult = await _validator.ValidateAsync(request.Item);
         if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult.Errors.Select(error => error.ErrorMessage));
-        var item = new HypeHubDAL.Models.Item(request.Item.Name, userId, request.Item.CloathingType, request.Item.Brand, request.Item.Model, request.Item.Colorway, request.Item.Price, request.Item.PurchaseDate);
+        var item = new HypeHubDAL.Models.Item(userId, request.Item.Name, request.Item.CloathingType, request.Item.Brand, request.Item.Model, request.Item.Colorway, request.Item.Price, request.Item.PurchaseDate);
         var createdItem = await _itemRepository.AddAsync(item);
         var addedItem = _mapper.Map<ItemGenerallReadDTO>(createdItem);
         return addedItem;

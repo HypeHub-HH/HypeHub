@@ -70,7 +70,7 @@ public class FakeDataGenerator
                 string colorway = $"Colorway{i}";
                 decimal? price = (decimal)(i * 10.0);
                 DateTime? purchaseDate = DateTime.UtcNow.AddMonths(-i);
-                items.Add(new Item(itemName, account.Id, cloathingType, brand, model, colorway, price, purchaseDate));
+                items.Add(new Item(account.Id, itemName, cloathingType, brand, model, colorway, price, purchaseDate));
             }
         }
         return items;

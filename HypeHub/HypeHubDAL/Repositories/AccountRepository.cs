@@ -26,10 +26,11 @@ public class AccountRepository : BaseRepository<Account>, IAccountRepository
     }
     public async Task<List<Account>> GetSearchedAccountsAsync(string searchedString)
     {
-        return await _dbContext.Accounts.Where(a => a.Username.StartsWith(searchedString)).ToListAsync();
+        var convertedSearchedString = searchedString.ToLower();
+        return await _dbContext.Accounts.Where(a => a.Username.ToLower().StartsWith(convertedSearchedString)).ToListAsync();
     }
 
-    public async Task<List<Guid>> GetAllOutfitIdsForAccount(Guid accountId)
+    public async Task<List<Guid>> GetAllOutfitsAndItemsIdsForAccount(Guid accountId)
     {
         return await _dbContext.Accounts
                      .Where(a => a.Id == accountId)
@@ -37,7 +38,5 @@ public class AccountRepository : BaseRepository<Account>, IAccountRepository
                      .Include(a => a.Outfits)
                      .SelectMany(a => a.Items.Select(o => o.Id).Concat(a.Outfits.Select(o => o.Id)))
                      .ToListAsync();
-                     
-                     
     }
 }

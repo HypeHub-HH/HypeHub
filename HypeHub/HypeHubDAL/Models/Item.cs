@@ -19,7 +19,7 @@ public class Item
     public DateTime? PurchaseDate { get; set; }
     public List<ItemImage> Images { get; init; } = new();
 
-    public Item(string name, Guid accountId, CloathingType cloathingType, string? brand, string? model, string? colorway, decimal? price, DateTime? purchaseDate)
+    public Item(Guid accountId, string name, CloathingType cloathingType, string? brand, string? model, string? colorway, decimal? price, DateTime? purchaseDate)
     {
         Id = Guid.NewGuid();
         Name = name;
