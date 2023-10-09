@@ -3,6 +3,7 @@ using HypeHubDAL.Models;
 using HypeHubDAL.Models.Relations;
 using HypeHubDAL.Models.Types;
 using HypeHubDAL.Repositories;
+using HypeHubDAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace HypeHubTests;
@@ -10,7 +11,7 @@ namespace HypeHubTests;
 [TestFixture]
 public class AccountRepositoryTests
 {
-    private AccountRepository _accountRepository;
+    private IAccountRepository _accountRepository;
     private HypeHubContext _dbContext;
     private static List<Account> _accounts = new()
         {
@@ -33,7 +34,7 @@ public class AccountRepositoryTests
         };
     private static List<AccountOutfitLike> _accountOutfitLikes = new()
         {
-            new AccountOutfitLike(Guid.NewGuid(), _outfits.First().Id, _accounts.First().Id),
+            new AccountOutfitLike(_outfits.First().Id, _accounts.First().Id),
         };
 
     [OneTimeSetUp]
@@ -101,13 +102,13 @@ public class AccountRepositoryTests
         Assert.Multiple(() =>
         {
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Id, Is.EqualTo(accountId));
-            Assert.That(result.Outfits, Is.Not.Null);
-            Assert.That(result.Outfits, Is.Not.Empty);
-            Assert.That(result.Outfits.First().Images, Is.Not.Null);
-            Assert.That(result.Outfits.First().Images, Is.Not.Empty);
-            Assert.That(result.Outfits.First().Likes, Is.Not.Null);
-            Assert.That(result.Outfits.First().Likes, Is.Not.Empty);
+            Assert.That(result?.Id, Is.EqualTo(accountId));
+            Assert.That(result?.Outfits, Is.Not.Null);
+            Assert.That(result?.Outfits, Is.Not.Empty);
+            Assert.That(result?.Outfits.First().Images, Is.Not.Null);
+            Assert.That(result?.Outfits.First().Images, Is.Not.Empty);
+            Assert.That(result?.Outfits.First().Likes, Is.Not.Null);
+            Assert.That(result?.Outfits.First().Likes, Is.Not.Empty);
         });
     }
 

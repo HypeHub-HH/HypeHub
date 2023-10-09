@@ -7,7 +7,7 @@ public class AccountOutfitLike
     public Guid OutfitId { get; init; }
     public Guid AccountId { get; init; }
 
-    public AccountOutfitLike(Guid id, Guid outfitId, Guid accountId)
+    public AccountOutfitLike(Guid outfitId, Guid accountId)
     {
         Id = Guid.NewGuid();
         OutfitId = outfitId;
