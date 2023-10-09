@@ -11,7 +11,6 @@ public class HypeHubContext : DbContext
     public HypeHubContext(DbContextOptions<HypeHubContext> options) : base(options) { }
 
     public DbSet<Account> Accounts { get; set; }
-    public DbSet<AccountCredentials> AccountCredentials { get; set; }
     public DbSet<Outfit> Outfits { get; set; }
     public DbSet<Item> Items { get; set; }
     public DbSet<OutfitImage> OutfitImages { get; set; }
@@ -31,7 +30,6 @@ public class HypeHubContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         modelBuilder.Entity<Account>().HasData(fakeData.Accounts);
-        modelBuilder.Entity<AccountCredentials>().HasData(fakeData.AccountsCredentials);
         modelBuilder.Entity<Outfit>().HasData(fakeData.Outfits);
         modelBuilder.Entity<Item>().HasData(fakeData.Items);
         modelBuilder.Entity<OutfitImage>().HasData(fakeData.OutfitImages);

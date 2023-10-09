@@ -10,13 +10,12 @@ public class FakeDataGenerator
     public FakeDataGeneratorModel GenerateFakeData(int numberOfAccounts, int numberOfItemsPerAccount, int numberOfOutfitsPerAccount)
     {
         var accounts = CreateRandomAccounts(numberOfAccounts);
-        var accountCredentials = CreateAccountCredentialsForEveryAccount(accounts);
         var outfits = CreateTwoOutfitsForEveryAccount(accounts, numberOfOutfitsPerAccount);
         var items = CreateItemsForEveryAccount(accounts, numberOfItemsPerAccount);
         var outfitImages = CreateImageForEveryOutfit(outfits);
         var imageImages = CreateImageForEveryItem(items);
 
-        return new FakeDataGeneratorModel(accounts, accountCredentials, outfits, items, outfitImages, imageImages);
+        return new FakeDataGeneratorModel(accounts, outfits, items, outfitImages, imageImages);
     }
 
     private List<Account> CreateRandomAccounts(int count)
@@ -30,16 +29,6 @@ public class FakeDataGenerator
         //    accounts.Add(new Account("", username, isPrivate, AccountTypes.User, avatarUrl));
         //}
         return accounts;
-    }
-
-    private List<AccountCredentials> CreateAccountCredentialsForEveryAccount(List<Account> accounts)
-    {
-        var accountsCredentials = new List<AccountCredentials>();
-        foreach (var account in accounts)
-        {
-            accountsCredentials.Add(new AccountCredentials(account.Id, $"hasłoMasło{random.Next(1000)}", $"{account.Username}@gmail.com"));
-        }
-        return accountsCredentials;
     }
 
     private List<Outfit> CreateTwoOutfitsForEveryAccount(List<Account> accounts, int numberOfOutfitsPerAccount)

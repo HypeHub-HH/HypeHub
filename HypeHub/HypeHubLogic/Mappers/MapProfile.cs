@@ -2,7 +2,6 @@
 using HypeHubDAL.Models;
 using HypeHubDAL.Models.Relations;
 using HypeHubLogic.DTOs.Account;
-using HypeHubLogic.DTOs.AccountCredentials;
 using HypeHubLogic.DTOs.AccountItemLike;
 using HypeHubLogic.DTOs.AccountOutfitLike;
 using HypeHubLogic.DTOs.Item;
@@ -18,12 +17,8 @@ public class MapProfile : Profile
     public MapProfile()
     {
         CreateMap<Account, AccountGeneralInfoReadDTO>();
-        CreateMap<Account, AccountWithCredentialsReadDTO>();
         CreateMap<Account, AccountWithOutfitsReadDTO>();
         CreateMap<AccountCreateDTO, Account>();
-
-        CreateMap<AccountCredentials, AccountCredentialsReadDTO>();
-        CreateMap<AccountCredentialsCreateDTO, AccountCredentials>();
 
         CreateMap<AccountItemLike, AccountItemLikeReadDTO>();
         CreateMap<AccountItemLikeCreateDTO, AccountItemLike>();

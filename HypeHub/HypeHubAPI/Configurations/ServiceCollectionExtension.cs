@@ -75,7 +75,6 @@ public static class ServiceCollectionExtension
         services.AddScoped<IItemRepository, ItemRepository>();
         services.AddScoped<IAccountRepository, AccountRepository>();
         services.AddScoped<IOutfitRepository, OutfitRepository>();
-        services.AddScoped<IAccountCredentialsRepository, AccountCredentialsRepository>();
         services.AddScoped<IAccountItemLikeRepository, AccountItemLikeRepository>();
         services.AddScoped<IAccountOutfitLikeRepository, AccountOutfitLikeRepository>();
         services.AddScoped<IItemImageRepository, ItemImageRepository>();

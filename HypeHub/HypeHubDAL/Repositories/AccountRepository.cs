@@ -24,6 +24,7 @@ public class AccountRepository : BaseRepository<Account>, IAccountRepository
             .ThenInclude(o => o.Likes)
             .SingleOrDefaultAsync(a => a.Id == accountId);
     }
+
     public async Task<List<Account>> GetSearchedAccountsAsync(string searchedString)
     {
         var convertedSearchedString = searchedString.ToLower();
