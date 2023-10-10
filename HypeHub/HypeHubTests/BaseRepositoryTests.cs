@@ -104,7 +104,7 @@ public class BaseRepositoryTests
     }
 
     [Test]
-    public async Task AddAsync_AddNull_ThrowsArgumentNullException()
+    public void AddAsync_AddNull_ThrowsArgumentNullException()
     {
         // Act
         Assert.ThrowsAsync<ArgumentNullException>(async () => await _baseRepository.AddAsync(null));
@@ -130,21 +130,20 @@ public class BaseRepositoryTests
     }
 
     [Test]
-    public async Task UpdateAsync_UpdateNull_ThrowsArgumentNullException()
+    public void UpdateAsync_UpdateNull_ThrowsArgumentNullException()
     {
         // Act
         Assert.ThrowsAsync<ArgumentNullException>(async () => await _baseRepository.UpdateAsync(null));
     }
 
     [Test]
-    public async Task DeleteAsync_UpdateAccount_ReturnsUpdatedAccount()
+    public async Task DeleteAsync_AccountExist_ReturnsNull()
     {
         // Arrange
         var accountToDelete = _accounts[1];
 
         // Act
         await _baseRepository.DeleteAsync(accountToDelete);
-
         var deletedEntity = await _dbContext.Accounts.FindAsync(accountToDelete.Id);
 
         // Assert
@@ -152,7 +151,7 @@ public class BaseRepositoryTests
     }
 
     [Test]
-    public async Task DeleteAsync_DeleteNull_ThrowsArgumentNullException()
+    public void DeleteAsync_DeleteNull_ThrowsArgumentNullException()
     {
         // Act
         Assert.ThrowsAsync<ArgumentNullException>(async () => await _baseRepository.DeleteAsync(null));

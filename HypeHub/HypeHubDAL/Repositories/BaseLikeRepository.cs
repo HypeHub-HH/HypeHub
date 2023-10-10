@@ -14,9 +14,10 @@ public class BaseLikeRepository<T> : IBaseLikeRepository<T> where T : class
 
     public async Task<T> AddAsync(T entity)
     {
-        await _dbContext.Set<T>().AddAsync(entity);
+        var result = await _dbContext.Set<T>().AddAsync(entity);
+        var addedEntity = result.Entity;
         await _dbContext.SaveChangesAsync();
-        return entity;
+        return addedEntity;
     }
 
     public async Task DeleteAsync(T entity)
