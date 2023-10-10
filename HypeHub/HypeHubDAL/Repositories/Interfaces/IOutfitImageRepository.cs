@@ -4,5 +4,5 @@ namespace HypeHubDAL.Repositories.Interfaces;
 
 public interface IOutfitImageRepository : IBaseImageRepository<OutfitImage>
 {
-    Task<IReadOnlyList<OutfitImage>> GetAllOutfitImagesAsync(Guid outfitId);
+    Task<List<OutfitImage>> GetAllOutfitImagesAsync(Guid outfitId);
 }

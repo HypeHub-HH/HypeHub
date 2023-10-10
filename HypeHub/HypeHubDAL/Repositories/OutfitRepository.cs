@@ -10,7 +10,7 @@ public class OutfitRepository : BaseRepository<Outfit>, IOutfitRepository
     public OutfitRepository(HypeHubContext dbContext) : base(dbContext)
     { }
 
-    public async Task<Outfit?> GetOutfitWithAccountAndItemsAndLikes(Guid outfitId)
+    public async Task<Outfit?> GetOutfitWithAccountAndItemsAndLikesAsync(Guid outfitId)
     {
         return await _dbContext.Outfits
             .Include(o => o.Account)
@@ -23,7 +23,7 @@ public class OutfitRepository : BaseRepository<Outfit>, IOutfitRepository
             .SingleOrDefaultAsync(o => o.Id == outfitId);
     }
 
-    public async Task<List<Outfit>> GetLatesOutfitsWithAccountsAndImagesAndLikes(int page, int count)
+    public async Task<List<Outfit>> GetLatesOutfitsWithAccountsAndImagesAndLikesAsync(int page, int count)
     {
         int itemsToSkip = (page - 1) * count;
         return await _dbContext.Outfits

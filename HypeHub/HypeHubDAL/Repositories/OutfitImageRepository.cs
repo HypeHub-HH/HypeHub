@@ -10,7 +10,7 @@ public class OutfitImageRepository : BaseImageRepository<OutfitImage>, IOutfitIm
     public OutfitImageRepository(HypeHubContext dbContext) : base(dbContext)
     { }
 
-    public async Task<IReadOnlyList<OutfitImage>> GetAllOutfitImagesAsync(Guid outfitId)
+    public async Task<List<OutfitImage>> GetAllOutfitImagesAsync(Guid outfitId)
     {
         return await _dbContext.OutfitImages.Where(outfitImages => outfitImages.OutfitId == outfitId)
                                             .ToListAsync();

@@ -13,7 +13,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
         _dbContext = dbContext;
     }
 
-    public async Task<IReadOnlyList<T>> GetAllAsync()
+    public async Task<List<T>> GetAllAsync()
     {
         return await _dbContext.Set<T>().ToListAsync();
     }
@@ -25,19 +25,22 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
 
     public async Task<T> AddAsync(T entity)
     {
-        await _dbContext.Set<T>().AddAsync(entity);
+        var result = await _dbContext.Set<T>().AddAsync(entity);
+        var addedEntity = result.Entity;
         await _dbContext.SaveChangesAsync();
-        return entity;
+        return addedEntity;
     }
 
     public async Task<T> UpdateAsync(T entity)
     {
+        T? updatedEntity = null;
         await Task.Run(() =>
         {
-            _dbContext.Set<T>().Update(entity);
+            var result = _dbContext.Set<T>().Update(entity);
+            updatedEntity = result.Entity;
         });
         await _dbContext.SaveChangesAsync();
-        return entity;
+        return updatedEntity;
     }
 
     public async Task DeleteAsync(T entity)

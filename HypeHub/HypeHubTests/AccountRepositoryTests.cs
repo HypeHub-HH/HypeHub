@@ -30,11 +30,13 @@ public class AccountRepositoryTests
         };
     private static List<OutfitImage> _outfitImages = new()
         {
-            new OutfitImage(_outfits.First().Id, "URLTest1"),
+            new OutfitImage(_outfits[0].Id, "URLTest1"),
+            new OutfitImage(_outfits[1].Id, "URLTest2"),
         };
     private static List<AccountOutfitLike> _accountOutfitLikes = new()
         {
-            new AccountOutfitLike(_outfits.First().Id, _accounts.First().Id),
+            new AccountOutfitLike(_outfits[0].Id, _accounts.First().Id),
+            new AccountOutfitLike(_outfits[1].Id, _accounts.First().Id),
         };
 
     [OneTimeSetUp]
@@ -105,10 +107,13 @@ public class AccountRepositoryTests
             Assert.That(result?.Id, Is.EqualTo(accountId));
             Assert.That(result?.Outfits, Is.Not.Null);
             Assert.That(result?.Outfits, Is.Not.Empty);
-            Assert.That(result?.Outfits.First().Images, Is.Not.Null);
-            Assert.That(result?.Outfits.First().Images, Is.Not.Empty);
-            Assert.That(result?.Outfits.First().Likes, Is.Not.Null);
-            Assert.That(result?.Outfits.First().Likes, Is.Not.Empty);
+            foreach (var outfit in result?.Outfits)
+            {
+                Assert.That(outfit.Images, Is.Not.Null);
+                Assert.That(outfit.Images, Is.Not.Empty);
+                Assert.That(outfit.Likes, Is.Not.Null);
+                Assert.That(outfit.Likes, Is.Not.Empty);
+            }
         });
     }
 

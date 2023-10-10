@@ -20,7 +20,7 @@ public class GetLatestOutfitsQueryHandler : IRequestHandler<GetLatestOutfitsQuer
     public async Task<List<OutfitWithAccountAndImagesAndLikesCountReadDTO>> Handle(GetLatestOutfitsQuery request, CancellationToken cancellationToken)
     {
         if (request.Page <= 0 || request.Count <= 0) throw new BadRequestException("Page and count parameter must be greater than zero");
-        var outfits = await _outfitRepository.GetLatesOutfitsWithAccountsAndImagesAndLikes(request.Page, request.Count);
+        var outfits = await _outfitRepository.GetLatesOutfitsWithAccountsAndImagesAndLikesAsync(request.Page, request.Count);
         return _mapper.Map<List<OutfitWithAccountAndImagesAndLikesCountReadDTO>>(outfits);
     }
 }

@@ -14,7 +14,7 @@ public class AccountOutfitLikeRepository : BaseLikeRepository<AccountOutfitLike>
     {
         return await _dbContext.AccountOutfitLikes.Where(aol =>
             aol.AccountId == accountOutfitLike.AccountId &&
-            aol.OutfitId == accountOutfitLike.OutfitId
-        ).SingleOrDefaultAsync();
+            aol.OutfitId == accountOutfitLike.OutfitId)
+            .SingleOrDefaultAsync();
     }
 }

@@ -19,7 +19,7 @@ public class GetOutfitWithAccountAndLikesAndImagesAndItemsQueryHandler : IReques
 
     public async Task<OutfitWithAccountAndImagesAndLikesAndItemsReadDTO> Handle(GetOutfitWithAccountAndLikesAndImagesAndItemsQuery request, CancellationToken cancellationToken)
     {
-        var outfit = await _outfitRepository.GetOutfitWithAccountAndItemsAndLikes(request.OutfitId) ?? throw new NotFoundException($"There is no outfit with the given Id: {request.OutfitId}.");
+        var outfit = await _outfitRepository.GetOutfitWithAccountAndItemsAndLikesAsync(request.OutfitId) ?? throw new NotFoundException($"There is no outfit with the given Id: {request.OutfitId}.");
         return _mapper.Map<OutfitWithAccountAndImagesAndLikesAndItemsReadDTO>(outfit);
     }
 }
