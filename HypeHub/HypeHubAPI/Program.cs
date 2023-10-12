@@ -23,7 +23,15 @@ builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddIdentity();
 builder.Host.AddSerilog();
 builder.Services.AddUISerilog(builder.Configuration);
-
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:3000")
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -33,6 +41,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseSerilogRequestLogging();
+
+app.UseCors();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

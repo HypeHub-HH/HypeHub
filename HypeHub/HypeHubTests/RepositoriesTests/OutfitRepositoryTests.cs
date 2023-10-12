@@ -6,7 +6,7 @@ using HypeHubDAL.Repositories.Interfaces;
 using HypeHubDAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace HypeHubTests;
+namespace HypeHubTests.RepositoriesTests;
 
 public class OutfitRepositoryTests
 {

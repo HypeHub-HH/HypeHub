@@ -33,8 +33,7 @@ public class TokenService : ITokenService
         return tokenHandler.WriteToken(token);
     }
 
-    private JwtSecurityToken CreateJwtToken(List<Claim> claims, SigningCredentials credentials,
-        DateTime expiration) =>
+    private JwtSecurityToken CreateJwtToken(List<Claim> claims, SigningCredentials credentials, DateTime expiration) =>
         new(
             _configuration["JWT:ValidIssuer"],
             _configuration["JWT:ValidAudience"],

@@ -15,6 +15,19 @@ namespace HypeHubAPI.Configurations;
 
 public static class ServiceCollectionExtension
 {
+    public static IServiceCollection AddCorsPolicy(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(builder =>
+            {
+                builder.WithOrigins("http://localhost:3000")
+                       .AllowAnyHeader()
+                       .AllowAnyMethod();
+            });
+        });
+        return services;
+    }
     public static IServiceCollection AddIdentity(this IServiceCollection services)
     {
         services

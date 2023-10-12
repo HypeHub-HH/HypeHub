@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HypeHubDAL.Migrations
 {
     [DbContext(typeof(HypeHubContext))]
-    [Migration("20230928154501_InitialCreate")]
+    [Migration("20231011203436_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -53,69 +53,6 @@ namespace HypeHubDAL.Migrations
                         .IsUnique();
 
                     b.ToTable("Accounts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("053135ab-a8e4-41c4-9e87-7e70982028ee"),
-                            AccountTypes = "User",
-                            AvatarUrl = "https://example.com/avatar/user1.png",
-                            IsPrivate = 0,
-                            Username = "User1"
-                        },
-                        new
-                        {
-                            Id = new Guid("ba8f19b2-193d-4f17-8b30-9112a8001142"),
-                            AccountTypes = "User",
-                            IsPrivate = 1,
-                            Username = "User2"
-                        });
-                });
-
-            modelBuilder.Entity("HypeHubDAL.Models.AccountCredentials", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AccountId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccountId")
-                        .IsUnique();
-
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.ToTable("AccountCredentials");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("3a0be4b8-2b2a-44cc-8d53-789f9441b1a9"),
-                            AccountId = new Guid("053135ab-a8e4-41c4-9e87-7e70982028ee"),
-                            Email = "User1@gmail.com",
-                            Password = "hasłoMasło651"
-                        },
-                        new
-                        {
-                            Id = new Guid("82360feb-1e74-4e0b-893a-f678b408c063"),
-                            AccountId = new Guid("ba8f19b2-193d-4f17-8b30-9112a8001142"),
-                            Email = "User2@gmail.com",
-                            Password = "hasłoMasło289"
-                        });
                 });
 
             modelBuilder.Entity("HypeHubDAL.Models.Item", b =>
@@ -159,32 +96,6 @@ namespace HypeHubDAL.Migrations
                     b.HasIndex("AccountId");
 
                     b.ToTable("Items");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("c84fb656-955a-4d73-ad41-44099f34ec5a"),
-                            AccountId = new Guid("053135ab-a8e4-41c4-9e87-7e70982028ee"),
-                            Brand = "Brand1",
-                            CloathingType = "Torso",
-                            Colorway = "Colorway1",
-                            Model = "Model1",
-                            Name = "Item1",
-                            Price = 10m,
-                            PurchaseDate = new DateTime(2023, 8, 28, 15, 45, 1, 89, DateTimeKind.Utc).AddTicks(2275)
-                        },
-                        new
-                        {
-                            Id = new Guid("4911a837-9945-4de6-a7b8-69699202cbc9"),
-                            AccountId = new Guid("ba8f19b2-193d-4f17-8b30-9112a8001142"),
-                            Brand = "Brand1",
-                            CloathingType = "Torso",
-                            Colorway = "Colorway1",
-                            Model = "Model1",
-                            Name = "Item1",
-                            Price = 10m,
-                            PurchaseDate = new DateTime(2023, 8, 28, 15, 45, 1, 89, DateTimeKind.Utc).AddTicks(2308)
-                        });
                 });
 
             modelBuilder.Entity("HypeHubDAL.Models.ItemImage", b =>
@@ -205,20 +116,6 @@ namespace HypeHubDAL.Migrations
                     b.HasIndex("ItemId");
 
                     b.ToTable("ItemsImages");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("54b0f528-c0a4-42ee-98fa-78a8fa96ff37"),
-                            ItemId = new Guid("c84fb656-955a-4d73-ad41-44099f34ec5a"),
-                            Url = "exampleURL"
-                        },
-                        new
-                        {
-                            Id = new Guid("7fa67b53-0365-4295-b066-9a4d867121b7"),
-                            ItemId = new Guid("4911a837-9945-4de6-a7b8-69699202cbc9"),
-                            Url = "exampleURL"
-                        });
                 });
 
             modelBuilder.Entity("HypeHubDAL.Models.Outfit", b =>
@@ -243,36 +140,6 @@ namespace HypeHubDAL.Migrations
                     b.HasIndex("AccountId");
 
                     b.ToTable("Outfits");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("1e13b80c-88ee-4870-bd3c-e3c46c592b59"),
-                            AccountId = new Guid("053135ab-a8e4-41c4-9e87-7e70982028ee"),
-                            CreationDate = new DateTime(2023, 9, 28, 17, 45, 1, 89, DateTimeKind.Local).AddTicks(2076),
-                            Name = "Outfit559"
-                        },
-                        new
-                        {
-                            Id = new Guid("1f710cdb-8262-424d-b079-8d3537ee5b60"),
-                            AccountId = new Guid("053135ab-a8e4-41c4-9e87-7e70982028ee"),
-                            CreationDate = new DateTime(2023, 9, 28, 17, 45, 1, 89, DateTimeKind.Local).AddTicks(2169),
-                            Name = "Outfit397"
-                        },
-                        new
-                        {
-                            Id = new Guid("cbbaad43-f8bd-4349-bd20-1a8fb9875f20"),
-                            AccountId = new Guid("ba8f19b2-193d-4f17-8b30-9112a8001142"),
-                            CreationDate = new DateTime(2023, 9, 28, 17, 45, 1, 89, DateTimeKind.Local).AddTicks(2175),
-                            Name = "Outfit782"
-                        },
-                        new
-                        {
-                            Id = new Guid("4961cf46-27f0-4600-835e-a38df2996526"),
-                            AccountId = new Guid("ba8f19b2-193d-4f17-8b30-9112a8001142"),
-                            CreationDate = new DateTime(2023, 9, 28, 17, 45, 1, 89, DateTimeKind.Local).AddTicks(2179),
-                            Name = "Outfit715"
-                        });
                 });
 
             modelBuilder.Entity("HypeHubDAL.Models.OutfitImage", b =>
@@ -293,32 +160,6 @@ namespace HypeHubDAL.Migrations
                     b.HasIndex("OutfitId");
 
                     b.ToTable("OutfitImages");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("d162b263-5bfc-4de8-a625-07f64d2cec58"),
-                            OutfitId = new Guid("1e13b80c-88ee-4870-bd3c-e3c46c592b59"),
-                            Url = "exampleURL"
-                        },
-                        new
-                        {
-                            Id = new Guid("5218e490-4b0d-45ce-8a96-d5728f522942"),
-                            OutfitId = new Guid("1f710cdb-8262-424d-b079-8d3537ee5b60"),
-                            Url = "exampleURL"
-                        },
-                        new
-                        {
-                            Id = new Guid("d92a6dd5-10a4-45c6-83d4-d2a262b612af"),
-                            OutfitId = new Guid("cbbaad43-f8bd-4349-bd20-1a8fb9875f20"),
-                            Url = "exampleURL"
-                        },
-                        new
-                        {
-                            Id = new Guid("bb121807-fda2-4cd6-b5e2-ea5c0fb6ebb0"),
-                            OutfitId = new Guid("4961cf46-27f0-4600-835e-a38df2996526"),
-                            Url = "exampleURL"
-                        });
                 });
 
             modelBuilder.Entity("HypeHubDAL.Models.Relations.AccountItemLike", b =>
@@ -372,17 +213,6 @@ namespace HypeHubDAL.Migrations
                     b.HasIndex("OutfitId");
 
                     b.ToTable("OutfitItems");
-                });
-
-            modelBuilder.Entity("HypeHubDAL.Models.AccountCredentials", b =>
-                {
-                    b.HasOne("HypeHubDAL.Models.Account", "Account")
-                        .WithOne("Credentials")
-                        .HasForeignKey("HypeHubDAL.Models.AccountCredentials", "AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("HypeHubDAL.Models.Item", b =>
@@ -468,9 +298,6 @@ namespace HypeHubDAL.Migrations
 
             modelBuilder.Entity("HypeHubDAL.Models.Account", b =>
                 {
-                    b.Navigation("Credentials")
-                        .IsRequired();
-
                     b.Navigation("Items");
 
                     b.Navigation("Outfits");

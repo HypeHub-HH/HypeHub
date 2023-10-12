@@ -4,7 +4,7 @@ using HypeHubDAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 using HypeHubDAL.Repositories.Interfaces;
 
-namespace HypeHubTests;
+namespace HypeHubTests.RepositoriesTests;
 
 [TestFixture]
 public class AccountOutfitLikeRepositoryTests

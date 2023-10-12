@@ -6,7 +6,7 @@ using HypeHubDAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 using HypeHubDAL.Models.Relations;
 
-namespace HypeHubTests;
+namespace HypeHubTests.RepositoriesTests;
 
 [TestFixture]
 public class BaseLikeRepositoryTests

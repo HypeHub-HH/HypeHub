@@ -37,6 +37,13 @@ public class AccountController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("Email")]
+    public async Task<IActionResult> CheckIfEmailExist([FromQuery] string email)
+    {
+        var result = await _mediator.Send(new CheckIfEmailAlreadyExistQuery(email));
+        return Ok(result);
+    }
+
     [HttpDelete]
     public async Task<IActionResult> DeleteAccount([FromBody] Guid id)
     {
