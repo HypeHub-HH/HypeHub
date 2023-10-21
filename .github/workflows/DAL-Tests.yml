@@ -25,4 +25,4 @@ jobs:
     - name: Build
       run: dotnet build ./HypeHub/HypeHub.sln  --no-restore
     - name: Test
-      run: dotnet test ./HypeHub/HypeHubTests/HypeHubTests.csproj --filter FullyQualifiedName~RepositoriesTests --no-build --verbosity normal
+      run: dotnet test ./HypeHub/HypeHubTests/HypeHubTests.csproj --filter FullyQualifiedName~RepositoriesTests
