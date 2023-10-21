@@ -17,6 +17,7 @@ public class TokenService : ITokenService
     {
         _configuration = configuration;
     }
+
     public string CreateToken(ApplicationUser user, IList<string> roles)
     {
         _ = int.TryParse(_configuration["JWT:TokenValidityInMinutes"], out int expirationMinutes);
