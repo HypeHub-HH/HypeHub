@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HypeHubAPI", "HypeHubAPI\HypeHubAPI.csproj", "{DCED7806-402C-48DF-BC4D-6BB30A9AFE8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HypeHubAPI", "HypeHubAPI\HypeHubAPI.csproj", "{DCED7806-402C-48DF-BC4D-6BB30A9AFE8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HypeHubLogic", "HypeHubLogic\HypeHubLogic.csproj", "{E268D5DC-9D2D-468C-98F7-D1B714E9C9B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HypeHubLogic", "HypeHubLogic\HypeHubLogic.csproj", "{E268D5DC-9D2D-468C-98F7-D1B714E9C9B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HypeHubDAL", "HypeHubDAL\HypeHubDAL.csproj", "{7006A461-8CC6-4A3A-B894-EACA80AB7BB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HypeHubDAL", "HypeHubDAL\HypeHubDAL.csproj", "{7006A461-8CC6-4A3A-B894-EACA80AB7BB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HypeHubTests", "HypeHubTests\HypeHubTests.csproj", "{27975896-12B1-4140-893A-F3F811E24DEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{7006A461-8CC6-4A3A-B894-EACA80AB7BB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7006A461-8CC6-4A3A-B894-EACA80AB7BB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7006A461-8CC6-4A3A-B894-EACA80AB7BB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27975896-12B1-4140-893A-F3F811E24DEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27975896-12B1-4140-893A-F3F811E24DEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27975896-12B1-4140-893A-F3F811E24DEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27975896-12B1-4140-893A-F3F811E24DEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -7,21 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="CQRS\Outfit\Commands\" />
-    <Folder Include="CQRS\Outfit\Queries\" />
-    <Folder Include="CQRS\Wardrobe\Commands\" />
-    <Folder Include="CQRS\Wardrobe\Queries\" />
-    <Folder Include="CQRS\Account\Commands\" />
-    <Folder Include="CQRS\Account\Queries\" />
-    <Folder Include="DTOs\" />
-    <Folder Include="Mappers\" />
-    <Folder Include="Validators\Account\" />
-    <Folder Include="Validators\Outfit\" />
-    <Folder Include="Validators\Wardrobe\" />
+    <Compile Remove="DTOs\Account - Copy %282%29\**" />
+    <Compile Remove="DTOs\Account - Copy %283%29\**" />
+    <Compile Remove="DTOs\Account - Copy %284%29\**" />
+    <Compile Remove="Validators\Wardrobe\**" />
+    <EmbeddedResource Remove="DTOs\Account - Copy %282%29\**" />
+    <EmbeddedResource Remove="DTOs\Account - Copy %283%29\**" />
+    <EmbeddedResource Remove="DTOs\Account - Copy %284%29\**" />
+    <EmbeddedResource Remove="Validators\Wardrobe\**" />
+    <None Remove="DTOs\Account - Copy %282%29\**" />
+    <None Remove="DTOs\Account - Copy %283%29\**" />
+    <None Remove="DTOs\Account - Copy %284%29\**" />
+    <None Remove="Validators\Wardrobe\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="11.7.1" />
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.7.1" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.62.1" />
     <PackageReference Include="MediatR" Version="12.1.1" />
   </ItemGroup>
 
