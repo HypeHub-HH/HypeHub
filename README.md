@@ -8,10 +8,17 @@ Link do strony
 <!--
 Nagrac gifa z wygladem i funkcjonalnosciami strony
 -->
-<h2 align="center">Tests</h2>
-[![DAL-Tests](https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/DAL-Tests.yml/badge.svg?branch=main)](https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/DAL-Tests.yml)
-[![Logic-Tests](https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/Logic-Tests.yml/badge.svg?branch=main)](https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/Logic-Tests.yml)
-
+<div align="center">
+  <h2>Tests</h2>
+  <p>
+    <a href="https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/DAL-Tests.yml">
+      <img src="https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/DAL-Tests.yml/badge.svg?branch=main" alt="DAL-Tests">
+    </a>
+    <a href="https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/Logic-Tests.yml">
+      <img src="https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/Logic-Tests.yml/badge.svg?branch=main" alt="Logic-Tests">
+    </a>
+  </p>
+</div>
 <h2 align="center">Technology stack</h2>
 <p align="center">
   <a href="https://www.w3schools.com/cs/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" alt="csharp" width="40" height="40"/></a>
