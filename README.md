@@ -8,6 +8,9 @@ Link do strony
 <!--
 Nagrac gifa z wygladem i funkcjonalnosciami strony
 -->
+<h2 align="center">Tests</h2>
+[![DAL-Tests](https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/DAL-Tests.yml/badge.svg?branch=main)](https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/DAL-Tests.yml)
+[![Logic-Tests](https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/Logic-Tests.yml/badge.svg?branch=main)](https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/Logic-Tests.yml)
 
 <h2 align="center">Technology stack</h2>
 <p align="center">
