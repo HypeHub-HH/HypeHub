@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'HypeHubDAL/**'
+      - 'HypeHub/HypeHubDAL/**'
   pull_request:
     branches: [ "main" ]
 
@@ -23,6 +23,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ./HypeHub/HypeHub.sln
     - name: Build
-      run: dotnet build ./HypeHub/HypeHub.sln  --no-restore
+      run: dotnet build ./HypeHub/HypeHub.sln --no-restore
     - name: Test
-      run: dotnet test ./HypeHub/HypeHubTests/HypeHubTests.csproj --filter FullyQualifiedName~RepositoriesTests
+      run: dotnet test ./HypeHub/HypeHubTests/HypeHubTests.csproj --filter FullyQualifiedName~RepositoriesTests --no-build --verbosity normal
