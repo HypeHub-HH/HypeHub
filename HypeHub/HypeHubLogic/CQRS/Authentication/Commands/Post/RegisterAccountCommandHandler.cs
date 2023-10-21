@@ -3,21 +3,18 @@ using FluentValidation;
 using HypeHubDAL.Exeptions;
 using HypeHubDAL.Models;
 using HypeHubDAL.Repositories.Interfaces;
-using HypeHubDAL.Models.Types;
 using HypeHubLogic.DTOs.Registration;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System.Data;
 
 namespace HypeHubLogic.CQRS.Authentication.Commands.Post;
-
 public class RegisterAccountCommandHandler : IRequestHandler<RegisterAccountCommand, RegistrationReadDTO>
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IMapper _mapper;
     private readonly IValidator<RegistrationCreateDTO> _validator;
     private readonly IAccountRepository _accountRepository;
-
     public RegisterAccountCommandHandler(UserManager<ApplicationUser> userManager, IMapper mapper, IValidator<RegistrationCreateDTO> validator, IAccountRepository accountRepository)
     {
         _userManager = userManager;
@@ -25,7 +22,6 @@ public class RegisterAccountCommandHandler : IRequestHandler<RegisterAccountComm
         _validator = validator;
         _accountRepository = accountRepository;
     }
-
     public async Task<RegistrationReadDTO> Handle(RegisterAccountCommand request, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(request.RegistrationCreateDTO);

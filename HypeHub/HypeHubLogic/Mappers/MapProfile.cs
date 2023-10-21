@@ -11,7 +11,6 @@ using HypeHubLogic.DTOs.OutfitImage;
 using HypeHubLogic.DTOs.Registration;
 
 namespace HypeHubLogic.Mappers;
-
 public class MapProfile : Profile
 {
     public MapProfile()

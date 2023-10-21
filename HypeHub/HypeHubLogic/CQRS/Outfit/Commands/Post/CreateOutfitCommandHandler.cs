@@ -5,9 +5,7 @@ using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Outfit;
 using MediatR;
 using System.Security.Claims;
-
 namespace HypeHubLogic.CQRS.Outfit.Commands.Post;
-
 public class CreateOutfitCommandHandler : IRequestHandler<CreateOutfitCommand, OutfitGenerallReadDTO>
 {
     private readonly IOutfitRepository _outfitRepository;
@@ -20,7 +18,6 @@ public class CreateOutfitCommandHandler : IRequestHandler<CreateOutfitCommand, O
         _mapper = mapper;
         _validator = validator;
     }
-
     public async Task<OutfitGenerallReadDTO> Handle(CreateOutfitCommand request, CancellationToken cancellationToken)
     {
         var userId = Guid.Parse(request.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);

@@ -1,7 +1,6 @@
 ﻿using HypeHubLogic.DTOs.OutfitImage;
 
 namespace HypeHubLogic.DTOs.Outfit;
-
 public record OutfitWithImagesAndLikesCountReadDTO
 {
     public Guid Id { get; init; }

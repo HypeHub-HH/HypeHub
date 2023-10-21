@@ -5,12 +5,10 @@ using HypeHubLogic.Validators;
 using MediatR;
 
 namespace HypeHubLogic.CQRS.Item.Commands.Delete;
-
 public class DeleteItemCommandHandler : IRequestHandler<DeleteItemCommand>
 {
     private readonly IItemRepository _itemRepository;
     private readonly IOwnershipValidator _ownershipValidator;
-
     public DeleteItemCommandHandler(IItemRepository itemRepository, IMapper mapper, IOwnershipValidator ownershipValidator)
     {
         _itemRepository = itemRepository;

@@ -1,5 +1,4 @@
 ﻿namespace HypeHubDAL.Models;
-
 public record Token
 {
     public string? AccessToken { get; init; }

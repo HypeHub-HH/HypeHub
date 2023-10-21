@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-
 namespace HypeHubLogic.Validators
 {
     public interface IOwnershipValidator

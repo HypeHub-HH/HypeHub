@@ -2,7 +2,6 @@
 using HypeHubDAL.Models.Types;
 
 namespace HypeHubDAL.Models;
-
 public class Item
 {
     public Guid Id { get; init; }
@@ -18,7 +17,6 @@ public class Item
     public decimal? Price { get; set; }
     public DateTime? PurchaseDate { get; set; }
     public List<ItemImage> Images { get; init; } = new();
-
     public Item(Guid accountId, string name, CloathingType cloathingType, string? brand, string? model, string? colorway, decimal? price, DateTime? purchaseDate)
     {
         Id = Guid.NewGuid();

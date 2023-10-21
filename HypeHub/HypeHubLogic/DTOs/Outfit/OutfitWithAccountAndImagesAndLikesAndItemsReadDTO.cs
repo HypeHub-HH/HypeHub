@@ -4,7 +4,6 @@ using HypeHubLogic.DTOs.Item;
 using HypeHubLogic.DTOs.OutfitImage;
 
 namespace HypeHubLogic.DTOs.Outfit;
-
 public record OutfitWithAccountAndImagesAndLikesAndItemsReadDTO
 {
     public Guid Id { get; init; }

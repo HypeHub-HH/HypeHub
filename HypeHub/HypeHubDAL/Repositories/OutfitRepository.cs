@@ -7,9 +7,7 @@ namespace HypeHubDAL.Repositories;
 
 public class OutfitRepository : BaseRepository<Outfit>, IOutfitRepository
 {
-    public OutfitRepository(HypeHubContext dbContext) : base(dbContext)
-    { }
-
+    public OutfitRepository(HypeHubContext dbContext) : base(dbContext) { }
     public async Task<Outfit?> GetOutfitWithAccountAndItemsAndLikesAsync(Guid outfitId)
     {
         return await _dbContext.Outfits
@@ -22,7 +20,6 @@ public class OutfitRepository : BaseRepository<Outfit>, IOutfitRepository
             .ThenInclude(i => i.Likes)
             .SingleOrDefaultAsync(o => o.Id == outfitId);
     }
-
     public async Task<List<Outfit>> GetLatesOutfitsWithAccountsAndImagesAndLikesAsync(int page, int count)
     {
         int itemsToSkip = (page - 1) * count;

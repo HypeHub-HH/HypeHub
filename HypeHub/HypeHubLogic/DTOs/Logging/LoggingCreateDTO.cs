@@ -1,5 +1,4 @@
 ﻿namespace HypeHubLogic.DTOs.Logging;
-
 public record LoggingCreateDTO
 {
     public string EmailOrUsername { get; init; }

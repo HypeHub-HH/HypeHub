@@ -3,22 +3,19 @@ using HypeHubDAL.Models;
 using HypeHubLogic.Services.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-namespace HypeHubLogic.CQRS.Authentication.Commands.Post;
 
+namespace HypeHubLogic.CQRS.Authentication.Commands.Post;
 public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, Token>
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ITokenService _tokenService;
-
     public RefreshTokenCommandHandler(UserManager<ApplicationUser> userManager, ITokenService tokenService)
     {
         _userManager = userManager;
         _tokenService = tokenService;
     }
-
     public async Task<Token> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
     {
-
         var principal = _tokenService.GetPrincipalFromExpiredToken(request.Token.AccessToken) ?? throw new BadRequestException($"Invalid access token or refresh token.");
         var username = principal.Identity.Name;
         var managedUser = await _userManager.FindByNameAsync(username) ?? throw new WrongCredentialsException($"There is no account with the given username: {username}.");

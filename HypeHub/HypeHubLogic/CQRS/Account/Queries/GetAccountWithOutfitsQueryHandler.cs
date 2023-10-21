@@ -10,13 +10,11 @@ public class GetAccountWithOutfitsQueryHandler : IRequestHandler<GetAccountWithO
 {
     private readonly IAccountRepository _accountRepository;
     private readonly IMapper _mapper;
-
     public GetAccountWithOutfitsQueryHandler(IAccountRepository accountRepository, IMapper mapper)
     {
         _accountRepository = accountRepository;
         _mapper = mapper;
     }
-
     public async Task<AccountWithOutfitsReadDTO> Handle(GetAccountWithOutfitsQuery request, CancellationToken cancellationToken)
     {
         var account = await _accountRepository.GetAccountWithOutfitsAsync(request.AccountId) ?? throw new NotFoundException($"There is no account with the given Id: {request.AccountId}.");

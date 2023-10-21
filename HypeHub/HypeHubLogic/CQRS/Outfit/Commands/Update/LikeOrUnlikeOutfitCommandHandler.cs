@@ -8,20 +8,17 @@ using MediatR;
 using System.Security.Claims;
 
 namespace HypeHubLogic.CQRS.Outfit.Commands.Update;
-
 public class LikeOrUnlikeOutfitCommandHandler : IRequestHandler<LikeOrUnlikeOutfitCommand>
 {
     private readonly IAccountOutfitLikeRepository _likeRepository;
     private readonly IMapper _mapper;
     private readonly IValidator<AccountOutfitLikeCreateDTO> _validator;
-
     public LikeOrUnlikeOutfitCommandHandler(IAccountOutfitLikeRepository likeRepository, IMapper mapper, IValidator<AccountOutfitLikeCreateDTO> validator)
     {
         _likeRepository = likeRepository;
         _mapper = mapper;
         _validator = validator;
     }
-
     public async Task Handle(LikeOrUnlikeOutfitCommand request, CancellationToken cancellationToken)
     {
         var accountId = Guid.Parse(request.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);

@@ -1,16 +1,12 @@
 ﻿using AutoMapper;
-using Azure.Core;
 using FluentValidation;
 using HypeHubDAL.Exeptions;
-using HypeHubDAL.Repositories;
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Item;
 using HypeHubLogic.Validators;
 using MediatR;
-using System.Security.Claims;
 
 namespace HypeHubLogic.CQRS.Item.Commands.Update;
-
 public class UpdateItemCommandHandler : IRequestHandler<UpdateItemCommand, ItemGenerallReadDTO>
 {
     private readonly IItemRepository _itemRepository;

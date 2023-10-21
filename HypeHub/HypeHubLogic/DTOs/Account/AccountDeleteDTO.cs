@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace HypeHubLogic.DTOs.Account;
-
+﻿namespace HypeHubLogic.DTOs.Account;
 public class AccountDeleteDTO
 {
     public Guid Id { get; set; }
@@ -11,5 +8,4 @@ public class AccountDeleteDTO
         Id = id;
         Email = email;
     }
-
 }

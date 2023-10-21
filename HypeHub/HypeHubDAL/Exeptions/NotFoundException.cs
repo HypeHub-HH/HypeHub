@@ -1,5 +1,4 @@
 ﻿namespace HypeHubDAL.Exeptions;
-
 public class NotFoundException : BaseException
 {
     public NotFoundException(string msg) : base(msg) { }

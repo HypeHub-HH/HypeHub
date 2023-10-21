@@ -1,5 +1,4 @@
 ﻿namespace HypeHubLogic.DTOs.Logging;
-
 public record LoggingReadDTO
 {
     public Guid AccountId { get; init; }

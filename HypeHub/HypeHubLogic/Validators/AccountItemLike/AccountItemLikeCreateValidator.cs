@@ -3,12 +3,10 @@ using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.AccountItemLike;
 
 namespace HypeHubLogic.Validators.AccountItemLike;
-
 public class AccountItemLikeCreateValidator : AbstractValidator<AccountItemLikeCreateDTO>
 {
     private readonly IAccountRepository _accountRepository;
     private readonly IItemRepository _itemRepository;
-
     public AccountItemLikeCreateValidator(IAccountRepository accountRepository, IItemRepository itemRepository)
     {
         _accountRepository = accountRepository;
@@ -26,13 +24,11 @@ public class AccountItemLikeCreateValidator : AbstractValidator<AccountItemLikeC
             .MustAsync(CheckIfItemExist)
             .WithMessage("There is no item with the given Id.");
     }
-
     private async Task<bool> CheckIfAccountExist(Guid id, CancellationToken cancellationToken)
     {
         var account = await _accountRepository.GetByIdAsync(id);
         return account != null;
     }
-
     private async Task<bool> CheckIfItemExist(Guid id, CancellationToken cancellationToken)
     {
         var item = await _itemRepository.GetByIdAsync(id);

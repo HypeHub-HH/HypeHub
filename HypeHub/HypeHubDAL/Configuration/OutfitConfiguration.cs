@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HypeHubDAL.Configuration;
-
 public class OutfitConfiguration : IEntityTypeConfiguration<Outfit>
 {
     public void Configure(EntityTypeBuilder<Outfit> builder)

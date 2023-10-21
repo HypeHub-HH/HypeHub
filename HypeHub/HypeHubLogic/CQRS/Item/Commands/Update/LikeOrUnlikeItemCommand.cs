@@ -1,9 +1,7 @@
-﻿using HypeHubLogic.DTOs.AccountItemLike;
-using MediatR;
+﻿using MediatR;
 using System.Security.Claims;
 
 namespace HypeHubLogic.CQRS.Item.Commands.Update;
-
 public class LikeOrUnlikeItemCommand : IRequest
 {
     public Guid ItemId { get; init; }

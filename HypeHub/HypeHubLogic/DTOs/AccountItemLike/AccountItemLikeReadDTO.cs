@@ -1,5 +1,4 @@
 ﻿namespace HypeHubLogic.DTOs.AccountItemLike;
-
 public record AccountItemLikeReadDTO
 {
     public Guid Id { get; init; }

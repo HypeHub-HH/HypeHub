@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HypeHubDAL.Configuration;
-
 public class AccountItemLikeConfiguration : IEntityTypeConfiguration<AccountItemLike>
 {
     public void Configure(EntityTypeBuilder<AccountItemLike> builder)

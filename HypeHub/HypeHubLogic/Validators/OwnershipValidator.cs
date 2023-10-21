@@ -1,9 +1,7 @@
 ﻿using HypeHubDAL.Repositories.Interfaces;
-using Microsoft.Identity.Client;
 using System.Security.Claims;
 
 namespace HypeHubLogic.Validators;
-
 public class OwnershipValidator : IOwnershipValidator
 {
     private readonly IAccountRepository _accountRepository;
@@ -12,7 +10,6 @@ public class OwnershipValidator : IOwnershipValidator
     {
         _accountRepository = accountRepository;
     }
-
     public async Task<bool> ValidateOwnership(IEnumerable<Claim> claims, Guid subjectId)
     {
         var userId = Guid.Parse(claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);

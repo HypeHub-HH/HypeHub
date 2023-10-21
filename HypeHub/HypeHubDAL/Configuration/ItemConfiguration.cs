@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HypeHubDAL.Configuration;
-
 public class ItemConfiguration : IEntityTypeConfiguration<Item>
 {
     public void Configure(EntityTypeBuilder<Item> builder)
@@ -14,9 +13,9 @@ public class ItemConfiguration : IEntityTypeConfiguration<Item>
         builder.Property(i => i.AccountId)
             .IsRequired();
 
-        builder.Property(i => i.Name)
-            .IsRequired()
-            .HasMaxLength(30);
+        //builder.Property(i => i.Name)
+        //    .IsRequired()
+        //    .HasMaxLength(30);
 
         builder.Property(i => i.CloathingType)
             .IsRequired()

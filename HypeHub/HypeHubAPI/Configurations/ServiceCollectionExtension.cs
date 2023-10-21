@@ -10,12 +10,15 @@ using Microsoft.OpenApi.Models;
 using HypeHubDAL.Models;
 using Serilog.Ui.Web;
 using Serilog.Ui.MsSqlServerProvider;
+using HypeHubLogic.Services.Interfaces;
+using HypeHubLogic.Services;
+using HypeHubLogic.Validators;
+using System.Reflection;
 
 namespace HypeHubAPI.Configurations;
-
 public static class ServiceCollectionExtension
 {
-    public static IServiceCollection AddCorsPolicy(this IServiceCollection services)
+    public static void AddCorsPolicy(this IServiceCollection services)
     {
         services.AddCors(options =>
         {
@@ -26,9 +29,16 @@ public static class ServiceCollectionExtension
                        .AllowAnyMethod();
             });
         });
-        return services;
     }
-    public static IServiceCollection AddIdentity(this IServiceCollection services)
+    public static void AddServices(this IServiceCollection services)
+    {
+        services.AddScoped<ITokenService, TokenService>();
+    }
+    public static void AddCustomValidators(this IServiceCollection services)
+    {
+        services.AddScoped<IOwnershipValidator, OwnershipValidator>();
+    }
+    public static void AddIdentity(this IServiceCollection services)
     {
         services
             .AddIdentityCore<ApplicationUser>(options =>
@@ -43,10 +53,8 @@ public static class ServiceCollectionExtension
             })
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<UsersContext>();
-        return services;
     }
-
-    public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
+    public static void AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
         services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -71,9 +79,7 @@ public static class ServiceCollectionExtension
                 googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
                 googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
             });
-        return services;
     }
-
     public static void AddDbContexts(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<HypeHubContext>(options =>
@@ -82,7 +88,6 @@ public static class ServiceCollectionExtension
         services.AddDbContext<UsersContext>(options =>
             options.UseSqlServer(configuration["UsersDbKey"]));
     }
-
     public static void AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IItemRepository, ItemRepository>();
@@ -93,12 +98,25 @@ public static class ServiceCollectionExtension
         services.AddScoped<IItemImageRepository, ItemImageRepository>();
         services.AddScoped<IOutfitImageRepository, OutfitImageRepository>();
     }
-
     public static void AddSwaggerGenWithJwt(this IServiceCollection services)
     {
         services.AddSwaggerGen(option =>
         {
-            option.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+            option.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "HypeHubAPI",
+                Version = "v1",
+                Description = "This is API for HypeHub project. Authenticated and authorized users have acces to all CRUD operations on item, outfits and their accounts.",
+                Contact = new OpenApiContact
+                {
+                    Name = "HypeHub - (Mikołaj Zgórski, Mariusz Woźniak)",
+                    Email = "hypehub.hh@gmail.com",
+                    Url = new Uri("https://github.com/HypeHub-HH")
+                }
+            });
+
+            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            option.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 
             option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {

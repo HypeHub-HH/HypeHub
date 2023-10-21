@@ -1,23 +1,18 @@
-﻿using HypeHubDAL.Exeptions;
-using HypeHubDAL.Models;
-using HypeHubLogic.DTOs.Logging;
+﻿using HypeHubDAL.Models;
 using HypeHubLogic.Services.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Google.Apis.Auth;
 using HypeHubDAL.Repositories.Interfaces;
-using Azure.Core;
 
 namespace HypeHubLogic.CQRS.Authentication.Commands.Post;
-
 public class GoogleAuthenticateCommandHandler : IRequestHandler<GoogleAuthenticateCommand, GoogleAuthenticateResponse>
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ITokenService _tokenService;
     private readonly IConfiguration _configuration;
     private readonly IAccountRepository _accountRepository;
-
     public GoogleAuthenticateCommandHandler(UserManager<ApplicationUser> userManager, ITokenService tokenService, IConfiguration configuration, IAccountRepository accountRepository)
     {
         _userManager = userManager;
@@ -25,7 +20,6 @@ public class GoogleAuthenticateCommandHandler : IRequestHandler<GoogleAuthentica
         _configuration = configuration;
         _accountRepository = accountRepository;
     }
-
     public async Task<GoogleAuthenticateResponse> Handle(GoogleAuthenticateCommand request, CancellationToken cancellationToken)
     {
         var payload = await GoogleJsonWebSignature.ValidateAsync(request.Token);

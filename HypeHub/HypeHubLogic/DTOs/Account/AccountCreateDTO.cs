@@ -1,5 +1,4 @@
 ﻿namespace HypeHubLogic.DTOs.Account;
-
 public record AccountCreateDTO
 {
     public string Username { get; init; }

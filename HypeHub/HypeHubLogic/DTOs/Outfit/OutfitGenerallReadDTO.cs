@@ -1,5 +1,4 @@
 ﻿namespace HypeHubLogic.DTOs.Outfit;
-
 public record OutfitGenerallReadDTO
 {
     public Guid Id { get; init; }

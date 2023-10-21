@@ -1,9 +1,7 @@
-﻿using HypeHubLogic.DTOs.AccountOutfitLike;
-using MediatR;
+﻿using MediatR;
 using System.Security.Claims;
 
 namespace HypeHubLogic.CQRS.Outfit.Commands.Update;
-
 public class LikeOrUnlikeOutfitCommand : IRequest
 {
     public Guid OutfitId { get; init; }

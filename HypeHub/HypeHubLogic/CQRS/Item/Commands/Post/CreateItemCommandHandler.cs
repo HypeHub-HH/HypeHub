@@ -7,20 +7,17 @@ using MediatR;
 using System.Security.Claims;
 
 namespace HypeHubLogic.CQRS.Item.Commands.Post;
-
 public class CreateItemCommandHandler : IRequestHandler<CreateItemCommand, ItemGenerallReadDTO>
 {
     private readonly IItemRepository _itemRepository;
     private readonly IMapper _mapper;
     private readonly IValidator<ItemCreateDTO> _validator;
-
     public CreateItemCommandHandler(IItemRepository itemRepository, IMapper mapper, IValidator<ItemCreateDTO> validator)
     {
         _itemRepository = itemRepository;
         _mapper = mapper;
         _validator = validator;
     }
-
     public async Task<ItemGenerallReadDTO> Handle(CreateItemCommand request, CancellationToken cancellationToken)
     {
         var userId = Guid.Parse(request.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);

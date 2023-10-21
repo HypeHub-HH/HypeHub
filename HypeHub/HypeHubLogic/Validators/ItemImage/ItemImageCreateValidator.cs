@@ -3,7 +3,6 @@ using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.ItemImage;
 
 namespace HypeHubLogic.Validators.ItemImage;
-
 public class ItemImageCreateValidator : AbstractValidator<ItemImageCreateDTO>
 {
     private readonly IItemRepository _itemRepository;
@@ -25,9 +24,6 @@ public class ItemImageCreateValidator : AbstractValidator<ItemImageCreateDTO>
             .WithMessage("Url is not in a valid format.");
     }
 
-    private async Task<bool> CheckIfItemExist(Guid id, CancellationToken cancellationToken)
-    {
-        var account = await _itemRepository.GetByIdAsync(id);
-        return account != null;
-    }
+    private async Task<bool> CheckIfItemExist(Guid id, CancellationToken cancellationToken) =>
+        await _itemRepository.GetByIdAsync(id) != null;
 }

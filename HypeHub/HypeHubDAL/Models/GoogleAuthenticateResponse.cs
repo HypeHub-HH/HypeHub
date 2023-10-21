@@ -1,5 +1,4 @@
 ﻿namespace HypeHubDAL.Models;
-
 public record GoogleAuthenticateResponse
 {
     public bool AccountExist { get; init; }

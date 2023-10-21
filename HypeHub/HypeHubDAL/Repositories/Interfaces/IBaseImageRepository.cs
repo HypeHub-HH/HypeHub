@@ -1,6 +1,4 @@
 ﻿namespace HypeHubDAL.Repositories.Interfaces;
-
-
 public interface IBaseImageRepository<T> where T : class
 {
     Task<T?> GetByIdAsync(Guid id);

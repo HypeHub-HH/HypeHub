@@ -1,11 +1,9 @@
 ﻿using HypeHubDAL.Exeptions;
-using HypeHubDAL.Models;
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.Validators;
 using MediatR;
 
 namespace HypeHubLogic.CQRS.Outfit.Commands.Delete;
-
 public class DeleteOutfitImageCommandHandler : IRequestHandler<DeleteOutfitImageCommand>
 {
     private readonly IOutfitImageRepository _outfitImageRepository;
@@ -15,7 +13,6 @@ public class DeleteOutfitImageCommandHandler : IRequestHandler<DeleteOutfitImage
         _outfitImageRepository = outfitImageRepository;
         _ownershipValidator = ownershipValidator;
     }
-
     public async Task Handle(DeleteOutfitImageCommand request, CancellationToken cancellationToken)
     {
         var outfitImage = await _outfitImageRepository.GetByIdAsync(request.OutfitImageId) ?? throw new NotFoundException($"There is no Image with the given Id: {request.OutfitImageId}.");

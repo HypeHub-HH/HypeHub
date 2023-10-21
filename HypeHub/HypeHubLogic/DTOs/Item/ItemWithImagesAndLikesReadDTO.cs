@@ -3,7 +3,6 @@ using HypeHubLogic.DTOs.AccountItemLike;
 using HypeHubLogic.DTOs.ItemImage;
 
 namespace HypeHubLogic.DTOs.Item;
-
 public record ItemWithImagesAndLikesReadDTO
 {
     public Guid Id { get; init; }

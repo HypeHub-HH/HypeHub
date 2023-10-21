@@ -1,5 +1,4 @@
 ﻿namespace HypeHubDAL.Exeptions;
-
 public class WrongCredentialsException : BaseException
 {
     public WrongCredentialsException(string msg) : base(msg) { }

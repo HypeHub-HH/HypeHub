@@ -1,5 +1,4 @@
 ﻿namespace HypeHubDAL.Exeptions;
-
 public class UnauthorizedRequestExeption : BaseException
 {
     public UnauthorizedRequestExeption(string msg) : base(msg) { }

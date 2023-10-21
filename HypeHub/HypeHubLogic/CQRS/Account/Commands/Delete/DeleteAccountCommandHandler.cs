@@ -5,18 +5,15 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 
 namespace HypeHubLogic.CQRS.Account.Commands.Delete;
-
 public class DeleteAccountCommandHandler : IRequestHandler<DeleteAccountCommand>
 {
     private readonly IAccountRepository _accountRepository;
     private readonly UserManager<ApplicationUser> _userManager;
-
     public DeleteAccountCommandHandler(IAccountRepository accountRepository, UserManager<ApplicationUser> userManager)
     {
         _accountRepository = accountRepository;
         _userManager = userManager;
     }
-
     public async Task Handle(DeleteAccountCommand request, CancellationToken cancellationToken)
     {
         var account = await _accountRepository.GetByIdAsync(request.AccountId) ?? throw new NotFoundException($"There is no account with the given Id: {request.AccountId}.");

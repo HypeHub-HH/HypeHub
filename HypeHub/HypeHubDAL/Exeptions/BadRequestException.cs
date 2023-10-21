@@ -1,5 +1,4 @@
 ﻿namespace HypeHubDAL.Exeptions;
-
 public class BadRequestException : BaseException
 {
     public BadRequestException(string msg) : base(msg) { }

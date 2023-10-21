@@ -1,7 +1,6 @@
 ﻿using HypeHubLogic.DTOs.Outfit;
 
 namespace HypeHubLogic.DTOs.Account;
-
 public record AccountWithOutfitsReadDTO
 {
     public Guid Id { get; init; }

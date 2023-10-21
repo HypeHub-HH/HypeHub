@@ -1,5 +1,4 @@
 ﻿namespace HypeHubDAL.Repositories.Interfaces;
-
 public interface IBaseRepository<T> where T : class
 {
     Task<List<T>> GetAllAsync();

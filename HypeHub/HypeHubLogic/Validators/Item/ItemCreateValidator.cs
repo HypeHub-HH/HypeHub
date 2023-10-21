@@ -3,11 +3,9 @@ using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Item;
 
 namespace HypeHubLogic.Validators.Item;
-
 public class ItemCreateValidator : AbstractValidator<ItemCreateDTO>
 {
     private readonly IAccountRepository _accountRepository;
-
     public ItemCreateValidator(IAccountRepository accountRepository)
     {
         _accountRepository = accountRepository;
@@ -53,10 +51,6 @@ public class ItemCreateValidator : AbstractValidator<ItemCreateDTO>
             .When(i => i.PurchaseDate != null)
             .WithMessage("PurchaseDate must not be older than today");
     }
-
-    private async Task<bool> CheckIfAccountExist(Guid id, CancellationToken cancellationToken)
-    {
-        var account = await _accountRepository.GetByIdAsync(id);
-        return account != null;
-    }
+    private async Task<bool> CheckIfAccountExist(Guid id, CancellationToken cancellationToken) =>
+        await _accountRepository.GetByIdAsync(id) != null;
 }

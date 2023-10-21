@@ -7,14 +7,12 @@ using HypeHubLogic.Validators;
 using MediatR;
 
 namespace HypeHubLogic.CQRS.Outfit.Commands.Post;
-
 public class CreateOutfitImageCommandHandler : IRequestHandler<CreateOutfitImageCommand, OutfitImageReadDTO>
 {
     private readonly IOutfitImageRepository _outfitImageRepository;
     private readonly IMapper _mapper;
     private readonly IValidator<OutfitImageCreateDTO> _validator;
     private readonly IOwnershipValidator _ownershipValidator;
-
     public CreateOutfitImageCommandHandler(IOutfitImageRepository outfitImageRepository, IMapper mapper, IValidator<OutfitImageCreateDTO> validator, IOwnershipValidator ownershipValidator)
     {
         _outfitImageRepository = outfitImageRepository;
@@ -22,7 +20,6 @@ public class CreateOutfitImageCommandHandler : IRequestHandler<CreateOutfitImage
         _validator = validator;
         _ownershipValidator = ownershipValidator;
     }
-
     public async Task<OutfitImageReadDTO> Handle(CreateOutfitImageCommand request, CancellationToken cancellationToken)
     {
         if (!await _ownershipValidator.ValidateOwnership(request.Claims, request.OutfitImage.OutfitId)) throw new UnauthorizedRequestExeption("Access denied. Only owner can acces this endpoint");

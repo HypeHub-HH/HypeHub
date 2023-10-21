@@ -3,7 +3,6 @@ using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Outfit;
 
 namespace HypeHubLogic.Validators.Outfit;
-
 public class OutfitCreateValidator : AbstractValidator<OutfitCreateDTO>
 {
     private readonly IAccountRepository _accountRepository;
@@ -25,9 +24,6 @@ public class OutfitCreateValidator : AbstractValidator<OutfitCreateDTO>
         //    .WithMessage("There is no account with the given Id.");
     }
 
-    private async Task<bool> CheckIfAccountExist(Guid id, CancellationToken cancellationToken)
-    {
-        var account = await _accountRepository.GetByIdAsync(id);
-        return account != null;
-    }
+    private async Task<bool> CheckIfAccountExist(Guid id, CancellationToken cancellationToken) =>
+        await _accountRepository.GetByIdAsync(id) != null;
 }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Azure.Core;
 using FluentValidation;
 using HypeHubDAL.Exeptions;
 using HypeHubDAL.Models.Relations;
@@ -9,20 +8,17 @@ using MediatR;
 using System.Security.Claims;
 
 namespace HypeHubLogic.CQRS.Item.Commands.Update;
-
 public class LikeOrUnlikeItemCommandHandler : IRequestHandler<LikeOrUnlikeItemCommand>
 {
     private readonly IAccountItemLikeRepository _likeRepository;
     private readonly IMapper _mapper;
     private readonly IValidator<AccountItemLikeCreateDTO> _validator;
-
     public LikeOrUnlikeItemCommandHandler(IAccountItemLikeRepository likeRepository, IMapper mapper, IValidator<AccountItemLikeCreateDTO> validator)
     {
         _likeRepository = likeRepository;
         _mapper = mapper;
         _validator = validator;
     }
-
     public async Task Handle(LikeOrUnlikeItemCommand request, CancellationToken cancellationToken)
     {
         var accountId = Guid.Parse(request.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value);

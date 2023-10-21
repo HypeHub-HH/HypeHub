@@ -3,7 +3,6 @@ using MediatR;
 using System.Security.Claims;
 
 namespace HypeHubLogic.CQRS.Outfit.Commands.Update;
-
 public class UpdateOutfitCommand : IRequest<OutfitGenerallReadDTO>
 {
     public OutfitUpdateDTO Outfit { get; init; }

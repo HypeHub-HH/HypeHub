@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HypeHubDAL.Configuration;
-
 public class ItemImageConfiguration : IEntityTypeConfiguration<ItemImage>
 {
     public void Configure(EntityTypeBuilder<ItemImage> builder)

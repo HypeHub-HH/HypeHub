@@ -1,7 +1,6 @@
 ﻿using HypeHubDAL.Models.Types;
 
 namespace HypeHubLogic.DTOs.Item;
-
 public record ItemGenerallReadDTO
 {
     public Guid Id { get; init; }

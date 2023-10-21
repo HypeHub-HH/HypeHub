@@ -1,5 +1,4 @@
 ﻿namespace HypeHubDAL.Exeptions;
-
 public class InternalIdentityServerException : BaseException
 {
     public InternalIdentityServerException(string msg) : base(msg) { }

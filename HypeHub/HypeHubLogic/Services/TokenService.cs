@@ -10,38 +10,23 @@ using System.Security.Cryptography;
 using System.Text;
 
 namespace HypeHubLogic.Services;
-
 public class TokenService : ITokenService
 {
     private readonly IConfiguration _configuration;
-
     public TokenService(IConfiguration configuration)
     {
         _configuration = configuration;
     }
-
     public string CreateToken(ApplicationUser user, IList<string> roles)
     {
         _ = int.TryParse(_configuration["JWT:TokenValidityInMinutes"], out int expirationMinutes);
         var expiration = DateTime.UtcNow.AddMinutes(expirationMinutes);
-        var token = CreateJwtToken(
-            CreateClaims(user, roles),
-            CreateSigningCredentials(),
-            expiration
-        );
+        var token = CreateJwtToken(CreateClaims(user, roles),CreateSigningCredentials(),expiration);
         var tokenHandler = new JwtSecurityTokenHandler();
         return tokenHandler.WriteToken(token);
     }
-
     private JwtSecurityToken CreateJwtToken(List<Claim> claims, SigningCredentials credentials, DateTime expiration) =>
-        new(
-            _configuration["JWT:ValidIssuer"],
-            _configuration["JWT:ValidAudience"],
-            claims,
-            expires: expiration,
-            signingCredentials: credentials
-        );
-
+        new(_configuration["JWT:ValidIssuer"], _configuration["JWT:ValidAudience"], claims, expires: expiration, signingCredentials: credentials);
     private List<Claim> CreateClaims(ApplicationUser user, IList<string> roles)
     {
         try
@@ -68,18 +53,8 @@ public class TokenService : ITokenService
             throw new InternalIdentityServerException(e.Message);
         }
     }
-
-    private SigningCredentials CreateSigningCredentials()
-    {
-        return new SigningCredentials(
-            new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(_configuration["IssuerSigningKey"])
-            ),
-            SecurityAlgorithms.HmacSha256
-        );
-    }
-
-
+    private SigningCredentials CreateSigningCredentials() =>
+       new(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["IssuerSigningKey"])), SecurityAlgorithms.HmacSha256);
     public string GenerateRefreshToken()
     {
         var randomNumber = new byte[32];
@@ -87,7 +62,6 @@ public class TokenService : ITokenService
         rng.GetBytes(randomNumber);
         return Convert.ToBase64String(randomNumber);
     }
-
     public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
     {
         var tokenValidationParameters = new TokenValidationParameters
@@ -99,8 +73,7 @@ public class TokenService : ITokenService
             ValidateLifetime = false
         };
         var tokenHandler = new JwtSecurityTokenHandler();
-        SecurityToken securityToken;
-        var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
+        var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken);
         var jwtSecurityToken = securityToken as JwtSecurityToken;
         if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
             throw new SecurityTokenException("Invalid token");

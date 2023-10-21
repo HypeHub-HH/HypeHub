@@ -6,18 +6,14 @@ using HypeHubLogic.Services.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Identity.Client;
-using System.Security.Claims;
 
 namespace HypeHubLogic.CQRS.Authentication.Commands.Post;
-
 public class LoginAccountCommandHandler : IRequestHandler<LoginAccountCommand, LoggingReadDTO>
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ITokenService _tokenService;
     private readonly IConfiguration _configuration;
     private readonly IAccountRepository _accountRepository;
-
     public LoginAccountCommandHandler(UserManager<ApplicationUser> userManager, ITokenService tokenService, IConfiguration configuration, IAccountRepository accountRepository)
     {
         _userManager = userManager;
@@ -25,7 +21,6 @@ public class LoginAccountCommandHandler : IRequestHandler<LoginAccountCommand, L
         _configuration = configuration;
         _accountRepository = accountRepository;
     }
-
     public async Task<LoggingReadDTO> Handle(LoginAccountCommand request, CancellationToken cancellationToken)
     {
         var emailOrUserName = request.LoggingCreateDTO.EmailOrUsername;

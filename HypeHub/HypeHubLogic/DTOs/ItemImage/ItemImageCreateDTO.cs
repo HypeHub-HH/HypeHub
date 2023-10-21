@@ -1,5 +1,4 @@
 ﻿namespace HypeHubLogic.DTOs.ItemImage;
-
 public record ItemImageCreateDTO
 {
     public Guid ItemId { get; init; }

@@ -1,7 +1,6 @@
 ﻿using HypeHubDAL.Models.Types;
 
 namespace HypeHubLogic.DTOs.Item;
-
 public record ItemCreateDTO
 {
     public string Name { get; set; }
@@ -11,7 +10,6 @@ public record ItemCreateDTO
     public string? Colorway { get; init; }
     public decimal? Price { get; init; }
     public DateTime? PurchaseDate { get; init; }
-
     public ItemCreateDTO(string name, CloathingType cloathingType, string? brand, string? model, string? colorway, decimal? price, DateTime? purchaseDate)
     {
         Name = name;

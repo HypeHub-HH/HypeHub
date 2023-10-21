@@ -1,18 +1,16 @@
 ﻿using HypeHubDAL.Exeptions;
+using HypeHubLogic.DTOs.Exception;
 using System.Net;
 using System.Text.Json;
 
 namespace HypeHubAPI.Middlewares;
-
 public class GlobalExeptionHandlingMiddleware
 {
     private readonly RequestDelegate _next;
-
     public GlobalExeptionHandlingMiddleware(RequestDelegate next)
     {
         _next = next;
     }
-
     public async Task Invoke(HttpContext context)
     {
         try
@@ -24,12 +22,11 @@ public class GlobalExeptionHandlingMiddleware
             await HandleExeptionAsync(context, ex);
         }
     }
-
     private static Task HandleExeptionAsync(HttpContext context, BaseException ex)
     {
         HttpStatusCode status;
-        var stackTrace = string.Empty;
-        string message = "";
+        string stackTrace;
+        string message;
         List<string> errors = new();
 
         var exeptionType = ex.GetType();
@@ -75,10 +72,10 @@ public class GlobalExeptionHandlingMiddleware
             stackTrace = ex.StackTrace;
         }
 
-        var exeptionResult = JsonSerializer.Serialize(new { message = message, status = status, errors = errors });
+        var response = new ExceptionOccuredReadDTO(message, errors, status);
+        var exeptionResult = JsonSerializer.Serialize(response);
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)status;
-
         return context.Response.WriteAsync(exeptionResult);
     }
 }

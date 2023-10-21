@@ -4,12 +4,9 @@ using HypeHubDAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace HypeHubDAL.Repositories;
-
 public class AccountItemLikeRepository : BaseLikeRepository<AccountItemLike>, IAccountItemLikeRepository
 {
-    public AccountItemLikeRepository(HypeHubContext dbContext) : base(dbContext)
-    { }
-
+    public AccountItemLikeRepository(HypeHubContext dbContext) : base(dbContext) { }
     public async Task<AccountItemLike?> GetAsyncByAccountAndItemId(AccountItemLike accountItemLike)
     {
         return await _dbContext.AccountItemLikes.Where(ail =>

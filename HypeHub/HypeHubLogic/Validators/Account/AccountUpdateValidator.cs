@@ -3,11 +3,9 @@ using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Account;
 
 namespace HypeHubLogic.Validators.Account;
-
 public class AccountUpdateValidator : AbstractValidator<AccountUpdateDTO>
 {
     private readonly IAccountRepository _accountRepository;
-
     public AccountUpdateValidator(IAccountRepository accountRepository)
     {
         _accountRepository = accountRepository;
@@ -38,13 +36,11 @@ public class AccountUpdateValidator : AbstractValidator<AccountUpdateDTO>
                 .WithMessage("AvatarUrl is not in a valid format.");
         });
     }
-
     private async Task<bool> CheckIfAccountExist(Guid id, CancellationToken cancellationToken)
     {
         var account = await _accountRepository.GetByIdAsync(id);
         return account != null;
     }
-
     private async Task<bool> CheckIfUsernameAlreadyExist(string username, CancellationToken cancellationToken)
     {
         return !await _accountRepository.CheckIfUsernameAlreadyExistAsync(username);
