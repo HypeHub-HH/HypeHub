@@ -40,7 +40,6 @@ public class MapProfile : Profile
             .ForMember(dest => dest.Likes, opt => opt.MapFrom(src => src.Likes.Count()));
         CreateMap<Outfit, OutfitWithAccountAndImagesAndLikesAndItemsReadDTO>();
         CreateMap<OutfitCreateDTO, Outfit>();
-
         CreateMap<OutfitImage, OutfitImageReadDTO>();
         CreateMap<OutfitImageCreateDTO, OutfitImage>();
 
