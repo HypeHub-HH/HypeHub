@@ -13,7 +13,7 @@ public class AccountRepositoryTests
 {
     private IAccountRepository _accountRepository;
     private HypeHubContext _dbContext;
-    private static List<Account> _accounts = new()
+    private static readonly List<Account> _accounts = new()
         {
             new Account(Guid.NewGuid(), "AccountTest1", true, AccountTypes.User, null),
             new Account(Guid.NewGuid(), "AccountTest2", true, AccountTypes.User, null),
@@ -45,7 +45,6 @@ public class AccountRepositoryTests
         var options = new DbContextOptionsBuilder<HypeHubContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
-
         _dbContext = new HypeHubContext(options);
         await _dbContext.Database.EnsureCreatedAsync();
         await _dbContext.Accounts.AddRangeAsync(_accounts);
@@ -54,7 +53,6 @@ public class AccountRepositoryTests
         await _dbContext.OutfitImages.AddRangeAsync(_outfitImages);
         await _dbContext.AccountOutfitLikes.AddRangeAsync(_accountOutfitLikes);
         await _dbContext.SaveChangesAsync();
-
         _accountRepository = new AccountRepository(_dbContext);
     }
 

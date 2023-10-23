@@ -12,46 +12,46 @@ public class OutfitRepositoryTests
 {
     private IOutfitRepository _outfitRepository;
     private HypeHubContext _dbContext;
-    private static List<Account> _accounts = new()
+    private static readonly List<Account> _accounts = new()
         {
             new Account(Guid.NewGuid(), "AccountTest1", true, AccountTypes.User, null),
         };
-    private static List<Outfit> _outfits = new()
+    private static readonly List<Outfit> _outfits = new()
         {
             new Outfit(_accounts.First().Id, "OutfitTest1"),
             new Outfit(_accounts.First().Id, "OutfitTest2"),
             new Outfit(_accounts.First().Id, "OutfitTest3"),
             new Outfit(_accounts.First().Id, "OutfitTest4"),
         };
-    private static List<Item> _items = new()
+    private static readonly List<Item> _items = new()
         {
             new Item(_accounts.First().Id, "ItemTest1", CloathingType.Accesories, null, null, null, null, null),
             new Item(_accounts.First().Id, "ItemTest2", CloathingType.Accesories, null, null, null, null, null),
             new Item(_accounts.First().Id, "ItemTest3", CloathingType.Accesories, null, null, null, null, null),
             new Item(_accounts.First().Id, "ItemTest4", CloathingType.Accesories, null, null, null, null, null),
         };
-    private static List<OutfitImage> _outfitImages = new()
+    private static readonly List<OutfitImage> _outfitImages = new()
         {
             new OutfitImage(_outfits[0].Id, "URLTest1"),
             new OutfitImage(_outfits[1].Id, "URLTest2"),
             new OutfitImage(_outfits[2].Id, "URLTest3"),
             new OutfitImage(_outfits[3].Id, "URLTest4"),
         };
-    private static List<ItemImage> _itemImages = new()
+    private static readonly List<ItemImage> _itemImages = new()
         {
             new ItemImage(_items[0].Id, "URLTest1"),
             new ItemImage(_items[1].Id, "URLTest2"),
             new ItemImage(_items[2].Id, "URLTest1"),
             new ItemImage(_items[3].Id, "URLTest2"),
         };
-    private static List<AccountOutfitLike> _accountOutfitLikes = new()
+    private static readonly List<AccountOutfitLike> _accountOutfitLikes = new()
         {
             new AccountOutfitLike(_outfits[0].Id, _accounts.First().Id),
             new AccountOutfitLike(_outfits[1].Id, _accounts.First().Id),
             new AccountOutfitLike(_outfits[2].Id, _accounts.First().Id),
             new AccountOutfitLike(_outfits[3].Id, _accounts.First().Id),
         };
-    private static List<AccountItemLike> _accountItemLikes = new()
+    private static readonly List<AccountItemLike> _accountItemLikes = new()
         {
             new AccountItemLike(_items[0].Id, _accounts.First().Id),
             new AccountItemLike(_items[1].Id, _accounts.First().Id),
@@ -65,7 +65,6 @@ public class OutfitRepositoryTests
         var options = new DbContextOptionsBuilder<HypeHubContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
-
         _dbContext = new HypeHubContext(options);
         await _dbContext.Database.EnsureCreatedAsync();
         await _dbContext.Accounts.AddRangeAsync(_accounts);
@@ -76,7 +75,6 @@ public class OutfitRepositoryTests
         await _dbContext.AccountOutfitLikes.AddRangeAsync(_accountOutfitLikes);
         await _dbContext.AccountItemLikes.AddRangeAsync(_accountItemLikes);
         await _dbContext.SaveChangesAsync();
-
         _outfitRepository = new OutfitRepository(_dbContext);
     }
 

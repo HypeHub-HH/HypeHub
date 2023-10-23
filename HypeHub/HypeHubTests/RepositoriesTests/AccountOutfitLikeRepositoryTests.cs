@@ -11,8 +11,8 @@ public class AccountOutfitLikeRepositoryTests
 {
     private IAccountOutfitLikeRepository _accountOutfitLikeRepository;
     private HypeHubContext _dbContext;
-    private static Guid _id = Guid.NewGuid();
-    private static List<AccountOutfitLike> _accountOutfitLikes = new()
+    private static readonly Guid _id = Guid.NewGuid();
+    private static readonly List<AccountOutfitLike> _accountOutfitLikes = new()
         {
             new AccountOutfitLike(Guid.NewGuid(), Guid.NewGuid()),
             new AccountOutfitLike(_id, _id),
@@ -25,12 +25,10 @@ public class AccountOutfitLikeRepositoryTests
         var options = new DbContextOptionsBuilder<HypeHubContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
-
         _dbContext = new HypeHubContext(options);
         await _dbContext.Database.EnsureCreatedAsync();
         await _dbContext.AccountOutfitLikes.AddRangeAsync(_accountOutfitLikes);
         await _dbContext.SaveChangesAsync();
-
         _accountOutfitLikeRepository = new AccountOutfitLikeRepository(_dbContext);
     }
 

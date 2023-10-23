@@ -11,8 +11,8 @@ public class OutfitImageRepositoryTests
 {
     private IOutfitImageRepository _outfitImageRepository;
     private HypeHubContext _dbContext;
-    private static Guid _id = Guid.NewGuid();
-    private static List<OutfitImage> _outfitImages = new()
+    private static readonly Guid _id = Guid.NewGuid();
+    private static readonly List<OutfitImage> _outfitImages = new()
         {
             new OutfitImage(_id, "TestURL1"),
             new OutfitImage(_id, "TestURL2"),
@@ -24,12 +24,10 @@ public class OutfitImageRepositoryTests
         var options = new DbContextOptionsBuilder<HypeHubContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
-
         _dbContext = new HypeHubContext(options);
         await _dbContext.Database.EnsureCreatedAsync();
         await _dbContext.OutfitImages.AddRangeAsync(_outfitImages);
         await _dbContext.SaveChangesAsync();
-
         _outfitImageRepository = new OutfitImageRepository(_dbContext);
     }
 

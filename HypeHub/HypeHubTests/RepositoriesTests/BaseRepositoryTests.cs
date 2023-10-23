@@ -12,7 +12,7 @@ public class BaseRepositoryTests
 {
     private IBaseRepository<Account> _baseRepository;
     private HypeHubContext _dbContext;
-    private static List<Account> _accounts = new()
+    private static readonly List<Account> _accounts = new()
         {
             new Account(Guid.NewGuid(), "AccountTest1", true, AccountTypes.User, null),
             new Account(Guid.NewGuid(), "AccountTest2", true, AccountTypes.User, null),
@@ -25,12 +25,10 @@ public class BaseRepositoryTests
         var options = new DbContextOptionsBuilder<HypeHubContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
-
         _dbContext = new HypeHubContext(options);
         await _dbContext.Database.EnsureCreatedAsync();
         await _dbContext.Accounts.AddRangeAsync(_accounts);
         await _dbContext.SaveChangesAsync();
-
         _baseRepository = new BaseRepository<Account>(_dbContext);
     }
 

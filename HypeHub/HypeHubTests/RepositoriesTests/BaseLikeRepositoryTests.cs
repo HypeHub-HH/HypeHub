@@ -1,6 +1,4 @@
 ﻿using HypeHubDAL.DbContexts;
-using HypeHubDAL.Models.Types;
-using HypeHubDAL.Models;
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubDAL.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +11,7 @@ public class BaseLikeRepositoryTests
 {
     private IBaseLikeRepository<AccountOutfitLike> _baseLikeRepository;
     private HypeHubContext _dbContext;
-    private static List<AccountOutfitLike> _accountOutfitLikes = new()
+    private static readonly List<AccountOutfitLike> _accountOutfitLikes = new()
         {
             new AccountOutfitLike(Guid.NewGuid(), Guid.NewGuid()),
             new AccountOutfitLike(Guid.NewGuid(), Guid.NewGuid()),
@@ -25,12 +23,10 @@ public class BaseLikeRepositoryTests
         var options = new DbContextOptionsBuilder<HypeHubContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
-
         _dbContext = new HypeHubContext(options);
         await _dbContext.Database.EnsureCreatedAsync();
         await _dbContext.AccountOutfitLikes.AddRangeAsync(_accountOutfitLikes);
         await _dbContext.SaveChangesAsync();
-
         _baseLikeRepository = new BaseLikeRepository<AccountOutfitLike>(_dbContext);
     }
 
@@ -46,7 +42,6 @@ public class BaseLikeRepositoryTests
     {
         // Arrange
         var accountOutfitLikeToAdd = new AccountOutfitLike(Guid.NewGuid(), Guid.NewGuid());
-
 
         // Act
         var result = await _baseLikeRepository.AddAsync(accountOutfitLikeToAdd);

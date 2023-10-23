@@ -1,5 +1,4 @@
 ﻿using HypeHubDAL.DbContexts;
-using HypeHubDAL.Models.Types;
 using HypeHubDAL.Models;
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubDAL.Repositories;
@@ -12,7 +11,7 @@ public class BaseImageRepositoryTests
 {
     private IBaseImageRepository<OutfitImage> _baseImageRepository;
     private HypeHubContext _dbContext;
-    private static List<OutfitImage> _outfitImages = new()
+    private static readonly List<OutfitImage> _outfitImages = new()
         {
             new OutfitImage(Guid.NewGuid(), "URLTest1"),
             new OutfitImage(Guid.NewGuid(), "URLTest2"),
@@ -24,12 +23,10 @@ public class BaseImageRepositoryTests
         var options = new DbContextOptionsBuilder<HypeHubContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
-
         _dbContext = new HypeHubContext(options);
         await _dbContext.Database.EnsureCreatedAsync();
         await _dbContext.OutfitImages.AddRangeAsync(_outfitImages);
         await _dbContext.SaveChangesAsync();
-
         _baseImageRepository = new BaseImageRepository<OutfitImage>(_dbContext);
     }
 
