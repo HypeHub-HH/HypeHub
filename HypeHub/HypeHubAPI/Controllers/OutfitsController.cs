@@ -3,14 +3,11 @@ using HypeHubLogic.CQRS.Outfit.Commands.Post;
 using HypeHubLogic.CQRS.Outfit.Commands.Update;
 using HypeHubLogic.CQRS.Outfit.Queries;
 using HypeHubLogic.DTOs.Exception;
-using HypeHubLogic.DTOs.Item;
-using HypeHubLogic.DTOs.ItemImage;
 using HypeHubLogic.DTOs.Outfit;
 using HypeHubLogic.DTOs.OutfitImage;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace HypeHubAPI.Controllers;
 

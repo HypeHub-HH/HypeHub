@@ -37,7 +37,7 @@ public class TokenService : ITokenService
                 new Claim("sub", "TokenForTheApiWithAuth"),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture)),
-                new Claim(ClaimTypes.Name, user.Id)
+                new Claim(ClaimTypes.Name, user.Id),
             };
             if (roles.Count != 0)
             {

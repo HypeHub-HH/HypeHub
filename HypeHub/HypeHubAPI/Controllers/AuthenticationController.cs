@@ -1,11 +1,14 @@
 ﻿using HypeHubDAL.Models;
 using HypeHubLogic.CQRS.Authentication.Commands.Post;
+using HypeHubLogic.CQRS.Authentication.Queries;
 using HypeHubLogic.DTOs.Exception;
 using HypeHubLogic.DTOs.Logging;
 using HypeHubLogic.DTOs.Registration;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
+using System.Net;
 
 namespace HypeHubAPI.Controllers;
 
@@ -79,15 +82,15 @@ public class AuthenticationController : ControllerBase
     /// </summary>
     /// <param name="token">A refresh token for refreshing the user's authentication token.</param>
     /// <returns>
-    ///   Returns an HTTP 200 (OK) response upon successful token refresh, along with the new access and refresh tokens.
+    ///   Returns an HTTP 200 (OK) response upon successful token refresh, along with the new access token.
     /// </returns>
     /// <remarks>
     ///   This endpoint allows a user to refresh their authentication token by providing a valid refresh token
     ///   in the request body using the JSON format. After a successful token refresh, a response with an HTTP 200 (OK)
-    ///   status code will be returned, and it will include the new access and refresh tokens for the user.
+    ///   status code will be returned, and it will include the new access token for the user.
     /// </remarks>
     /// <param name="token">A DTO (Data Transfer Object) containing the refresh token for token refresh.</param>
-    /// <response code="200">The user's authentication token was successfully refreshed, and new tokens are returned.</response>
+    /// <response code="200">The user's authentication token was successfully refreshed, and new token is returned.</response>
     /// <response code="400">The token refresh request was invalid, or the refresh token is expired or incorrect.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
     [ProducesResponseType(typeof(Token), StatusCodes.Status200OK)]
@@ -127,6 +130,15 @@ public class AuthenticationController : ControllerBase
     {
         await _mediator.Send(new RevokeTokenCommand(username));
         return NoContent();
+    }
+
+    [HttpGet("GetCurrentAccount")]
+    [Authorize]
+    public async Task<IActionResult> GetCurrentAccount()
+    {
+        var token = Request.Headers.Authorization;
+        var result = await _mediator.Send(new GetCurrentAccountQuery(token));
+        return Ok(result);
     }
 
     #region Endpoint Description

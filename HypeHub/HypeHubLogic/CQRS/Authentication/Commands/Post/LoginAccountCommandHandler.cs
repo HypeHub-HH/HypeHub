@@ -45,6 +45,6 @@ public class LoginAccountCommandHandler : IRequestHandler<LoginAccountCommand, L
         var userId = Guid.Parse(managedUser.Id);
         var account = await _accountRepository.GetByIdAsync(userId);
 
-        return new LoggingReadDTO() { AccountId = userId, UserName = account.Username, Email = managedUser.Email, AvatarURL = account.AvatarUrl, Token = accessToken, RefreshToken = refreshToken };
+        return new LoggingReadDTO() { AccountId = userId, UserName = managedUser.UserName, Email = managedUser.Email, IsPrivate = account.IsPrivate, AvatarURL = account.AvatarUrl, Roles = roles, Token = accessToken, RefreshToken = refreshToken };
     }
 }

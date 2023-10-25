@@ -1,5 +1,6 @@
-﻿namespace HypeHubLogic.DTOs.Logging;
-public record LoggingReadDTO
+﻿namespace HypeHubLogic.DTOs.Account;
+
+public record AccountCurrentReadDTO
 {
     public Guid AccountId { get; init; }
     public string UserName { get; init; }
@@ -7,6 +8,4 @@ public record LoggingReadDTO
     public bool IsPrivate { get; init; }
     public string? AvatarURL { get; init; }
     public IList<string> Roles { get; init; }
-    public string Token { get; init; }
-    public string RefreshToken { get; init; }
 }
