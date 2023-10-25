@@ -22,7 +22,12 @@ public class AccountController : ControllerBase
         var result = await _mediator.Send(new GetAccountWithOutfitsQuery(id));
         return Ok(result);
     }
-
+    [HttpGet("{id}/Items")]
+    public async Task<IActionResult> GetItemsFromOutfit(Guid id)
+    {
+        var result = await _mediator.Send(new GetItemsFromAccountQuery(id));
+        return Ok(result);
+    }
     [HttpGet("Search")]
     public async Task<IActionResult> GetSearchedAccounts([FromQuery] string searchedUsername)
     {
