@@ -20,6 +20,15 @@ public class AccountRepository : BaseRepository<Account>, IAccountRepository
             .ThenInclude(o => o.Likes)
             .SingleOrDefaultAsync(a => a.Id == accountId);
     }
+    public async Task<Account?> GetAccountWithItemsAsync(Guid accountId)
+    {
+        return await _dbContext.Accounts
+            .Include(a => a.Items)
+            .ThenInclude(o => o.Images)
+            .Include(a => a.Items)
+            .ThenInclude(o => o.Likes)
+            .SingleOrDefaultAsync(a => a.Id == accountId);
+    }
     public async Task<List<Account>> GetSearchedAccountsAsync(string searchedString)
     {
         var convertedSearchedString = searchedString.ToLower();

@@ -1,5 +1,6 @@
 ﻿using HypeHubDAL.Models;
 using HypeHubDAL.Models.Relations;
+using HypeHubDAL.Seeder;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -18,5 +19,30 @@ public class HypeHubContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+        var seeder = new SeederGenerator();
+
+        var accounts = seeder.CreateAccountsForHypeHub();
+        modelBuilder.Entity<Account>().HasData(accounts);
+
+        var outfits = seeder.CreateOutfitsForHypeHub(accounts);
+        modelBuilder.Entity<Outfit>().HasData(outfits);
+
+        var outfitImages = seeder.CreateImageForEveryOutfit(outfits);
+        modelBuilder.Entity<OutfitImage>().HasData(outfitImages);
+
+        var outfitLikes = seeder.CreateLikesForOutfits(accounts, outfits);
+        modelBuilder.Entity<AccountOutfitLike>().HasData(outfitLikes);
+
+        var items = seeder.CreateItemsForHypeHub(accounts);
+        modelBuilder.Entity<Item>().HasData(items);
+
+        var itemsImages = seeder.CreateImageForEveryItem(items);
+        modelBuilder.Entity<ItemImage>().HasData(itemsImages);
+
+        var itemsLikes = seeder.CreateLikesForItems(accounts, items);
+        modelBuilder.Entity<AccountItemLike>().HasData(itemsLikes);
+
+        base.OnModelCreating(modelBuilder);
     }
 }
