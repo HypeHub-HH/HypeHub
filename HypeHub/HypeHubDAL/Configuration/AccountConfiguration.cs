@@ -21,12 +21,6 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
             .IsRequired()
             .HasConversion(new BoolToZeroOneConverter<int>());
 
-        builder.Property(a => a.AccountTypes)
-            .IsRequired()
-            .HasConversion(
-                v => v.ToString(),
-                v => (AccountTypes)Enum.Parse(typeof(AccountTypes), v));
-
         builder.Property(a => a.AvatarUrl)
             .IsRequired(false)
             .HasMaxLength(400);
