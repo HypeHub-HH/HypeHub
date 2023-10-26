@@ -20,16 +20,14 @@ public class OutfitRepository : BaseRepository<Outfit>, IOutfitRepository
             .ThenInclude(i => i.Likes)
             .SingleOrDefaultAsync(o => o.Id == outfitId);
     }
-    public async Task<List<Outfit>> GetLatesOutfitsWithAccountsAndImagesAndLikesAsync(int page, int count)
+    public async Task<PagedList<Outfit>> GetLatesOutfitsWithAccountsAndImagesAndLikesAsync(int page, int pageSize)
     {
-        int itemsToSkip = (page - 1) * count;
-        return await _dbContext.Outfits
+        var outfits = await _dbContext.Outfits
             .Include(o => o.Account)
             .Include(o => o.Images)
             .Include(o => o.Likes)
             .OrderBy(o => o.CreationDate)
-            .Skip(itemsToSkip)
-            .Take(count)
             .ToListAsync();
+        return PagedList<Outfit>.ToPagedList(outfits, page, pageSize);
     }
 }

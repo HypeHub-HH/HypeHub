@@ -5,6 +5,7 @@ using HypeHubDAL.Models.Types;
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubDAL.Repositories;
 using Microsoft.EntityFrameworkCore;
+using HypeHubDAL.Exeptions;
 
 namespace HypeHubTests.RepositoriesTests;
 
@@ -156,9 +157,8 @@ public class OutfitRepositoryTests
         Assert.Multiple(() =>
         {
             Assert.That(result1, Is.Not.Null);
-            Assert.That(result1, Is.Not.Empty);
-            Assert.That(result1?.Count, Is.EqualTo(count1));
-            foreach (var outfit in result1)
+            Assert.That(result1?.Entities.Count, Is.EqualTo(count1));
+            foreach (var outfit in result1.Entities)
             {
                 Assert.That(outfit.Account, Is.Not.Null);
                 foreach (var like in outfit.Likes)
@@ -170,15 +170,14 @@ public class OutfitRepositoryTests
                     Assert.That(image, Is.Not.Null);
                 }
             }
-            for (int i = 1; i < result1?.Count; i++)
+            for (int i = 1; i < result1?.Entities.Count; i++)
             {
-                Assert.That(result1[i].CreationDate >= result1[i - 1].CreationDate, Is.True);
-                Assert.That(result1[i].CreationDate >= result1[i - 1].CreationDate, Is.True);
+                Assert.That(result1.Entities[i].CreationDate >= result1.Entities[i - 1].CreationDate, Is.True);
+                Assert.That(result1.Entities[i].CreationDate >= result1.Entities[i - 1].CreationDate, Is.True);
             }
             Assert.That(result2, Is.Not.Null);
-            Assert.That(result2, Is.Not.Empty);
-            Assert.That(result2?.Count, Is.EqualTo(count2));
-            foreach (var outfit in result2)
+            Assert.That(result2?.Entities.Count, Is.EqualTo(count2));
+            foreach (var outfit in result2.Entities)
             {
                 Assert.That(outfit.Account, Is.Not.Null);
                 foreach (var like in outfit.Likes)
@@ -190,26 +189,24 @@ public class OutfitRepositoryTests
                     Assert.That(image, Is.Not.Null);
                 }
             }
-            for (int i = 1; i < result2?.Count; i++)
+            for (int i = 1; i < result2?.Entities.Count; i++)
             {
-                Assert.That(result2[i].CreationDate >= result2[i - 1].CreationDate, Is.True);
-                Assert.That(result2[i].CreationDate >= result2[i - 1].CreationDate, Is.True);
+                Assert.That(result2.Entities[i].CreationDate >= result2.Entities[i - 1].CreationDate, Is.True);
+                Assert.That(result2.Entities[i].CreationDate >= result2.Entities[i - 1].CreationDate, Is.True);
             }
-            Assert.That(result2[0].Id, Is.Not.EqualTo(result1[0].Id));
+            Assert.That(result2.Entities[0].Id, Is.Not.EqualTo(result1.Entities[0].Id));
         });
     }
 
+
     [Test]
-    public async Task GetLatesOutfitsWithAccountsAndImagesAndLikes_PageAndCountAreZero_ReturnsEmpty()
+    public void GetLatesOutfitsWithAccountsAndImagesAndLikes_PageAndPageSizeAreZero_ThrowsException()
     {
         // Arrange
         var page = 0;
         var count = 0;
 
         // Act
-        var result = await _outfitRepository.GetLatesOutfitsWithAccountsAndImagesAndLikesAsync(page, count);
-
-        // Assert
-        Assert.That(result, Is.Empty);
+        Assert.ThrowsAsync<ArgumentException>(async () => await _outfitRepository.GetLatesOutfitsWithAccountsAndImagesAndLikesAsync(page, count));
     }
 }
