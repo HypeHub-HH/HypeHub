@@ -34,10 +34,8 @@ public class MapProfile : Profile
         CreateMap<ItemImageCreateDTO, ItemImage>();
 
         CreateMap<Outfit, OutfitGenerallReadDTO>();
-        CreateMap<Outfit, OutfitWithImagesAndLikesCountReadDTO>()
-            .ForMember(dest => dest.Likes, opt => opt.MapFrom(src => src.Likes.Count()));
-        CreateMap<Outfit, OutfitWithAccountAndImagesAndLikesCountReadDTO>()
-            .ForMember(dest => dest.Likes, opt => opt.MapFrom(src => src.Likes.Count()));
+        CreateMap<Outfit, OutfitWithImagesAndLikesReadDTO>();
+        CreateMap<Outfit, OutfitWithAccountAndImagesAndLikesReadDTO>();
         CreateMap<Outfit, OutfitWithAccountAndImagesAndLikesAndItemsReadDTO>();
         CreateMap<OutfitCreateDTO, Outfit>();
         CreateMap<OutfitImage, OutfitImageReadDTO>();

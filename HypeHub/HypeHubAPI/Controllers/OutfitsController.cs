@@ -95,7 +95,7 @@ public class OutfitsController : ControllerBase
     /// <param name="count">An integer representing the number of outfits to retrieve on each page.</param>
     /// <response code="200">The latest outfits for the specified page and count were successfully retrieved.</response>
     /// <response code="400">The pagination parameters are invalid or out of range.</response>
-    [ProducesResponseType(typeof(List<OutfitWithAccountAndImagesAndLikesCountReadDTO>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(List<OutfitWithAccountAndImagesAndLikesReadDTO>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status400BadRequest)]
     #endregion
     [HttpGet("Latest")]
@@ -244,7 +244,7 @@ public class OutfitsController : ControllerBase
     [ProducesResponseType(typeof(List<OutfitImageReadDTO>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status404NotFound)]
     #endregion
-    [HttpGet("{outfitId}/Images")]
+    [HttpGet("{outfitId}/Images")]//nie potrzebne
     public async Task<IActionResult> GetOutfitImages(Guid outfitId)
     {
         var result = await _mediator.Send(new GetOutfitImagesQuery(outfitId));

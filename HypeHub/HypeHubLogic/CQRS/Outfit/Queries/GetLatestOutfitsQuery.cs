@@ -2,7 +2,7 @@
 using MediatR;
 
 namespace HypeHubLogic.CQRS.Outfit.Queries;
-public class GetLatestOutfitsQuery : IRequest<List<OutfitWithAccountAndImagesAndLikesCountReadDTO>>
+public class GetLatestOutfitsQuery : IRequest<List<OutfitWithAccountAndImagesAndLikesReadDTO>>
 {
     public int Page { get; init; }
     public int Count { get; init; }
