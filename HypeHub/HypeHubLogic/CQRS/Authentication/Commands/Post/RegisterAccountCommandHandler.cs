@@ -31,15 +31,14 @@ public class RegisterAccountCommandHandler : IRequestHandler<RegisterAccountComm
         var email = request.RegistrationCreateDTO.Email;
         var password = request.RegistrationCreateDTO.Password;
         var userId = Guid.NewGuid();
-        var user = new ApplicationUser { UserName = userName, Email = email, EmailConfirmed = false, Id= userId.ToString() };
+        var user = new ApplicationUser { UserName = userName, Email = email, EmailConfirmed = false, Id = userId.ToString() };
         var result = await _userManager.CreateAsync(user, password);
         if (!result.Succeeded) throw new InternalIdentityServerException("Server failed", result.Errors.Select(error => error.Description));
 
         var addRoleResult = await _userManager.AddToRoleAsync(user, "User");
         if (!addRoleResult.Succeeded) throw new InternalIdentityServerException("Server failed", result.Errors.Select(error => error.Description));
         var account = new HypeHubDAL.Models.Account(userId, userName, false, HypeHubDAL.Models.Types.AccountTypes.User, null);
-        var createdAccount = await _accountRepository.AddAsync(account);
-        if (createdAccount == null) throw new InternalIdentityServerException("Server failed", new List<string>() { "Account has not been created" });
+        var createdAccount = await _accountRepository.AddAsync(account) ?? throw new InternalEntityServerException("Server failed", new List<string>() { "Account has not been created." });
         return _mapper.Map<RegistrationReadDTO>(request.RegistrationCreateDTO);
     }
 }

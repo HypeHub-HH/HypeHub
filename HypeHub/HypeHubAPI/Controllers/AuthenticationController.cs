@@ -7,8 +7,6 @@ using HypeHubLogic.DTOs.Registration;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Primitives;
-using System.Net;
 
 namespace HypeHubAPI.Controllers;
 
@@ -38,7 +36,7 @@ public class AuthenticationController : ControllerBase
     /// <param name="RegistrationReadDTO">A DTO (Data Transfer Object) containing user registration data.</param>
     /// <response code="200">The user account was successfully registered.</response>
     /// <response code="400">The request was invalid or the registration data is incomplete.</response>
-    /// <response code="500">An error occured during process of creating account in database</response>
+    /// <response code="500">The error occurred on the server side.</response>
     [ProducesResponseType(typeof(RegistrationReadDTO), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status500InternalServerError)]
@@ -66,8 +64,10 @@ public class AuthenticationController : ControllerBase
     /// <param name="loggingCreateDTO">A DTO (Data Transfer Object) containing user login data.</param>
     /// <response code="200">The user was successfully logged in, and user authentication data is returned with JWT and refresh token.</response>
     /// <response code="400">The login request was invalid or the login data is incorrect.</response>
+    /// <response code="500">The error occurred on the server side.</response>
     [ProducesResponseType(typeof(RegistrationReadDTO), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status500InternalServerError)]
     #endregion
     [HttpPost("Login")]
     public async Task<IActionResult> Login([FromBody] LoggingCreateDTO loggingCreateDTO)
@@ -92,7 +92,6 @@ public class AuthenticationController : ControllerBase
     /// <param name="token">A DTO (Data Transfer Object) containing the refresh token for token refresh.</param>
     /// <response code="200">The user's authentication token was successfully refreshed, and new token is returned.</response>
     /// <response code="400">The token refresh request was invalid, or the refresh token is expired or incorrect.</response>
-    /// <response code="401">User was unauthorized or JWT was invalid</response>
     [ProducesResponseType(typeof(Token), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status401Unauthorized)]
@@ -120,6 +119,7 @@ public class AuthenticationController : ControllerBase
     /// </remarks>
     /// <param name="username">The username of the user whose token should be revoked.</param>
     /// <response code="204">The user's authentication token was successfully revoked, and no content is returned.</response>
+    /// <response code="400">Wrong user credentials.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status401Unauthorized)]
@@ -132,6 +132,25 @@ public class AuthenticationController : ControllerBase
         return NoContent();
     }
 
+    #region Endpoint Description
+    /// <summary>
+    /// Gets current account.
+    /// </summary>
+    /// <returns>
+    ///   Returns an HTTP 200 (OK) response after successful user identification with user data.
+    /// </returns>
+    /// <remarks>
+    ///   This endpoint allows to get information about the current user based on the JWT token. After successful identification, a response with an HTTP 200 (OK)
+    ///   status code will be returned with user data.
+    /// </remarks>
+    /// <response code="200">The user was successfully identified, and user data is returned.</response>
+    /// <response code="400">User or JWT was invalid.</response>
+    /// <response code="401">User was unauthorized or JWT was invalid</response>
+    /// <response code="500">The error occurred on the server side.</response>
+    [ProducesResponseType(typeof(RegistrationReadDTO), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status500InternalServerError)]
+    #endregion
     [HttpGet("GetCurrentAccount")]
     [Authorize]
     public async Task<IActionResult> GetCurrentAccount()

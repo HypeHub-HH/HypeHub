@@ -4,7 +4,7 @@ using HypeHubDAL.Repositories.Interfaces;
 
 namespace HypeHubDAL.Repositories;
 
-public class OutfitItemRepository<T> : IOutfitItemRepository
+public class OutfitItemRepository : IOutfitItemRepository
 {
     protected readonly HypeHubContext _dbContext;
     public OutfitItemRepository(HypeHubContext dbContext)

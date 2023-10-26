@@ -97,6 +97,7 @@ public static class ServiceCollectionExtension
         services.AddScoped<IAccountOutfitLikeRepository, AccountOutfitLikeRepository>();
         services.AddScoped<IItemImageRepository, ItemImageRepository>();
         services.AddScoped<IOutfitImageRepository, OutfitImageRepository>();
+        services.AddScoped<IOutfitItemRepository, OutfitItemRepository>();
     }
     public static void AddSwaggerGenWithJwt(this IServiceCollection services)
     {

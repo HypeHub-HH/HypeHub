@@ -32,15 +32,15 @@ public class CreateOutfitCommandHandler : IRequestHandler<CreateOutfitCommand, O
         var validationResult = await _validator.ValidateAsync(request.Outfit);
         if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult.Errors.Select(error => error.ErrorMessage));
         var outfit = new HypeHubDAL.Models.Outfit(userId, request.Outfit.Name);
-        var createdOutfit = await _outfitRepository.AddAsync(outfit);
+        var createdOutfit = await _outfitRepository.AddAsync(outfit) ?? throw new InternalEntityServerException("Server failed", new List<string>() { "Outfit has not been created." });
         foreach (var item in items)
         {
             var itemId = Guid.Parse(item);
-            var addedEntity = await _outfitItemRepository.AddAsync(new HypeHubDAL.Models.Relations.OutfitItem(createdOutfit.Id, itemId));
+            var addedEntity = await _outfitItemRepository.AddAsync(new HypeHubDAL.Models.Relations.OutfitItem(createdOutfit.Id, itemId)) ?? throw new InternalEntityServerException("Server failed", new List<string>() { "OutfitItem has not been created." });
         }
         foreach (var image in images)
         {
-            var addedEntity = await _outfitImageRepository.AddAsync(new OutfitImage(createdOutfit.Id, image));
+            var addedEntity = await _outfitImageRepository.AddAsync(new OutfitImage(createdOutfit.Id, image)) ?? throw new InternalEntityServerException("Server failed", new List<string>() { "OutfitImage has not been created." });
         }
         return _mapper.Map<OutfitGenerallReadDTO>(createdOutfit);
     }

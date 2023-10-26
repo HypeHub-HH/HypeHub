@@ -30,9 +30,9 @@ public class GetCurrentAccountQueryHandler : IRequestHandler<GetCurrentAccountQu
         var managedUser = await _userManager.FindByIdAsync(id) ?? throw new WrongCredentialsException($"There is no account with the given id: {id}.");
         var roles = await _userManager.GetRolesAsync(managedUser);
 
-        var guidId = Guid.Parse(id);
-        var account = await _accountRepository.GetByIdAsync(guidId);
+        var userId = Guid.Parse(id);
+        var account = await _accountRepository.GetByIdAsync(userId) ?? throw new InternalEntityServerException("Server failed", new List<string>() { $"There is no account with given id: {userId}." }); ;
 
-        return new AccountCurrentReadDTO() { AccountId = guidId, UserName = managedUser.UserName, Email = managedUser.Email, IsPrivate = account.IsPrivate, AvatarURL = account.AvatarUrl, Roles = roles };
+        return new AccountCurrentReadDTO() { AccountId = userId, UserName = managedUser.UserName, Email = managedUser.Email, IsPrivate = account.IsPrivate, AvatarURL = account.AvatarUrl, Roles = roles };
     }
 }

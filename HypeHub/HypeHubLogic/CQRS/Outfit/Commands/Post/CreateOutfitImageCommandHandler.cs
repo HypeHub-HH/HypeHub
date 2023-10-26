@@ -26,7 +26,7 @@ public class CreateOutfitImageCommandHandler : IRequestHandler<CreateOutfitImage
         var validationResult = await _validator.ValidateAsync(request.OutfitImage);
         if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult.Errors.Select(error => error.ErrorMessage));
         var outfitImage = _mapper.Map<HypeHubDAL.Models.OutfitImage>(request.OutfitImage);
-        var createdOutfitImage = await _outfitImageRepository.AddAsync(outfitImage);
+        var createdOutfitImage = await _outfitImageRepository.AddAsync(outfitImage) ?? throw new InternalEntityServerException("Server failed", new List<string>() { "OutfitImage has not been created." });
         return _mapper.Map<OutfitImageReadDTO>(createdOutfitImage);
     }
 }

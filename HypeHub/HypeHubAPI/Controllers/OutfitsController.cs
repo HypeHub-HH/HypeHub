@@ -1,4 +1,5 @@
-﻿using HypeHubLogic.CQRS.Outfit.Commands.Delete;
+﻿using HypeHubDAL.Models.Relations;
+using HypeHubLogic.CQRS.Outfit.Commands.Delete;
 using HypeHubLogic.CQRS.Outfit.Commands.Post;
 using HypeHubLogic.CQRS.Outfit.Commands.Update;
 using HypeHubLogic.CQRS.Outfit.Queries;
@@ -123,9 +124,11 @@ public class OutfitsController : ControllerBase
     /// <response code="201">The new outfit was successfully created, and its details are returned.</response>
     /// <response code="400">The creation request was invalid or the outfit data is incomplete.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
+    /// <response code="500">The error occurred on the server side.</response>
     [ProducesResponseType(typeof(OutfitGenerallReadDTO), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status500InternalServerError)]
     #endregion
     [HttpPost]
     [Authorize]
@@ -227,6 +230,38 @@ public class OutfitsController : ControllerBase
 
     #region Endpoint Description
     /// <summary>
+    ///   Add ann item to the outfit.
+    /// </summary>
+    /// <param name="outfitItem">Data for adding an item to the outfit</param>
+    /// <returns>
+    ///   Returns an HTTP 200 (Ok) response upon successfully adding an item to the outfit.
+    /// </returns>
+    /// <remarks>
+    ///   This endpoint allows you to add an item to the outfit by providing the necessary data in
+    ///   the request body using the JSON format. To use this endpoint, ensure that you are authenticated with a valid
+    ///   authorization token, as it is secured with the "Authorize" attribute. After successful creation, a response with
+    ///   an HTTP 200 (Ok) status code will be returned, and it will include the details of the added outfit item.
+    /// </remarks>
+    /// <param name="outfitItem">A DTO (Data Transfer Object) containing data for adding an item to the outfit.</param>
+    /// <response code="200">The item was successfully added, and its details are returned.</response>
+    /// <response code="400">The adding request was invalid or the outfitItem data is incomplete.</response>
+    /// <response code="401">User was unauthorized or JWT was invalid</response>
+    /// <response code="500">The error occurred on the server side.</response>
+    [ProducesResponseType(typeof(OutfitItem), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status500InternalServerError)]
+    #endregion
+    [HttpPost("{outfitId}/Items")]
+    [Authorize]
+    public async Task<IActionResult> AddItemToOutfit([FromBody] OutfitItem outfitItem)
+    {
+        var result = await _mediator.Send(new AddItemToOutfitCommand(outfitItem, HttpContext.User.Claims));
+        return Ok(result);
+    }
+
+    //#region Endpoint Description
+    /// <summary>
     /// Retrieves images associated with an outfit by its unique identifier (ID).
     /// </summary>
     /// <param name="outfitId">The unique identifier of the outfit for which images are to be retrieved.</param>
@@ -241,15 +276,15 @@ public class OutfitsController : ControllerBase
     /// <param name="outfitId">A GUID representing the unique identifier of the outfit for which images are to be retrieved.</param>
     /// <response code="200">The images associated with the specified outfit were successfully retrieved.</response>
     /// <response code="404">The outfit with the specified "outfitId" was not found, or there are no images associated with it.</response>
-    [ProducesResponseType(typeof(List<OutfitImageReadDTO>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status404NotFound)]
-    #endregion
-    [HttpGet("{outfitId}/Images")]//nie potrzebne
-    public async Task<IActionResult> GetOutfitImages(Guid outfitId)
-    {
-        var result = await _mediator.Send(new GetOutfitImagesQuery(outfitId));
-        return Ok(result);
-    }
+    //[ProducesResponseType(typeof(List<OutfitImageReadDTO>), StatusCodes.Status200OK)]
+    //[ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status404NotFound)]
+    //#endregion
+    //[HttpGet("{outfitId}/Images")]
+    //public async Task<IActionResult> GetOutfitImages(Guid outfitId)
+    //{
+    //    var result = await _mediator.Send(new GetOutfitImagesQuery(outfitId));
+    //    return Ok(result);
+    //}
 
     #region Endpoint Description
     /// <summary>
@@ -295,9 +330,11 @@ public class OutfitsController : ControllerBase
     /// <response code="201">The new image was successfully created, and its details are returned.</response>
     /// <response code="400">The creation request was invalid or the image data is incomplete.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
+    /// <response code="500">The error occurred on the server side.</response>
     [ProducesResponseType(typeof(OutfitImageReadDTO), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status500InternalServerError)]
     #endregion
     [HttpPost("{outfitId}/Images")]
     [Authorize]

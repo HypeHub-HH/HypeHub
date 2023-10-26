@@ -27,7 +27,7 @@ public class CreateItemImageCommandHandler : IRequestHandler<CreateItemImageComm
         var validationResult = await _validator.ValidateAsync(request.ItemImage);
         if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult.Errors.Select(error => error.ErrorMessage));
         var itemImage = _mapper.Map<ItemImage>(request.ItemImage);
-        var createdItemImage = await _imageItemRepository.AddAsync(itemImage);
+        var createdItemImage = await _imageItemRepository.AddAsync(itemImage) ?? throw new InternalEntityServerException("Server failed", new List<string>() { "ItemImage has not been created." });
         return _mapper.Map<ItemImageReadDTO>(createdItemImage);
     }
 }

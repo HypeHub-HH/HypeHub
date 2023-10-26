@@ -50,7 +50,7 @@ public class ItemsController : ControllerBase
     /// <summary>
     ///  Creates a new item.
     /// </summary>
-    /// <param name="item">The data for the item to be created.</param>
+    /// <param name="item">The data for the item to be created.</p1aram>
     /// <returns>
     ///   Newly created item.
     /// </returns>
@@ -58,27 +58,16 @@ public class ItemsController : ControllerBase
     ///   This endpoint allows you to create a new item. You must provide the item data in the request body
     ///   using the JSON format. The request should also include a valid authorization token as this
     ///   endpoint is secured with authentication using the "Authorize" attribute.
-    /// Sample request:
-    ///
-    ///     POST /api/Item/CreateItem
-    ///     {
-    ///        "name": "Nike air max 3",
-    ///        "cloathingType": 1,
-    ///        "brand": "Nike",
-    ///        "model": "air max",
-    ///        "colorway": "red",
-    ///        "price": 100,
-    ///        "purchaseDate": "2023-09-28"
-    ///     }
-    ///
     /// </remarks>
     /// <param name="item">A DTO (Data Transfer Object) representing the item to be created.</param>
     /// <response code="201">The item was successfully created, and its data is returned.</response>
     /// <response code="400">The request was invalid or the item data is incomplete.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
+    /// <response code="500">The error occurred on the server side.</response>
     [ProducesResponseType(typeof(ItemGenerallReadDTO), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status500InternalServerError)]
     #endregion
     [HttpPost]
     [Authorize]
@@ -100,19 +89,6 @@ public class ItemsController : ControllerBase
     ///   This endpoint allows you to update an existing item with the provided data. You should provide
     ///   the item data in the request body using the JSON format. To use this endpoint, ensure that you
     ///   are authenticated with a valid authorization token, as it is secured with the "Authorize" attribute.
-    /// Sample request:
-    ///
-    ///     PUT /api/Item/CreateItem
-    ///     {
-    ///        "name": "Nike air max 3",
-    ///        "cloathingType": 1,
-    ///        "brand": "Nike",
-    ///        "model": "air max",
-    ///        "colorway": "red",
-    ///        "price": 100,
-    ///        "purchaseDate": "2023-09-28"
-    ///     }
-    ///
     /// </remarks>
     /// <param name="item">A DTO (Data Transfer Object) representing the item to be updated.</param>
     /// <response code="201">The item was successfully updated, and its updated data is returned.</response>
@@ -232,9 +208,11 @@ public class ItemsController : ControllerBase
     /// <response code="200">The image was successfully created and associated with the specified item.</response>
     /// <response code="400">The request was invalid or the image data is incomplete.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
+    /// <response code="500">The error occurred on the server side.</response>
     [ProducesResponseType(typeof(ItemImageReadDTO), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status500InternalServerError)]
     #endregion
     [HttpPost("{itemId}/Images")]
     [Authorize]

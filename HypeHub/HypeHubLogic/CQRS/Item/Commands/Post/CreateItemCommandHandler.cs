@@ -24,7 +24,7 @@ public class CreateItemCommandHandler : IRequestHandler<CreateItemCommand, ItemG
         var validationResult = await _validator.ValidateAsync(request.Item);
         if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult.Errors.Select(error => error.ErrorMessage));
         var item = new HypeHubDAL.Models.Item(userId, request.Item.Name, request.Item.CloathingType, request.Item.Brand, request.Item.Model, request.Item.Colorway, request.Item.Price, request.Item.PurchaseDate);
-        var createdItem = await _itemRepository.AddAsync(item);
+        var createdItem = await _itemRepository.AddAsync(item) ?? throw new InternalEntityServerException("Server failed", new List<string>() { "Item has not been created." });
         var addedItem = _mapper.Map<ItemGenerallReadDTO>(createdItem);
         return addedItem;
     }

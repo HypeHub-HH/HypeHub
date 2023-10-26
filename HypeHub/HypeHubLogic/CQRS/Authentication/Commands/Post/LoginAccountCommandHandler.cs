@@ -43,7 +43,7 @@ public class LoginAccountCommandHandler : IRequestHandler<LoginAccountCommand, L
 
         await _userManager.UpdateAsync(managedUser);
         var userId = Guid.Parse(managedUser.Id);
-        var account = await _accountRepository.GetByIdAsync(userId);
+        var account = await _accountRepository.GetByIdAsync(userId) ?? throw new InternalEntityServerException("Server failed", new List<string>() { $"There is no account with given id: {userId}." });
 
         return new LoggingReadDTO() { AccountId = userId, UserName = managedUser.UserName, Email = managedUser.Email, IsPrivate = account.IsPrivate, AvatarURL = account.AvatarUrl, Roles = roles, Token = accessToken, RefreshToken = refreshToken };
     }
