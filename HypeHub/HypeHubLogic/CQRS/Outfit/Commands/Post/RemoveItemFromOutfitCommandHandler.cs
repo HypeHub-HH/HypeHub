@@ -1,0 +1,24 @@
+﻿using HypeHubDAL.Exeptions;
+using HypeHubDAL.Repositories.Interfaces;
+using HypeHubLogic.Validators;
+using MediatR;
+
+namespace HypeHubLogic.CQRS.Outfit.Commands.Post;
+public class RemoveItemFromOutfitCommandHandler : IRequestHandler<RemoveItemFromOutfitCommand>
+{
+
+    private readonly IOutfitItemRepository _outfitItemeRepository;
+    private readonly IOwnershipValidator _ownershipValidator;
+
+    public RemoveItemFromOutfitCommandHandler(IOutfitItemRepository outfitItemeRepository, IOwnershipValidator ownershipValidator)
+    {
+        _outfitItemeRepository = outfitItemeRepository;
+        _ownershipValidator = ownershipValidator;
+    }
+    public async Task Handle(RemoveItemFromOutfitCommand request, CancellationToken cancellationToken)
+    {
+        if (!await _ownershipValidator.ValidateOwnership(request.Claims, request.OutfitItem.OutfitId)) throw new UnauthorizedRequestExeption("Access denied. Only owner can acces this endpoint.");
+        if (!await _ownershipValidator.ValidateOwnership(request.Claims, request.OutfitItem.ItemId)) throw new UnauthorizedRequestExeption("Access denied. Only owner can acces this endpoint.");
+        await _outfitItemeRepository.DeleteAsync(request.OutfitItem);
+    }
+}

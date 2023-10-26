@@ -260,6 +260,36 @@ public class OutfitsController : ControllerBase
         return Ok(result);
     }
 
+    #region Endpoint Description
+    /// <summary>
+    /// Removes the item from the outfit.
+    /// </summary>
+    /// <param name="outfitItem">Data to remove the item from the outfit</param>
+    /// <returns>
+    ///   Returns an HTTP 204 (no content) response after successfully removing the item from an outfit.
+    /// </returns>
+    /// <remarks>
+    ///   This endpoint allows you to remove the item from the outfit by providing the necessary data in
+    ///   the request body using the JSON format. To use this endpoint, ensure that you are authenticated with a valid authorization
+    ///   token, as it is secured with the "Authorize" attribute. After successful removal, a response with an HTTP 204 (No Content)
+    ///   status code will be returned.
+    /// </remarks>
+    /// <param name="outfitItem">A DTO (Data Transfer Object) containing data to remove the item from the outfit.</param>
+    /// <response code="204">The item was successfully removed, and no content is returned.</response>
+    /// <response code="400">The removing request was invalid or the outfitItem data is incomplete.</response>
+    /// <response code="401">User was unauthorized or JWT was invalid</response>
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status401Unauthorized)]
+    #endregion
+    [HttpDelete("{outfitId}/Items")]
+    [Authorize]
+    public async Task<IActionResult> RemoveItemFromOutfit([FromBody] OutfitItem outfitItem)
+    {
+        await _mediator.Send(new RemoveItemFromOutfitCommand(outfitItem, HttpContext.User.Claims));
+        return NoContent();
+    }
+
     //#region Endpoint Description
     /// <summary>
     /// Retrieves images associated with an outfit by its unique identifier (ID).
