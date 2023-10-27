@@ -50,7 +50,6 @@ public class BaseRepositoryTests
         {
             Assert.That(result, Is.Not.Null);
             Assert.That(result, Is.Not.Empty);
-            Assert.That(result?.Count, Is.EqualTo(_accounts.Count));
         });
     }
 

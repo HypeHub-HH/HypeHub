@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace HypeHubLogic.CQRS.Authentication.Commands.Post;
-public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, string>
+public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, Token>
 {
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly ITokenService _tokenService;
@@ -15,7 +15,7 @@ public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, s
         _userManager = userManager;
         _tokenService = tokenService;
     }
-    public async Task<string> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
+    public async Task<Token> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
     {
         var principal = _tokenService.GetPrincipalFromExpiredToken(request.Token.AccessToken) ?? throw new BadRequestException($"Invalid access token.");
         var id = principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
@@ -23,7 +23,9 @@ public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, s
         if (managedUser.RefreshToken != request.Token.RefreshToken || managedUser.RefreshTokenExpiryTime <= DateTime.Now) throw new BadRequestException($"Invalid refresh token.");
         var roles = await _userManager.GetRolesAsync(managedUser);
         var accessToken = _tokenService.CreateToken(managedUser, roles);
-
-        return accessToken;
+        var refreshToken = _tokenService.GenerateRefreshToken();
+        managedUser.RefreshToken = refreshToken;
+        await _userManager.UpdateAsync(managedUser);
+        return new Token() { AccessToken = accessToken, RefreshToken = refreshToken };
     }
 }
