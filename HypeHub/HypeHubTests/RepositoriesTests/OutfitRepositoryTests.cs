@@ -172,8 +172,8 @@ public class OutfitRepositoryTests
             }
             for (int i = 1; i < result1?.Entities.Count; i++)
             {
-                Assert.That(result1.Entities[i].CreationDate >= result1.Entities[i - 1].CreationDate, Is.True);
-                Assert.That(result1.Entities[i].CreationDate >= result1.Entities[i - 1].CreationDate, Is.True);
+                Assert.That(result1.Entities[i].CreationDate <= result1.Entities[i - 1].CreationDate, Is.True);
+                Assert.That(result1.Entities[i].CreationDate <= result1.Entities[i - 1].CreationDate, Is.True);
             }
             Assert.That(result2, Is.Not.Null);
             Assert.That(result2?.Entities.Count, Is.EqualTo(count2));
@@ -191,8 +191,8 @@ public class OutfitRepositoryTests
             }
             for (int i = 1; i < result2?.Entities.Count; i++)
             {
-                Assert.That(result2.Entities[i].CreationDate >= result2.Entities[i - 1].CreationDate, Is.True);
-                Assert.That(result2.Entities[i].CreationDate >= result2.Entities[i - 1].CreationDate, Is.True);
+                Assert.That(result2.Entities[i].CreationDate <= result2.Entities[i - 1].CreationDate, Is.True);
+                Assert.That(result2.Entities[i].CreationDate <= result2.Entities[i - 1].CreationDate, Is.True);
             }
             Assert.That(result2.Entities[0].Id, Is.Not.EqualTo(result1.Entities[0].Id));
         });
