@@ -40,6 +40,7 @@ public class MapProfile : Profile
         CreateMap<OutfitCreateDTO, Outfit>();
         CreateMap<OutfitImage, OutfitImageReadDTO>();
         CreateMap<OutfitImageCreateDTO, OutfitImage>();
+        CreateMap<AccountOutfitLike, AccountOutfitLikeReadDTO>();
 
         CreateMap<RegistrationCreateDTO, RegistrationReadDTO>();
     }

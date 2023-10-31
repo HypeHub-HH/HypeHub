@@ -225,8 +225,8 @@ public class OutfitsController : ControllerBase
     [Authorize]
     public async Task<IActionResult> LikeOrUnlikeOutfit(Guid outfitId)
     {
-        await _mediator.Send(new LikeOrUnlikeOutfitCommand(outfitId, HttpContext.User.Claims));
-        return Ok();
+        var result = await _mediator.Send(new LikeOrUnlikeOutfitCommand(outfitId, HttpContext.User.Claims));
+        return Ok(result);
     }
 
     #region Endpoint Description
