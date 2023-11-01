@@ -6,18 +6,19 @@ using HypeHubLogic.DTOs.AccountOutfitLike;
 using HypeHubDAL.Models.Relations;
 using MediatR;
 using System.Security.Claims;
-using HypeHubDAL.Models;
-using HypeHubLogic.DTOs.OutfitImage;
+using HypeHubLogic.DTOs.Account;
 
 namespace HypeHubLogic.CQRS.Outfit.Commands.Update;
 public class LikeOrUnlikeOutfitCommandHandler : IRequestHandler<LikeOrUnlikeOutfitCommand, List<AccountOutfitLikeReadDTO>>
 {
     private readonly IAccountOutfitLikeRepository _likeRepository;
+    private readonly IAccountRepository _accountRepository;
     private readonly IMapper _mapper;
     private readonly IValidator<AccountOutfitLikeCreateDTO> _validator;
-    public LikeOrUnlikeOutfitCommandHandler(IAccountOutfitLikeRepository likeRepository, IMapper mapper, IValidator<AccountOutfitLikeCreateDTO> validator)
+    public LikeOrUnlikeOutfitCommandHandler(IAccountOutfitLikeRepository likeRepository, IAccountRepository accountRepository, IMapper mapper, IValidator<AccountOutfitLikeCreateDTO> validator)
     {
         _likeRepository = likeRepository;
+        _accountRepository = accountRepository;
         _mapper = mapper;
         _validator = validator;
     }
@@ -32,6 +33,13 @@ public class LikeOrUnlikeOutfitCommandHandler : IRequestHandler<LikeOrUnlikeOutf
         if (searchedAccountOutfitLike != null) await _likeRepository.DeleteAsync(searchedAccountOutfitLike);
         else await _likeRepository.AddAsync(accountOutfitLike);
         var likes = await _likeRepository.GetOutfitLikesAsync(request.OutfitId);
-        return _mapper.Map<List<AccountOutfitLikeReadDTO>>(likes);
+        var mappedLikes = _mapper.Map<List<AccountOutfitLikeReadDTO>>(likes);
+        foreach (var like in mappedLikes)
+        {
+            var account = await _accountRepository.GetByIdAsync(like.AccountId);
+            var mappedAccounts = _mapper.Map<AccountGeneralInfoReadDTO>(account);
+            like.Account = mappedAccounts;
+        }
+        return mappedLikes;
     }
 }
