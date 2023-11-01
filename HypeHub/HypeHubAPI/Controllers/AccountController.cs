@@ -45,6 +45,13 @@ public class AccountController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("{id}/Items")]
+    public async Task<IActionResult> GetItemsFromAccount(Guid id)
+    {
+        var result = await _mediator.Send(new GetItemsFromAccountQuery(id));
+        return Ok(result);
+    }
+
     #region Endpoint Description
     /// <summary>
     /// Search for usernames.

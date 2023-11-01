@@ -257,7 +257,7 @@ public class ItemsController : ControllerBase
     /// <summary>
     /// Likes or unlikes an item with the specified ID.
     /// </summary>
-    /// <param name="id">The unique identifier of the item to like or unlike.</param>
+    /// <param name="itemId">The unique identifier of the item to like or unlike.</param>
     /// <returns>
     ///   Returns an HTTP 200 (OK) response upon successful liking or unliking of the item.
     /// </returns>
@@ -267,7 +267,7 @@ public class ItemsController : ControllerBase
     ///   endpoint is secured with the "Authorize" attribute. Liking or unliking an item will affect the item's status,
     ///   and a response with an HTTP 200 (OK) status code will be returned upon successful liking or unliking.
     /// </remarks>
-    /// <param name="id">A GUID representing the unique identifier of the item to like or unlike.</param>
+    /// <param name="itemId">A GUID representing the unique identifier of the item to like or unlike.</param>
     /// <response code="200">The item with the specified "id" was successfully liked or unliked.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
     /// <response code="404">The item with the specified "id" was not found.</response>
@@ -275,9 +275,9 @@ public class ItemsController : ControllerBase
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status404NotFound)]
     #endregion
-    [HttpPut("{id}/like")]
+    [HttpPut("{itemId}/like")]
     [Authorize]
-    public async Task<IActionResult> LikeOrUnlikeItem([FromBody] Guid itemId)
+    public async Task<IActionResult> LikeOrUnlikeItem(Guid itemId)
     {
         await _mediator.Send(new LikeOrUnlikeItemCommand(itemId, HttpContext.User.Claims));
         return Ok();

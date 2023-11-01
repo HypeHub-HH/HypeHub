@@ -2,9 +2,6 @@
 using HypeHubDAL.Models.Relations;
 using HypeHubDAL.Models.Types;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Identity.Client;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace HypeHubDAL.Seeder;
 
