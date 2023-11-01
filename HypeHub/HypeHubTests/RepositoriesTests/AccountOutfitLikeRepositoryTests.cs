@@ -17,6 +17,7 @@ public class AccountOutfitLikeRepositoryTests
             new AccountOutfitLike(Guid.NewGuid(), Guid.NewGuid()),
             new AccountOutfitLike(_id, _id),
             new AccountOutfitLike(_id, _id),
+            new AccountOutfitLike(_id, Guid.NewGuid()),
         };
 
     [OneTimeSetUp]
@@ -78,5 +79,22 @@ public class AccountOutfitLikeRepositoryTests
 
         // Assert
         Assert.ThrowsAsync<InvalidOperationException>(async () => await _accountOutfitLikeRepository.GetAsyncByAccountAndOutfitId(accountOutfitLike));
+    }
+
+    [Test]
+    public async Task GetOutfitLikesAsync_AccountOutfitLikeExist_ReturnsLikes()
+    {
+        // Arrange
+        var accountOutfitLike = _accountOutfitLikes[1];
+
+        // Act
+        var result = await _accountOutfitLikeRepository.GetOutfitLikesAsync(accountOutfitLike.OutfitId);
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.Not.Empty);
+            Assert.That(result?.Count, Is.EqualTo(3));
+        });
     }
 }

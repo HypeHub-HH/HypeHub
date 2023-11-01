@@ -14,4 +14,10 @@ public class AccountOutfitLikeRepository : BaseLikeRepository<AccountOutfitLike>
             aol.OutfitId == accountOutfitLike.OutfitId)
             .SingleOrDefaultAsync();
     }
+    public async Task<List<AccountOutfitLike>> GetOutfitLikesAsync(Guid outfitId)
+    {
+        return await _dbContext.AccountOutfitLikes.Where(aol =>
+            aol.OutfitId == outfitId)
+            .ToListAsync();
+    }
 }

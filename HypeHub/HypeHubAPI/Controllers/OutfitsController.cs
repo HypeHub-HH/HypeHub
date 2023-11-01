@@ -1,4 +1,5 @@
-﻿using HypeHubDAL.Models.Relations;
+﻿using HypeHubDAL.Models;
+using HypeHubDAL.Models.Relations;
 using HypeHubLogic.CQRS.Outfit.Commands.Delete;
 using HypeHubLogic.CQRS.Outfit.Commands.Post;
 using HypeHubLogic.CQRS.Outfit.Commands.Update;
@@ -82,27 +83,27 @@ public class OutfitsController : ControllerBase
     /// Retrieves the latest outfits with pagination.
     /// </summary>
     /// <param name="page">The page number for pagination (starting from 1).</param>
-    /// <param name="count">The number of outfits to retrieve on each page.</param>
+    /// <param name="pageSize">The number of outfits to retrieve on each page.</param>
     /// <returns>
     ///   Returns an HTTP 200 (OK) response with the latest outfits for the specified page and count.
     /// </returns>
     /// <remarks>
-    ///   This endpoint allows you to retrieve the latest outfits with pagination. Provide the "page" and "count"
+    ///   This endpoint allows you to retrieve the latest outfits with pagination. Provide the "page" and "pageSize"
     ///   parameters in the query string to control which page of outfits to retrieve and how many outfits to include
     ///   on each page. After a successful retrieval, a response with an HTTP 200 (OK) status code will be returned,
-    ///   containing the latest outfits according to the specified page and count.
+    ///   containing the latest outfits according to the specified page and pageSize.
     /// </remarks>
     /// <param name="page">An integer representing the page number for pagination (starting from 1).</param>
-    /// <param name="count">An integer representing the number of outfits to retrieve on each page.</param>
-    /// <response code="200">The latest outfits for the specified page and count were successfully retrieved.</response>
+    /// <param name="pageSize">An integer representing the number of outfits to retrieve on each page.</param>
+    /// <response code="200">The latest outfits for the specified page and pageSize were successfully retrieved.</response>
     /// <response code="400">The pagination parameters are invalid or out of range.</response>
     [ProducesResponseType(typeof(List<OutfitWithAccountAndImagesAndLikesReadDTO>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status400BadRequest)]
     #endregion
     [HttpGet("Latest")]
-    public async Task<IActionResult> GetLatestOutfits([FromQuery] int page, int count)
+    public async Task<IActionResult> GetLatestOutfits([FromQuery] int page, int pageSize)
     {
-        var result = await _mediator.Send(new GetLatestOutfitsQuery(page, count));
+        var result = await _mediator.Send(new GetLatestOutfitsQuery(page, pageSize));
         return Ok(result);
     }
 
@@ -208,7 +209,7 @@ public class OutfitsController : ControllerBase
     /// </returns>
     /// <remarks>
     ///   This endpoint allows you to like or unlike an existing outfit by providing the unique identifier ("outfitId") of
-    ///   the outfit in the request body using the JSON format. To use this endpoint, ensure that you are authenticated with
+    ///   the outfit as part of the URL route. To use this endpoint, ensure that you are authenticated with
     ///   a valid authorization token, as it is secured with the "Authorize" attribute. After successful liking or unliking,
     ///   a response with an HTTP 200 (OK) status code will be returned.
     /// </remarks>
@@ -220,12 +221,12 @@ public class OutfitsController : ControllerBase
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status404NotFound)]
     #endregion
-    [HttpPut("Like")]
+    [HttpPut("Like/{outfitId}")]
     [Authorize]
-    public async Task<IActionResult> LikeOrUnlikeOutfit([FromBody] Guid outfitId)
+    public async Task<IActionResult> LikeOrUnlikeOutfit(Guid outfitId)
     {
-        await _mediator.Send(new LikeOrUnlikeOutfitCommand(outfitId, HttpContext.User.Claims));
-        return Ok();
+        var result = await _mediator.Send(new LikeOrUnlikeOutfitCommand(outfitId, HttpContext.User.Claims));
+        return Ok(result);
     }
 
     #region Endpoint Description
@@ -366,7 +367,7 @@ public class OutfitsController : ControllerBase
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status500InternalServerError)]
     #endregion
-    [HttpPost("{outfitId}/Images")]
+    [HttpPost("Images")]
     [Authorize]
     public async Task<IActionResult> CreateImage([FromBody] OutfitImageCreateDTO outfitImage)
     {
