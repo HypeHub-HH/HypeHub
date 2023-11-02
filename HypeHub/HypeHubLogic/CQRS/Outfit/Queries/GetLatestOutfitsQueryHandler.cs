@@ -33,8 +33,8 @@ public class GetLatestOutfitsQueryHandler : IRequestHandler<GetLatestOutfitsQuer
             foreach (var like in outfit.Likes)
             {
                 var account = await _accountRepository.GetByIdAsync(like.AccountId);
-                var mappedAccounts = _mapper.Map<AccountGeneralInfoReadDTO>(account);
-                like.Account = mappedAccounts;
+                var mappedAccount = _mapper.Map<AccountGeneralInfoReadDTO>(account);
+                like.Account = mappedAccount;
             }
         }
         return pagedList;

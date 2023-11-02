@@ -17,6 +17,7 @@ public class AccountItemLikeRepositoryTests
             new AccountItemLike(Guid.NewGuid(), Guid.NewGuid()),
             new AccountItemLike(_id, _id),
             new AccountItemLike(_id, _id),
+            new AccountItemLike(_id, Guid.NewGuid()),
         };
 
     [OneTimeSetUp]
@@ -78,5 +79,22 @@ public class AccountItemLikeRepositoryTests
 
         // Assert
         Assert.ThrowsAsync<InvalidOperationException>(async () => await _accountItemLikeRepository.GetAsyncByAccountAndItemId(accountItemLike));
+    }
+
+    [Test]
+    public async Task GetItemLikesAsync_AccountItemLikeExist_ReturnsLikes()
+    {
+        // Arrange
+        var accountItemLike = _accountItemLikes[1];
+
+        // Act
+        var result = await _accountItemLikeRepository.GetItemLikesAsync(accountItemLike.ItemId);
+
+        // Assert
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.Not.Empty);
+            Assert.That(result?.Count, Is.EqualTo(3));
+        });
     }
 }

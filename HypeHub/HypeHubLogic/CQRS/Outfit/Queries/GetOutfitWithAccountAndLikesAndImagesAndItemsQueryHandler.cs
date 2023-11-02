@@ -21,12 +21,11 @@ public class GetOutfitWithAccountAndLikesAndImagesAndItemsQueryHandler : IReques
     {
         var outfit = await _outfitRepository.GetOutfitWithAccountAndItemsAndLikesAsync(request.OutfitId) ?? throw new NotFoundException($"There is no outfit with the given Id: {request.OutfitId}.");
         var mappedOutfit = _mapper.Map<OutfitWithAccountAndImagesAndLikesAndItemsReadDTO>(outfit);
-
         foreach (var like in mappedOutfit.Likes)
         {
             var account = await _accountRepository.GetByIdAsync(like.AccountId);
-            var mappedAccounts = _mapper.Map<AccountGeneralInfoReadDTO>(account);
-            like.Account = mappedAccounts;
+            var mappedAccount = _mapper.Map<AccountGeneralInfoReadDTO>(account);
+            like.Account = mappedAccount;
         }
         return mappedOutfit;
     }

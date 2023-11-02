@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HypeHubDAL.Exeptions;
 using HypeHubDAL.Repositories.Interfaces;
+using HypeHubLogic.DTOs.Account;
 using HypeHubLogic.DTOs.Item;
 using MediatR;
 
@@ -17,7 +18,17 @@ public class GetItemsFromAccountQueryHandler : IRequestHandler<GetItemsFromAccou
     public async Task<List<ItemWithImagesAndLikesReadDTO>> Handle(GetItemsFromAccountQuery request, CancellationToken cancellationToken)
     {
         var account = await _accountRepository.GetAccountWithItemsAsync(request.AccountId) ?? throw new NotFoundException($"There is no account with the given Id: {request.AccountId}.");
-        var items = _mapper.Map<List<ItemWithImagesAndLikesReadDTO>>(account.Items);
-        return items;
+        var mappedItems = _mapper.Map<List<ItemWithImagesAndLikesReadDTO>>(account.Items);
+
+        foreach (var item in mappedItems)
+        {
+            foreach (var like in item.Likes)
+            {
+                var likeAccount = await _accountRepository.GetByIdAsync(like.AccountId);
+                var mappedAccount = _mapper.Map<AccountGeneralInfoReadDTO>(likeAccount);
+                like.Account = mappedAccount;
+            }
+        }
+        return mappedItems;
     }
 }

@@ -259,7 +259,7 @@ public class ItemsController : ControllerBase
     /// </summary>
     /// <param name="itemId">The unique identifier of the item to like or unlike.</param>
     /// <returns>
-    ///   Returns an HTTP 200 (OK) response upon successful liking or unliking of the item.
+    ///   Returns an HTTP 200 (OK) response upon successful liking or unliking of the item with current item likes.
     /// </returns>
     /// <remarks>
     ///   This endpoint allows you to like or unlike an item with the specified "id." To use this endpoint, provide
@@ -279,7 +279,7 @@ public class ItemsController : ControllerBase
     [Authorize]
     public async Task<IActionResult> LikeOrUnlikeItem(Guid itemId)
     {
-        await _mediator.Send(new LikeOrUnlikeItemCommand(itemId, HttpContext.User.Claims));
-        return Ok();
+        var result = await _mediator.Send(new LikeOrUnlikeItemCommand(itemId, HttpContext.User.Claims));
+        return Ok(result);
     }
 }

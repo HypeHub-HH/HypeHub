@@ -19,6 +19,15 @@ public class GetAccountWithOutfitsQueryHandler : IRequestHandler<GetAccountWithO
     {
         var account = await _accountRepository.GetAccountWithOutfitsAsync(request.AccountId) ?? throw new NotFoundException($"There is no account with the given Id: {request.AccountId}.");
         var mappedAccount = _mapper.Map<AccountWithOutfitsReadDTO>(account);
+        foreach (var outfit in mappedAccount.Outfits)
+        {
+            foreach (var like in outfit.Likes)
+            {
+                var LikeAccount = await _accountRepository.GetByIdAsync(like.AccountId);
+                var mappedLikeAccount = _mapper.Map<AccountGeneralInfoReadDTO>(LikeAccount);
+                like.Account = mappedLikeAccount;
+            }
+        }
         return mappedAccount;
     }
 }

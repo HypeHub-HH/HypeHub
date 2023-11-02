@@ -205,7 +205,7 @@ public class OutfitsController : ControllerBase
     /// </summary>
     /// <param name="outfitId">The unique identifier of the outfit to like or unlike.</param>
     /// <returns>
-    ///   Returns an HTTP 200 (OK) response upon successful liking or unliking of the outfit.
+    ///   Returns an HTTP 200 (OK) response upon successful liking or unliking of the outfit with current outfit likes.
     /// </returns>
     /// <remarks>
     ///   This endpoint allows you to like or unlike an existing outfit by providing the unique identifier ("outfitId") of

@@ -14,7 +14,8 @@ public class AccountRepository : BaseRepository<Account>, IAccountRepository
     public async Task<Account?> GetAccountWithOutfitsAsync(Guid accountId)
     {
         return await _dbContext.Accounts
-            .Include(a => a.Outfits)
+            .Include(a => a.Outfits
+            .OrderByDescending(o => o.CreationDate))
             .ThenInclude(o => o.Images)
             .Include(a => a.Outfits)
             .ThenInclude(o => o.Likes)
