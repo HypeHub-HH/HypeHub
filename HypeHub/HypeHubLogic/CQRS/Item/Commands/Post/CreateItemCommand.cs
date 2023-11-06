@@ -3,7 +3,7 @@ using MediatR;
 using System.Security.Claims;
 
 namespace HypeHubLogic.CQRS.Item.Commands.Post;
-public class CreateItemCommand : IRequest<ItemGenerallReadDTO>
+public class CreateItemCommand : IRequest<ItemWithImagesAndLikesReadDTO>
 {
     public ItemCreateDTO Item { get; init; }
     public IEnumerable<Claim> Claims { get; init; }

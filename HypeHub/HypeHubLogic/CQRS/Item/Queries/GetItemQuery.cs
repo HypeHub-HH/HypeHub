@@ -2,7 +2,7 @@
 using MediatR;
 
 namespace HypeHubLogic.CQRS.Item.Queries;
-public class GetItemQuery : IRequest<ItemGenerallReadDTO>
+public class GetItemQuery : IRequest<ItemWithImagesAndLikesReadDTO>
 {
     public Guid ItemId { get; init; }
     public GetItemQuery(Guid itemId)
