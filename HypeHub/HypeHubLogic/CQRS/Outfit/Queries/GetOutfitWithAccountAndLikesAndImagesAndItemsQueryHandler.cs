@@ -27,6 +27,15 @@ public class GetOutfitWithAccountAndLikesAndImagesAndItemsQueryHandler : IReques
             var mappedAccount = _mapper.Map<AccountGeneralInfoReadDTO>(account);
             like.Account = mappedAccount;
         }
+        foreach (var item in mappedOutfit.Items)
+        {
+            foreach (var like in item.Likes)
+            {
+                var account = await _accountRepository.GetByIdAsync(like.AccountId);
+                var mappedAccount = _mapper.Map<AccountGeneralInfoReadDTO>(account);
+                like.Account = mappedAccount;
+            }
+        }
         return mappedOutfit;
     }
 }
