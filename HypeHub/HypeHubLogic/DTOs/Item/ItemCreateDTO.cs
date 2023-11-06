@@ -10,4 +10,5 @@ public record ItemCreateDTO
     public string? Colorway { get; init; }
     public decimal? Price { get; init; }
     public DateTime? PurchaseDate { get; init; }
+    public List<string> Images { get; init; }
 }

@@ -279,7 +279,7 @@ public class ItemsController : ControllerBase
     [Authorize]
     public async Task<IActionResult> LikeOrUnlikeItem(Guid itemId)
     {
-        await _mediator.Send(new LikeOrUnlikeItemCommand(itemId, HttpContext.User.Claims));
-        return Ok();
+        var result = await _mediator.Send(new LikeOrUnlikeItemCommand(itemId, HttpContext.User.Claims));
+        return Ok(result);
     }
 }

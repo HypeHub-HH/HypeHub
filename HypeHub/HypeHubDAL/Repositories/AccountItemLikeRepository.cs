@@ -14,4 +14,11 @@ public class AccountItemLikeRepository : BaseLikeRepository<AccountItemLike>, IA
             ail.ItemId == accountItemLike.ItemId
         ).SingleOrDefaultAsync();
     }
+
+    public async Task<List<AccountItemLike>> GetItemLikesAsync(Guid itemId)
+    {
+        return await _dbContext.AccountItemLikes.Where(ail =>
+            ail.ItemId == itemId)
+            .ToListAsync();
+    }
 }
