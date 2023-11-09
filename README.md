@@ -1,5 +1,15 @@
 <h1 align="center">HypeHub <img align="center" alt="logo" width="50px" src="https://github.com/HypeHub-HH/HypeHub-backend/assets/119299967/926fff61-999d-45b5-949f-6398f0c725af" /></h1>
-<p align="center">Backend part of our.....</p>
+<p align="center">Backend part of our mini social media platform born from passion for coding and streatwear. </br>
+Users can add cloathing items to wardrobe, create and share outfits, express opinion and many more.</br>
+- Design based on the CQRS pattern</br>
+- Identity framework, JWT and refresh token were used for authentication and authorization</br>
+- CI/CD was implemented using GithubActions</br>
+- Serilog was used for diagnostic logging</br>
+- Unit tests were performed using NUnit</br>
+- API documented with swagger</br>
+- FluentValidation, AutoMapper and MediatR were also used in the project</br>
+</p>
+
 <!--
 Link do strony
 -->
@@ -35,7 +45,7 @@ Nagrac gifa z wygladem i funkcjonalnosciami strony
 <h2 align="center">Developers</h2>
 <p align="center">https://github.com/MariuszWozniak145</p>
 <p align="center">https://github.com/Meek0hWhy</p>
-
+<!--
 <h2 align="center">Documentation</h2>
 <p align="center">
   <a align="center" href="https://postman.com" target="_blank" rel="noreferrer">API</a>
@@ -46,7 +56,7 @@ Nagrac gifa z wygladem i funkcjonalnosciami strony
 <p align="center">
   <a align="center" href="https://postman.com" target="_blank" rel="noreferrer">Database diagram</a>
 </p>
-
+-->
 <!--
 CI ikonka
 -->
