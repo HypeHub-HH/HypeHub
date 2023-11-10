@@ -25,6 +25,8 @@ jobs:
     - name: Build
       run: dotnet build ./HypeHub/HypeHub.sln --no-restore
     - name: Set up secrets
+      env: 
+        super_secret: ${{ secrets.SuperSecret }}
       run: echo "IssuerSigningKey=${{ secrets.IssuerSigningKey }}" >> $GITHUB_ENV
     - name: Test
       run: dotnet test ./HypeHub/HypeHubTests/HypeHubTests.csproj --filter FullyQualifiedName~ServicesTests --no-build --verbosity normal
