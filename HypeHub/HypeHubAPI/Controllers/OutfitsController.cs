@@ -37,7 +37,6 @@ public class OutfitsController : ControllerBase
     ///   as part of the URL route. After a successful retrieval, a response with an HTTP 200 (OK) status code will be
     ///   returned, and it will contain the outfit details, such as its name, description, and other attributes.
     /// </remarks>
-    /// <param name="id">A GUID representing the unique identifier of the outfit to be retrieved.</param>
     /// <response code="200">The outfit with the specified "id" was successfully retrieved.</response>
     /// <response code="404">The outfit with the specified "id" was not found.</response>
     [ProducesResponseType(typeof(OutfitGenerallReadDTO), StatusCodes.Status200OK)]
@@ -65,7 +64,6 @@ public class OutfitsController : ControllerBase
     ///   a response with an HTTP 200 (OK) status code will be returned, and it will contain comprehensive information about
     ///   the outfit, including its associated account, likes, images, and items.
     /// </remarks>
-    /// <param name="id">A GUID representing the unique identifier of the outfit to be retrieved.</param>
     /// <response code="200">The outfit with the specified "id" and its associated information was successfully retrieved.</response>
     /// <response code="404">The outfit with the specified "id" was not found.</response>
     [ProducesResponseType(typeof(OutfitWithAccountAndImagesAndLikesAndItemsReadDTO), StatusCodes.Status200OK)]
@@ -93,8 +91,6 @@ public class OutfitsController : ControllerBase
     ///   on each page. After a successful retrieval, a response with an HTTP 200 (OK) status code will be returned,
     ///   containing the latest outfits according to the specified page and pageSize.
     /// </remarks>
-    /// <param name="page">An integer representing the page number for pagination (starting from 1).</param>
-    /// <param name="pageSize">An integer representing the number of outfits to retrieve on each page.</param>
     /// <response code="200">The latest outfits for the specified page and pageSize were successfully retrieved.</response>
     /// <response code="400">The pagination parameters are invalid or out of range.</response>
     [ProducesResponseType(typeof(List<OutfitWithAccountAndImagesAndLikesReadDTO>), StatusCodes.Status200OK)]
@@ -121,7 +117,6 @@ public class OutfitsController : ControllerBase
     ///   secured with the "Authorize" attribute. After successful creation, a response with an HTTP 201 (Created) status code
     ///   will be returned, and it will include the details of the newly created outfit.
     /// </remarks>
-    /// <param name="outfit">A DTO (Data Transfer Object) containing data for creating a new outfit.</param>
     /// <response code="201">The new outfit was successfully created, and its details are returned.</response>
     /// <response code="400">The creation request was invalid or the outfit data is incomplete.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
@@ -153,7 +148,6 @@ public class OutfitsController : ControllerBase
     ///   secured with the "Authorize" attribute. After successful update, a response with an HTTP 201 (Created) status code
     ///   will be returned, and it will include the details of the updated outfit.
     /// </remarks>
-    /// <param name="outfit">A DTO (Data Transfer Object) containing data for updating an existing outfit.</param>
     /// <response code="201">The outfit was successfully updated, and its updated details are returned.</response>
     /// <response code="400">The update request was invalid or the outfit data is incomplete.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
@@ -183,7 +177,6 @@ public class OutfitsController : ControllerBase
     ///   as it is secured with the "Authorize" attribute. After successful deletion, a response with an HTTP 204 (No Content)
     ///   status code will be returned.
     /// </remarks>
-    /// <param name="id">A GUID representing the unique identifier of the outfit to be deleted.</param>
     /// <response code="204">The outfit with the specified "id" was successfully deleted, and no content is returned.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
     /// <response code="404">The outfit with the specified "id" was not found.</response>
@@ -213,7 +206,6 @@ public class OutfitsController : ControllerBase
     ///   a valid authorization token, as it is secured with the "Authorize" attribute. After successful liking or unliking,
     ///   a response with an HTTP 200 (OK) status code will be returned.
     /// </remarks>
-    /// <param name="outfitId">A GUID representing the unique identifier of the outfit to like or unlike.</param>
     /// <response code="200">The item with the specified "id" was successfully liked or unliked.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
     /// <response code="404">The item with the specified "id" was not found.</response>
@@ -243,7 +235,6 @@ public class OutfitsController : ControllerBase
     ///   authorization token, as it is secured with the "Authorize" attribute. After successful creation, a response with
     ///   an HTTP 200 (Ok) status code will be returned, and it will include the details of the added outfit item.
     /// </remarks>
-    /// <param name="outfitItem">A DTO (Data Transfer Object) containing data for adding an item to the outfit.</param>
     /// <response code="200">The item was successfully added, and its details are returned.</response>
     /// <response code="400">The adding request was invalid or the outfitItem data is incomplete.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
@@ -275,7 +266,6 @@ public class OutfitsController : ControllerBase
     ///   token, as it is secured with the "Authorize" attribute. After successful removal, a response with an HTTP 204 (No Content)
     ///   status code will be returned.
     /// </remarks>
-    /// <param name="outfitItem">A DTO (Data Transfer Object) containing data to remove the item from the outfit.</param>
     /// <response code="204">The item was successfully removed, and no content is returned.</response>
     /// <response code="400">The removing request was invalid or the outfitItem data is incomplete.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
@@ -330,7 +320,6 @@ public class OutfitsController : ControllerBase
     ///   of the image as part of the URL route. After a successful retrieval, a response with an HTTP 200 (OK) status code will
     ///   be returned, and it will contain the image associated with the specified ID.
     /// </remarks>
-    /// <param name="Id">A GUID representing the unique identifier of the image to be retrieved.</param>
     /// <response code="200">The image associated with the specified "Id" was successfully retrieved.</response>
     /// <response code="404">The image with the specified "Id" was not found.</response>
     [ProducesResponseType(typeof(OutfitImageReadDTO), StatusCodes.Status200OK)]
@@ -357,7 +346,6 @@ public class OutfitsController : ControllerBase
     ///   authorization token, as it is secured with the "Authorize" attribute. After successful creation, a response with
     ///   an HTTP 201 (Created) status code will be returned, and it will include the details of the newly created image.
     /// </remarks>
-    /// <param name="outfitImage">A DTO (Data Transfer Object) containing data for creating a new image associated with an outfit.</param>
     /// <response code="201">The new image was successfully created, and its details are returned.</response>
     /// <response code="400">The creation request was invalid or the image data is incomplete.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
@@ -389,7 +377,6 @@ public class OutfitsController : ControllerBase
     ///   token, as it is secured with the "Authorize" attribute. After successful deletion, a response with an HTTP 204 (No Content)
     ///   status code will be returned.
     /// </remarks>
-    /// <param name="id">A GUID representing the unique identifier of the image to be deleted.</param>
     /// <response code="204">The image with the specified "id" was successfully deleted, and no content is returned.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
     /// <response code="404">The image with the specified "id" was not found.</response>

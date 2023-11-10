@@ -50,7 +50,7 @@ public class ItemsController : ControllerBase
     /// <summary>
     ///  Creates a new item.
     /// </summary>
-    /// <param name="item">The data for the item to be created.</p1aram>
+    /// <param name="item">The data for the item to be created.</param>
     /// <returns>
     ///   Newly created item.
     /// </returns>
@@ -59,7 +59,6 @@ public class ItemsController : ControllerBase
     ///   using the JSON format. The request should also include a valid authorization token as this
     ///   endpoint is secured with authentication using the "Authorize" attribute.
     /// </remarks>
-    /// <param name="item">A DTO (Data Transfer Object) representing the item to be created.</param>
     /// <response code="201">The item was successfully created, and its data is returned.</response>
     /// <response code="400">The request was invalid or the item data is incomplete.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
@@ -90,7 +89,6 @@ public class ItemsController : ControllerBase
     ///   the item data in the request body using the JSON format. To use this endpoint, ensure that you
     ///   are authenticated with a valid authorization token, as it is secured with the "Authorize" attribute.
     /// </remarks>
-    /// <param name="item">A DTO (Data Transfer Object) representing the item to be updated.</param>
     /// <response code="201">The item was successfully updated, and its updated data is returned.</response>
     /// <response code="400">The request was invalid, or the item data is incomplete.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
@@ -120,7 +118,6 @@ public class ItemsController : ControllerBase
     ///   with the "Authorize" attribute. The item will be deleted, and a response with an HTTP 204 (No Content)
     ///   status code will be returned upon successful deletion.
     /// </remarks>
-    /// <param name="id">A GUID representing the unique identifier of the item to be deleted.</param>
     /// <response code="204">The item was successfully deleted, and no content is returned.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
     /// <response code="404">The item with the specified ID was not found and could not be deleted.</response>
@@ -149,7 +146,6 @@ public class ItemsController : ControllerBase
     ///   the "itemId" as part of the URL route to indicate which item's images you want to retrieve. The
     ///   response will contain the images associated with the item in an array or collection format.
     /// </remarks>
-    /// <param name="itemId">A GUID representing the unique identifier of the item for which images are being retrieved.</param>
     /// <response code="200">The images associated with the specified item were successfully retrieved.</response>
     /// <response code="404">The item with the specified "itemId" was not found, or no images are associated with it.</response>
     [ProducesResponseType(typeof(List<ItemImageReadDTO>), StatusCodes.Status200OK)]
@@ -175,7 +171,6 @@ public class ItemsController : ControllerBase
     ///   the "imageId" as part of the URL route to indicate which image you want to retrieve. The response
     ///   will contain the image associated with the specified "imageId."
     /// </remarks>
-    /// <param name="imageId">A GUID representing the unique identifier of the image to be retrieved.</param>
     /// <response code="200">The specific image associated with the provided "imageId" was successfully retrieved.</response>
     /// <response code="404">The image with the specified "imageId" was not found.</response>
     [ProducesResponseType(typeof(ItemImageReadDTO), StatusCodes.Status200OK)]
@@ -203,8 +198,6 @@ public class ItemsController : ControllerBase
     ///   using the JSON format. Ensure you are authenticated with a valid authorization token, as this endpoint
     ///   is secured with the "Authorize" attribute.
     /// </remarks>
-    /// <param name="itemId">A GUID representing the unique identifier of the item to which the image will be associated.</param>
-    /// <param name="item">A DTO (Data Transfer Object) representing the image data to be uploaded and associated with the item.</param>
     /// <response code="200">The image was successfully created and associated with the specified item.</response>
     /// <response code="400">The request was invalid or the image data is incomplete.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
@@ -237,7 +230,6 @@ public class ItemsController : ControllerBase
     ///   will be deleted, and a response with an HTTP 204 (No Content) status code will be returned upon
     ///   successful deletion.
     /// </remarks>
-    /// <param name="imageId">A GUID representing the unique identifier of the image to be deleted.</param>
     /// <response code="204">The image with the specified "imageId" was successfully deleted, and no content is returned.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
     /// <response code="404">The image with the specified "imageId" was not found.</response>
@@ -267,7 +259,6 @@ public class ItemsController : ControllerBase
     ///   endpoint is secured with the "Authorize" attribute. Liking or unliking an item will affect the item's status,
     ///   and a response with an HTTP 200 (OK) status code will be returned upon successful liking or unliking.
     /// </remarks>
-    /// <param name="itemId">A GUID representing the unique identifier of the item to like or unlike.</param>
     /// <response code="200">The item with the specified "id" was successfully liked or unliked.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
     /// <response code="404">The item with the specified "id" was not found.</response>

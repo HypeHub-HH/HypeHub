@@ -40,7 +40,7 @@ public class TokenServiceTests
             ValidateIssuerSigningKey = true,
             ValidIssuer = _configuration["JWT:ValidIssuer"],
             ValidAudience = _configuration["JWT:ValidAudience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["IssuerSigningKey"]))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("IssuerSigningKey")))
         };
 
         // Act

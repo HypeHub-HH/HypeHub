@@ -33,7 +33,6 @@ public class AuthenticationController : ControllerBase
     ///   in the request body using the JSON format. After successful registration, a response with an HTTP 200
     ///   (OK) status code will be returned, and the newly registered user's data may be included in the response.
     /// </remarks>
-    /// <param name="RegistrationReadDTO">A DTO (Data Transfer Object) containing user registration data.</param>
     /// <response code="200">The user account was successfully registered.</response>
     /// <response code="400">The request was invalid or the registration data is incomplete.</response>
     /// <response code="500">The error occurred on the server side.</response>
@@ -61,7 +60,6 @@ public class AuthenticationController : ControllerBase
     ///   in the request body using the JSON format. After successful login, a response with an HTTP 200 (OK)
     ///   status code will be returned with user authentication data, such as tokens or user information.
     /// </remarks>
-    /// <param name="loggingCreateDTO">A DTO (Data Transfer Object) containing user login data.</param>
     /// <response code="200">The user was successfully logged in, and user authentication data is returned with JWT and refresh token.</response>
     /// <response code="400">The login request was invalid or the login data is incorrect.</response>
     /// <response code="500">The error occurred on the server side.</response>
@@ -89,7 +87,6 @@ public class AuthenticationController : ControllerBase
     ///   in the request body using the JSON format. After a successful token refresh, a response with an HTTP 200 (OK)
     ///   status code will be returned, and it will include the new access token for the user.
     /// </remarks>
-    /// <param name="token">A DTO (Data Transfer Object) containing the refresh token for token refresh.</param>
     /// <response code="200">The user's authentication token was successfully refreshed, and new token is returned.</response>
     /// <response code="400">The token refresh request was invalid, or the refresh token is expired or incorrect.</response>
     [ProducesResponseType(typeof(Token), StatusCodes.Status200OK)]
@@ -117,7 +114,6 @@ public class AuthenticationController : ControllerBase
     ///   authorization token, as this endpoint is secured with the "Authorize" attribute. After successful token
     ///   revocation, a response with an HTTP 204 (No Content) status code will be returned.
     /// </remarks>
-    /// <param name="username">The username of the user whose token should be revoked.</param>
     /// <response code="204">The user's authentication token was successfully revoked, and no content is returned.</response>
     /// <response code="400">Wrong user credentials.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
@@ -174,7 +170,6 @@ public class AuthenticationController : ControllerBase
     ///   with an HTTP 200 (OK) status code will be returned, and it may include user authentication data, such
     ///   as tokens or user information.
     /// </remarks>
-    /// <param name="token">A string representing the authentication token from Google.</param>
     /// <response code="200">The user was successfully authenticated with Google, and user authentication data is returned.</response>
     /// <response code="400">The authentication request was invalid or the authentication token is incorrect.</response>
     [ProducesResponseType(typeof(GoogleAuthenticateResponse), StatusCodes.Status200OK)]
