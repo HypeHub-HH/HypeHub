@@ -1,5 +1,4 @@
 name: Logic-Tests
-run-name: ${{ github.actor }} is pushed changes with modifications in Logic layer. 
 on:
   push:
     branches:
@@ -11,22 +10,27 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
+
     - name: Restore dependencies
       run: dotnet restore ./HypeHub/HypeHub.sln
+
     - name: Build
       run: dotnet build ./HypeHub/HypeHub.sln --no-restore
-    - name: Set up secrets
-      env: 
-        super_secret: ${{ secrets.SuperSecret }}
-      run: echo "IssuerSigningKey=${{ secrets.IssuerSigningKey }}" >> $GITHUB_ENV
+    
     - name: Test
+      env:
+        IssuerSigningKey: ${{ secrets.ISSUER_SIGNING_KEY }}
+        JWT:VALIDAUDIENCE: ${{ secrets.JWT_VALIDAUDIENCE }}
+        JWT:VALIDISSUER: ${{ secrets.JWT_VALIDISSUER }}
+        JWT:TOKENVALIDITYINMINUTES: ${{ secrets.JWT_TOKENVALIDITYINMINUTES}}
       run: dotnet test ./HypeHub/HypeHubTests/HypeHubTests.csproj --filter FullyQualifiedName~ServicesTests --no-build --verbosity normal
