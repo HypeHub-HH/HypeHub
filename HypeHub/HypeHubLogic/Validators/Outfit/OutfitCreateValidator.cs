@@ -16,12 +16,6 @@ public class OutfitCreateValidator : AbstractValidator<OutfitCreateDTO>
              .WithMessage("Name must have a value.")
              .Length(4, 30)
              .WithMessage("Name must not have less than 4 and more than 30 characters.");
-
-        //RuleFor(o => o.AccountId)
-        //    .NotEmpty()
-        //    .WithMessage("AccountId must have a value.")
-        //    .MustAsync(CheckIfAccountExist)
-        //    .WithMessage("There is no account with the given Id.");
     }
 
     private async Task<bool> CheckIfAccountExist(Guid id, CancellationToken cancellationToken) =>
