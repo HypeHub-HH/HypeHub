@@ -20,6 +20,7 @@ public class TokenServiceTests
     {
         _configuration = new ConfigurationBuilder()
             .AddUserSecrets<TokenServiceTests>()
+            .AddEnvironmentVariables()
             .Build();
         _tokenService = new TokenService(_configuration);
     }
