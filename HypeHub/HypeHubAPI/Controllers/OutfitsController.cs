@@ -223,20 +223,21 @@ public class OutfitsController : ControllerBase
 
     #region Endpoint Description
     /// <summary>
-    ///   Add ann item to the outfit.
+    ///   Add items to the outfit.
     /// </summary>
-    /// <param name="outfitItem">Data for adding an item to the outfit</param>
+    /// <param name="outfitId">The unique identifier of the outfit.</param>
+    /// <param name="items">The list of unique identifiers of items.</param>
     /// <returns>
-    ///   Returns an HTTP 200 (Ok) response upon successfully adding an item to the outfit.
+    ///   Returns an HTTP 200 (Ok) response upon successfully adding items to the outfit.
     /// </returns>
     /// <remarks>
-    ///   This endpoint allows you to add an item to the outfit by providing the necessary data in
+    ///   This endpoint allows you to add items to the outfit by providing the necessary data in
     ///   the request body using the JSON format. To use this endpoint, ensure that you are authenticated with a valid
     ///   authorization token, as it is secured with the "Authorize" attribute. After successful creation, a response with
-    ///   an HTTP 200 (Ok) status code will be returned, and it will include the details of the added outfit item.
+    ///   an HTTP 200 (Ok) status code will be returned, and it will include the details of the added outfit items.
     /// </remarks>
-    /// <response code="200">The item was successfully added, and its details are returned.</response>
-    /// <response code="400">The adding request was invalid or the outfitItem data is incomplete.</response>
+    /// <response code="200">Items were successfully added, and its details are returned.</response>
+    /// <response code="400">The adding request was invalid or the items data is incomplete.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
     /// <response code="500">The error occurred on the server side.</response>
     [ProducesResponseType(typeof(OutfitItem), StatusCodes.Status200OK)]
@@ -246,38 +247,39 @@ public class OutfitsController : ControllerBase
     #endregion
     [HttpPost("{outfitId}/Items")]
     [Authorize]
-    public async Task<IActionResult> AddItemToOutfit([FromBody] OutfitItem outfitItem)
+    public async Task<IActionResult> AddItemsToOutfit(Guid outfitId, [FromBody] List<Guid> items)
     {
-        var result = await _mediator.Send(new AddItemToOutfitCommand(outfitItem, HttpContext.User.Claims));
+        var result = await _mediator.Send(new AddItemsToOutfitCommand(items, outfitId, HttpContext.User.Claims));
         return Ok(result);
     }
 
     #region Endpoint Description
     /// <summary>
-    /// Removes the item from the outfit.
+    /// Removes the items from the outfit.
     /// </summary>
-    /// <param name="outfitItem">Data to remove the item from the outfit</param>
+    /// <param name="outfitId">The unique identifier of the outfit.</param>
+    /// <param name="items">The list of unique identifiers of items.</param>
     /// <returns>
-    ///   Returns an HTTP 204 (no content) response after successfully removing the item from an outfit.
+    ///   Returns an HTTP 204 (no content) response after successfully removing items from an outfit.
     /// </returns>
     /// <remarks>
-    ///   This endpoint allows you to remove the item from the outfit by providing the necessary data in
+    ///   This endpoint allows you to remove items from the outfit by providing the necessary data in
     ///   the request body using the JSON format. To use this endpoint, ensure that you are authenticated with a valid authorization
     ///   token, as it is secured with the "Authorize" attribute. After successful removal, a response with an HTTP 204 (No Content)
     ///   status code will be returned.
     /// </remarks>
-    /// <response code="204">The item was successfully removed, and no content is returned.</response>
-    /// <response code="400">The removing request was invalid or the outfitItem data is incomplete.</response>
+    /// <response code="204">Items were successfully removed, and no content is returned.</response>
+    /// <response code="400">The removing request was invalid or the items data is incomplete.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status401Unauthorized)]
     #endregion
-    [HttpDelete("{outfitId}/Items")]
+    [HttpPut("{outfitId}/Items")]
     [Authorize]
-    public async Task<IActionResult> RemoveItemFromOutfit([FromBody] OutfitItem outfitItem)
+    public async Task<IActionResult> RemoveItemsFromOutfit(Guid outfitId, [FromBody] List<Guid> items)
     {
-        await _mediator.Send(new RemoveItemFromOutfitCommand(outfitItem, HttpContext.User.Claims));
+        await _mediator.Send(new RemoveItemsFromOutfitCommand(items, outfitId, HttpContext.User.Claims));
         return NoContent();
     }
 
