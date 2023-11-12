@@ -1,5 +1,4 @@
-﻿using HypeHubDAL.Models;
-using HypeHubDAL.Models.Relations;
+﻿using HypeHubDAL.Models.Relations;
 using HypeHubLogic.CQRS.Outfit.Commands.Delete;
 using HypeHubLogic.CQRS.Outfit.Commands.Post;
 using HypeHubLogic.CQRS.Outfit.Commands.Update;
@@ -223,21 +222,21 @@ public class OutfitsController : ControllerBase
 
     #region Endpoint Description
     /// <summary>
-    ///   Add items to the outfit.
+    ///   Add ann item to the outfit.
     /// </summary>
     /// <param name="outfitId">The unique identifier of the outfit.</param>
-    /// <param name="items">The list of unique identifiers of items.</param>
+    /// <param name="itemId">The unique identifier of the item.</param>
     /// <returns>
-    ///   Returns an HTTP 200 (Ok) response upon successfully adding items to the outfit.
+    ///   Returns an HTTP 200 (Ok) response upon successfully adding an item to the outfit.
     /// </returns>
     /// <remarks>
-    ///   This endpoint allows you to add items to the outfit by providing the necessary data in
+    ///   This endpoint allows you to add an item to the outfit by providing the necessary data in
     ///   the request body using the JSON format. To use this endpoint, ensure that you are authenticated with a valid
     ///   authorization token, as it is secured with the "Authorize" attribute. After successful creation, a response with
-    ///   an HTTP 200 (Ok) status code will be returned, and it will include the details of the added outfit items.
+    ///   an HTTP 200 (Ok) status code will be returned, and it will include the details of the added outfit item.
     /// </remarks>
-    /// <response code="200">Items were successfully added, and its details are returned.</response>
-    /// <response code="400">The adding request was invalid or the items data is incomplete.</response>
+    /// <response code="200">The item was successfully added, and its details are returned.</response>
+    /// <response code="400">The adding request was invalid.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
     /// <response code="500">The error occurred on the server side.</response>
     [ProducesResponseType(typeof(OutfitItem), StatusCodes.Status200OK)]
@@ -245,69 +244,43 @@ public class OutfitsController : ControllerBase
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status500InternalServerError)]
     #endregion
-    [HttpPost("{outfitId}/Items")]
+    [HttpPost("{outfitId}/Items/{itemId}")]
     [Authorize]
-    public async Task<IActionResult> AddItemsToOutfit(Guid outfitId, [FromBody] List<Guid> items)
+    public async Task<IActionResult> AddItemToOutfit(Guid outfitId, Guid itemId)
     {
-        var result = await _mediator.Send(new AddItemsToOutfitCommand(items, outfitId, HttpContext.User.Claims));
+        var result = await _mediator.Send(new AddItemToOutfitCommand(outfitId, itemId, HttpContext.User.Claims));
         return Ok(result);
     }
 
     #region Endpoint Description
     /// <summary>
-    /// Removes the items from the outfit.
+    /// Removes the item from the outfit.
     /// </summary>
     /// <param name="outfitId">The unique identifier of the outfit.</param>
-    /// <param name="items">The list of unique identifiers of items.</param>
+    /// <param name="itemId">The unique identifier of the item.</param>
     /// <returns>
-    ///   Returns an HTTP 204 (no content) response after successfully removing items from an outfit.
+    ///   Returns an HTTP 204 (no content) response after successfully removing the item from an outfit.
     /// </returns>
     /// <remarks>
-    ///   This endpoint allows you to remove items from the outfit by providing the necessary data in
+    ///   This endpoint allows you to remove the item from the outfit by providing the necessary data in
     ///   the request body using the JSON format. To use this endpoint, ensure that you are authenticated with a valid authorization
     ///   token, as it is secured with the "Authorize" attribute. After successful removal, a response with an HTTP 204 (No Content)
     ///   status code will be returned.
     /// </remarks>
-    /// <response code="204">Items were successfully removed, and no content is returned.</response>
-    /// <response code="400">The removing request was invalid or the items data is incomplete.</response>
+    /// <response code="204">The item was successfully removed, and no content is returned.</response>
+    /// <response code="400">The removing request was invalid.</response>
     /// <response code="401">User was unauthorized or JWT was invalid</response>
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status401Unauthorized)]
     #endregion
-    [HttpPut("{outfitId}/Items")]
+    [HttpDelete("{outfitId}/Items/{itemId}")]
     [Authorize]
-    public async Task<IActionResult> RemoveItemsFromOutfit(Guid outfitId, [FromBody] List<Guid> items)
+    public async Task<IActionResult> RemoveItemFromOutfit(Guid outfitId, Guid itemId)
     {
-        await _mediator.Send(new RemoveItemsFromOutfitCommand(items, outfitId, HttpContext.User.Claims));
+        await _mediator.Send(new RemoveItemFromOutfitCommand(outfitId, itemId, HttpContext.User.Claims));
         return NoContent();
     }
-
-    //#region Endpoint Description
-    /// <summary>
-    /// Retrieves images associated with an outfit by its unique identifier (ID).
-    /// </summary>
-    /// <param name="outfitId">The unique identifier of the outfit for which images are to be retrieved.</param>
-    /// <returns>
-    ///   Returns an HTTP 200 (OK) response with the images associated with the specified outfit.
-    /// </returns>
-    /// <remarks>
-    ///   This endpoint allows you to retrieve images associated with an outfit by providing the unique identifier ("outfitId")
-    ///   of the outfit as part of the URL route. After a successful retrieval, a response with an HTTP 200 (OK) status code
-    ///   will be returned, and it will contain the images associated with the specified outfit.
-    /// </remarks>
-    /// <param name="outfitId">A GUID representing the unique identifier of the outfit for which images are to be retrieved.</param>
-    /// <response code="200">The images associated with the specified outfit were successfully retrieved.</response>
-    /// <response code="404">The outfit with the specified "outfitId" was not found, or there are no images associated with it.</response>
-    //[ProducesResponseType(typeof(List<OutfitImageReadDTO>), StatusCodes.Status200OK)]
-    //[ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status404NotFound)]
-    //#endregion
-    //[HttpGet("{outfitId}/Images")]
-    //public async Task<IActionResult> GetOutfitImages(Guid outfitId)
-    //{
-    //    var result = await _mediator.Send(new GetOutfitImagesQuery(outfitId));
-    //    return Ok(result);
-    //}
 
     #region Endpoint Description
     /// <summary>
