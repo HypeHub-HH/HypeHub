@@ -3,7 +3,6 @@
 namespace HypeHubLogic.DTOs.Item;
 public record ItemUpdateDTO
 {
-    public Guid Id { get; init; }
     public string Name { get; init; }
     public CloathingType CloathingType { get; init; }
     public string? Brand { get; init; }

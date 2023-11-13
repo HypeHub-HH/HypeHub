@@ -96,11 +96,11 @@ public class ItemsController : ControllerBase
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status401Unauthorized)]
     #endregion
-    [HttpPut]
+    [HttpPut("{id}")]
     [Authorize]
-    public async Task<IActionResult> UpdateItem([FromBody] ItemUpdateDTO item)
+    public async Task<IActionResult> UpdateItem(Guid id, [FromBody] ItemUpdateDTO item)
     {
-        var result = await _mediator.Send(new UpdateItemCommand(item, HttpContext.User.Claims));
+        var result = await _mediator.Send(new UpdateItemCommand(id, item, HttpContext.User.Claims));
         return CreatedAtAction(nameof(GetItem), new { id = result.Id }, result);
     }
 
@@ -131,31 +131,6 @@ public class ItemsController : ControllerBase
     {
         await _mediator.Send(new DeleteItemCommand(id, HttpContext.User.Claims));
         return NoContent();
-    }
-
-    #region Endpoint Description
-    /// <summary>
-    /// Retrieves images associated with a specific item.
-    /// </summary>
-    /// <param name="itemId">The unique identifier of the item for which images are being retrieved.</param>
-    /// <returns>
-    ///   Returns an HTTP 200 (OK) response with the images associated with the specified item.
-    /// </returns>
-    /// <remarks>
-    ///   This endpoint allows you to retrieve images associated with a specific item. You should provide
-    ///   the "itemId" as part of the URL route to indicate which item's images you want to retrieve. The
-    ///   response will contain the images associated with the item in an array or collection format.
-    /// </remarks>
-    /// <response code="200">The images associated with the specified item were successfully retrieved.</response>
-    /// <response code="404">The item with the specified "itemId" was not found, or no images are associated with it.</response>
-    [ProducesResponseType(typeof(List<ItemImageReadDTO>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status404NotFound)]
-    #endregion
-    [HttpGet("{itemId}/Images")]
-    public async Task<IActionResult> GetItemImages(Guid itemId)
-    {
-        var result = await _mediator.Send(new GetItemImagesQuery(itemId));
-        return Ok(result);
     }
 
     #region Endpoint Description
@@ -210,8 +185,8 @@ public class ItemsController : ControllerBase
     [Authorize]
     public async Task<IActionResult> CreateImage([FromBody] ItemImageCreateDTO item)
     {
-        await _mediator.Send(new CreateItemImageCommand(item, HttpContext.User.Claims));
-        return Ok();
+        var result = await _mediator.Send(new CreateItemImageCommand(item, HttpContext.User.Claims));
+        return CreatedAtAction(nameof(GetItemImage), new { imageId = result.ItemId, id = result.Id }, result);
     }
 
     #region Endpoint Description
@@ -236,7 +211,7 @@ public class ItemsController : ControllerBase
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status404NotFound)]
     #endregion
-    [HttpDelete("Images")]
+    [HttpDelete("Images/{imageId}")]
     [Authorize]
     public async Task<IActionResult> DeleteImage(Guid imageId)
     {

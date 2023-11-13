@@ -155,30 +155,4 @@ public class AuthenticationController : ControllerBase
         var result = await _mediator.Send(new GetCurrentAccountQuery(token));
         return Ok(result);
     }
-
-    #region Endpoint Description
-    /// <summary>
-    /// Authenticates a user with Google using an authentication token.
-    /// </summary>
-    /// <param name="token">The authentication token provided by Google.</param>
-    /// <returns>
-    ///   Returns an HTTP 200 (OK) response upon successful authentication, along with user authentication data.
-    /// </returns>
-    /// <remarks>
-    ///   This endpoint allows a user to authenticate with Google by providing an authentication token obtained
-    ///   from Google in the request body using the JSON format. After a successful authentication, a response
-    ///   with an HTTP 200 (OK) status code will be returned, and it may include user authentication data, such
-    ///   as tokens or user information.
-    /// </remarks>
-    /// <response code="200">The user was successfully authenticated with Google, and user authentication data is returned.</response>
-    /// <response code="400">The authentication request was invalid or the authentication token is incorrect.</response>
-    [ProducesResponseType(typeof(GoogleAuthenticateResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status400BadRequest)]
-    #endregion
-    [HttpPost("GoogleAuthenticate")]
-    public async Task<IActionResult> GoogleAuthenticate([FromBody] string token)
-    {
-        var result = await _mediator.Send(new GoogleAuthenticateCommand(token));
-        return Ok(result);
-    }
 }

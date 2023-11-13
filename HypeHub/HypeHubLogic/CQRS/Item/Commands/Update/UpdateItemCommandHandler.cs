@@ -23,10 +23,10 @@ public class UpdateItemCommandHandler : IRequestHandler<UpdateItemCommand, ItemG
 
     public async Task<ItemGenerallReadDTO> Handle(UpdateItemCommand request, CancellationToken cancellationToken)
     {
-        if(!await _ownershipValidator.ValidateOwnership(request.Claims, request.Item.Id)) throw new UnauthorizedRequestExeption("Access denied. Only owner can acces this endpoint");
+        if(!await _ownershipValidator.ValidateOwnership(request.Claims, request.Id)) throw new UnauthorizedRequestExeption("Access denied. Only owner can acces this endpoint");
         var validationResult = await _validator.ValidateAsync(request.Item);
         if (!validationResult.IsValid) throw new ValidationFailedException("Validation failed", validationResult.Errors.Select(error => error.ErrorMessage));
-        var itemForUpdate = await _itemRepository.GetByIdAsync(request.Item.Id) ?? throw new NotFoundException($"There is no item with the given Id: {request.Item.Id}.");
+        var itemForUpdate = await _itemRepository.GetByIdAsync(request.Id) ?? throw new NotFoundException($"There is no item with the given Id: {request.Id}.");
         var update = request.Item;
 
         itemForUpdate.Name = update.Name;

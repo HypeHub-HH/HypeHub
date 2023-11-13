@@ -1,7 +1,4 @@
-﻿using Azure.Core;
-using HypeHubDAL.Exeptions;
-
-namespace HypeHubDAL.Models;
+﻿namespace HypeHubDAL.Models;
 
 public class PagedList<T>
 {

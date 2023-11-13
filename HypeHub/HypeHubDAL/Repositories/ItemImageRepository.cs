@@ -8,10 +8,4 @@ public class ItemImageRepository : BaseImageRepository<ItemImage>, IItemImageRep
 {
     public ItemImageRepository(HypeHubContext dbContext) : base(dbContext)
     { }
-
-    public async Task<List<ItemImage>> GetAllItemImagesAsync(Guid itemId)
-    {
-        return await _dbContext.ItemsImages.Where(ItemImages => ItemImages.ItemId == itemId)
-                                            .ToListAsync();
-    }
 }

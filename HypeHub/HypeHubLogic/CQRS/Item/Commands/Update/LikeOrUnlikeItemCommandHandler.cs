@@ -2,11 +2,9 @@
 using FluentValidation;
 using HypeHubDAL.Exeptions;
 using HypeHubDAL.Models.Relations;
-using HypeHubDAL.Repositories;
 using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Account;
 using HypeHubLogic.DTOs.AccountItemLike;
-using HypeHubLogic.DTOs.AccountOutfitLike;
 using MediatR;
 using System.Security.Claims;
 

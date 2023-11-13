@@ -13,10 +13,6 @@ public class ItemConfiguration : IEntityTypeConfiguration<Item>
         builder.Property(i => i.AccountId)
             .IsRequired();
 
-        //builder.Property(i => i.Name)
-        //    .IsRequired()
-        //    .HasMaxLength(30);
-
         builder.Property(i => i.CloathingType)
             .IsRequired()
             .HasConversion(

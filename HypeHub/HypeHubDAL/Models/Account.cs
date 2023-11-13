@@ -1,6 +1,4 @@
-﻿using HypeHubDAL.Models.Types;
-
-namespace HypeHubDAL.Models;
+﻿namespace HypeHubDAL.Models;
 public class Account
 {
     public Guid Id { get; init; }

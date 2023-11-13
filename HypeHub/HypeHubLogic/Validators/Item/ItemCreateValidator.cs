@@ -16,12 +16,6 @@ public class ItemCreateValidator : AbstractValidator<ItemCreateDTO>
              .Length(4, 30)
              .WithMessage("Name must not have less than 4 and more than 30 characters.");
 
-        //RuleFor(i => i.AccountId)
-        //    .NotEmpty()
-        //    .WithMessage("AccountId must have a value.");
-        //    //.MustAsync(CheckIfAccountExist)
-        //    //.WithMessage("There is no account with the given Id.");
-
         RuleFor(i => i.CloathingType)
             .IsInEnum()
             .WithMessage("CloathingType is not a valid enum value.");
