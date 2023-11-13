@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using HypeHubDAL.Repositories.Interfaces;
 using HypeHubLogic.DTOs.Account;
 
 namespace HypeHubLogic.Validators.Account;

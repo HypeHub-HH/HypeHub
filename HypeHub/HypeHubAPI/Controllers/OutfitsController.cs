@@ -154,11 +154,11 @@ public class OutfitsController : ControllerBase
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status401Unauthorized)]
     #endregion
-    [HttpPut]
+    [HttpPut("{id}")]
     [Authorize]
-    public async Task<IActionResult> UpdateOutfit([FromBody] OutfitUpdateDTO outfit)
+    public async Task<IActionResult> UpdateOutfit(Guid id, [FromBody] OutfitUpdateDTO outfit)
     {
-        var result = await _mediator.Send(new UpdateOutfitCommand(outfit, HttpContext.User.Claims));
+        var result = await _mediator.Send(new UpdateOutfitCommand(id, outfit, HttpContext.User.Claims));
         return CreatedAtAction(nameof(GetOutfit), new { id = result.Id }, result);
     }
 
