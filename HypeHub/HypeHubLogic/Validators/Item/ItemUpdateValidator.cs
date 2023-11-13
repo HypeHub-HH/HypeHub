@@ -22,14 +22,14 @@ public class ItemUpdateValidator : AbstractValidator<ItemUpdateDTO>
            .Length(4, 30)
            .WithMessage("Name must not have less than 4 and more than 30 characters.");
 
-        When(i => i.CloathingType != null, () =>
-        {
-            RuleFor(i => i.CloathingType)
-                .NotEmpty()
-                .WithMessage("CloathingType must have a value.")
-                .IsInEnum()
-                .WithMessage("CloathingType is not a valid enum value.");
-        });
+        //When(i => i.CloathingType != null, () =>
+        //{
+           // RuleFor(i => i.CloathingType)
+               // .NotEmpty()
+               // .WithMessage("CloathingType must have a value.")
+               // .IsInEnum()
+              //  .WithMessage("CloathingType is not a valid enum value.");
+       // });
 
         RuleFor(i => i.Brand)
             .MaximumLength(30)

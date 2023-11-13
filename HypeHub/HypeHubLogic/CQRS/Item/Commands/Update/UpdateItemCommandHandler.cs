@@ -38,6 +38,7 @@ public class UpdateItemCommandHandler : IRequestHandler<UpdateItemCommand, ItemG
         itemForUpdate.PurchaseDate = update.PurchaseDate;
 
         var item = await _itemRepository.UpdateAsync(itemForUpdate);
+
         var updatedItem = _mapper.Map<ItemGenerallReadDTO>(item);
 
         return updatedItem;

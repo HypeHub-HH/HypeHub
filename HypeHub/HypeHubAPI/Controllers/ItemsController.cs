@@ -187,7 +187,6 @@ public class ItemsController : ControllerBase
     /// <summary>
     /// Uploads and associates a new image with a specific item.
     /// </summary>
-    /// <param name="itemId">The unique identifier of the item to which the image will be associated.</param>
     /// <param name="item">The data for the image to be uploaded and associated with the item.</param>
     /// <returns>
     ///   Returns an HTTP 200 (OK) response upon successful creation and association of the image with the item.
@@ -207,7 +206,7 @@ public class ItemsController : ControllerBase
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status500InternalServerError)]
     #endregion
-    [HttpPost("{itemId}/Images")]
+    [HttpPost("Images")]
     [Authorize]
     public async Task<IActionResult> CreateImage([FromBody] ItemImageCreateDTO item)
     {
@@ -237,7 +236,7 @@ public class ItemsController : ControllerBase
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ExceptionOccuredReadDTO), StatusCodes.Status404NotFound)]
     #endregion
-    [HttpDelete("Images/{imageId}")]
+    [HttpDelete("Images")]
     [Authorize]
     public async Task<IActionResult> DeleteImage(Guid imageId)
     {
