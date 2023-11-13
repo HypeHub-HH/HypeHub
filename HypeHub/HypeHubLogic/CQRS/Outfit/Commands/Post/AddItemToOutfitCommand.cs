@@ -5,11 +5,13 @@ using System.Security.Claims;
 namespace HypeHubLogic.CQRS.Outfit.Commands.Post;
 public class AddItemToOutfitCommand : IRequest<OutfitItem>
 {
-    public OutfitItem OutfitItem { get; init; }
+    public Guid OutfitId { get; init; }
+    public Guid ItemId { get; init; }
     public IEnumerable<Claim> Claims { get; init; }
-    public AddItemToOutfitCommand(OutfitItem outfitItem, IEnumerable<Claim> claims)
+    public AddItemToOutfitCommand(Guid outfitId, Guid itemId, IEnumerable<Claim> claims)
     {
-        OutfitItem = outfitItem;
+        OutfitId = outfitId;
+        ItemId = itemId;
         Claims = claims;
     }
 }
