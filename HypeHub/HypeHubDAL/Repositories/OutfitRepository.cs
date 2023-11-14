@@ -26,6 +26,7 @@ public class OutfitRepository : BaseRepository<Outfit>, IOutfitRepository
             .Include(o => o.Account)
             .Include(o => o.Images)
             .Include(o => o.Likes)
+            .Where(o => !o.Account.IsPrivate)
             .OrderByDescending(o => o.CreationDate)
             .ToListAsync();
         return PagedList<Outfit>.ToPagedList(outfits, page, pageSize);

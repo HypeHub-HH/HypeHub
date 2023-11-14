@@ -33,7 +33,7 @@ public class AccountRepository : BaseRepository<Account>, IAccountRepository
     public async Task<List<Account>> GetSearchedAccountsAsync(string searchedString)
     {
         var convertedSearchedString = searchedString.ToLower();
-        return await _dbContext.Accounts.Where(a => a.Username.ToLower().StartsWith(convertedSearchedString)).ToListAsync();
+        return await _dbContext.Accounts.Where(a => a.Username.ToLower().StartsWith(convertedSearchedString) && !a.IsPrivate).ToListAsync();
     }
     public async Task<List<Guid>> GetAllOutfitsAndItemsIdsForAccount(Guid accountId)
     {
