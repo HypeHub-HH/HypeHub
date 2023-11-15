@@ -247,4 +247,27 @@ public class ItemsController : ControllerBase
         var result = await _mediator.Send(new LikeOrUnlikeItemCommand(itemId, HttpContext.User.Claims));
         return Ok(result);
     }
+
+    #region Endpoint Description
+    /// <summary>
+    /// Checks if an item is present in any outfit.
+    /// </summary>
+    /// <param name="itemId">The unique identifier of the item to be checked.</param>
+    /// <returns>
+    ///   Returns an HTTP 200 (OK) response indicating whether the item is present in any outfit.
+    /// </returns>
+    /// <remarks>
+    ///   This endpoint allows you to check if a specific item (identified by "itemId") is present in any outfit.
+    ///   After processing the request, a response with an HTTP 200 (OK) status code will be returned, indicating
+    ///   whether the item is present in any outfit.
+    /// </remarks>
+    /// <response code="200">Indicates whether the item is present in any outfit.</response>
+    [ProducesResponseType(typeof(bool),StatusCodes.Status200OK)]
+    #endregion
+    [HttpGet("{itemId}/isInOutfit")]
+    public async Task<IActionResult> CheckIfItemIsInAnyOutfit(Guid itemId)
+    {
+        var result = await _mediator.Send(new GetCheckIfItemIsInAnyOutfitCommand(itemId));
+        return Ok(result);
+    }
 }

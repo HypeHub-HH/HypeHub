@@ -1,6 +1,7 @@
 ﻿using HypeHubDAL.DbContexts;
 using HypeHubDAL.Models.Relations;
 using HypeHubDAL.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace HypeHubDAL.Repositories;
 
@@ -27,5 +28,10 @@ public class OutfitItemRepository : IOutfitItemRepository
             _dbContext.OutfitItems.Remove(outfitItem);
         });
         await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<bool> CheckIfItemIsInAnyOutfitAsync(Guid itemId)
+    {
+        return await _dbContext.OutfitItems.AnyAsync(oi => oi.ItemId == itemId);
     }
 }
