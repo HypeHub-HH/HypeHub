@@ -146,7 +146,8 @@ public static class ServiceCollectionExtension
     }
     public static void AddUISerilog(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddSerilogUi(options => options.UseSqlServer(configuration["LogsDbKey"], "Logs"));
+        var hypeHubSerielogDatabaseKey = GetSecretAsync(configuration, "HypeHubSerielogDatabaseKey").GetAwaiter().GetResult();
+        services.AddSerilogUi(options => options.UseSqlServer(hypeHubSerielogDatabaseKey, "Logs"));
     }
     private static async Task<string> GetSecretAsync(IConfiguration configuration, string secretName)
     {
