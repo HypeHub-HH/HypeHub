@@ -14,6 +14,8 @@ using HypeHubLogic.Services.Interfaces;
 using HypeHubLogic.Services;
 using HypeHubLogic.Validators;
 using System.Reflection;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 
 namespace HypeHubAPI.Configurations;
 public static class ServiceCollectionExtension
@@ -54,8 +56,9 @@ public static class ServiceCollectionExtension
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<UsersContext>();
     }
-    public static void AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
+    public static async Task AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
+        var issuerSigningKey = await GetSecretAsync(configuration, "IssuerSigningKey");
         services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -70,23 +73,20 @@ public static class ServiceCollectionExtension
                     ValidIssuer = configuration["JWT:ValidIssuer"],
                     ValidAudience = configuration["JWT:ValidAudience"],
                     IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(configuration["IssuerSigningKey"])
+                Encoding.UTF8.GetBytes(issuerSigningKey)
             ),
                 };
-            })
-            .AddGoogle(googleOptions =>
-            {
-                googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-                googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
             });
     }
     public static void AddDbContexts(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<HypeHubContext>(options =>
-            options.UseSqlServer(configuration["HypeHubDbKey"]));
+        var hypeHubDbKey = GetSecretAsync(configuration, "HypeHubEntityDatabaseKey").GetAwaiter().GetResult();
+        var usersDbKey = GetSecretAsync(configuration, "HypeHubIdentityDatabaseKey").GetAwaiter().GetResult();
 
+        services.AddDbContext<HypeHubContext>(options =>
+            options.UseSqlServer(hypeHubDbKey));
         services.AddDbContext<UsersContext>(options =>
-            options.UseSqlServer(configuration["UsersDbKey"]));
+            options.UseSqlServer(usersDbKey));
     }
     public static void AddRepositories(this IServiceCollection services)
     {
@@ -147,5 +147,12 @@ public static class ServiceCollectionExtension
     public static void AddUISerilog(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSerilogUi(options => options.UseSqlServer(configuration["LogsDbKey"], "Logs"));
+    }
+    private static async Task<string> GetSecretAsync(IConfiguration configuration, string secretName)
+    {
+        var vaultUri = configuration["AzureKeyVault:VaultUri"];
+        var client = new SecretClient(new Uri(vaultUri), new DefaultAzureCredential());
+        KeyVaultSecret secret = await client.GetSecretAsync(secretName);
+        return secret.Value;
     }
 }
