@@ -29,7 +29,6 @@ public class OutfitItemRepository : IOutfitItemRepository
         });
         await _dbContext.SaveChangesAsync();
     }
-
     public async Task<bool> CheckIfItemIsInAnyOutfitAsync(Guid itemId)
     {
         return await _dbContext.OutfitItems.AnyAsync(oi => oi.ItemId == itemId);
