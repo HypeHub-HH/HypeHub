@@ -20,7 +20,6 @@ public class OutfitItemRepository : IOutfitItemRepository
         await _dbContext.SaveChangesAsync();
         return addedEntity;
     }
-
     public async Task DeleteAsync(OutfitItem outfitItem)
     {
         await Task.Run(() =>
