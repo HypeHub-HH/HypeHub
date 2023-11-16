@@ -15,8 +15,8 @@ public class AccountRepositoryTests
     private HypeHubContext _dbContext;
     private static readonly List<Account> _accounts = new()
         {
-            new Account(Guid.NewGuid(), "AccountTest1", true, null),
-            new Account(Guid.NewGuid(), "AccountTest2", true, null),
+            new Account(Guid.NewGuid(), "AccountTest1", false, null),
+            new Account(Guid.NewGuid(), "AccountTest2", false, null),
         };
     private static List<Outfit> _outfits = new()
         {
