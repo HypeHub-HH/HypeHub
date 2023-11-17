@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Azure.Security.KeyVault.Secrets;
 
 namespace HypeHubLogic.Services;
-
 public static class AzureKeyVaultService
 {
     public static async Task<string> GetSecretAsync(IConfiguration configuration, string secretName)
