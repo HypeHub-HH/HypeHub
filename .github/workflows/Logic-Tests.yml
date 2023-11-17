@@ -30,6 +30,7 @@ jobs:
     - name: Test
       env:
         IssuerSigningKey: ${{ secrets.ISSUER_SIGNING_KEY }}
+        AzureKeyVault:VaultUri: ${{ secrets.AZUREKEYVALUT_VAULTURI }}
         JWT:VALIDAUDIENCE: ${{ secrets.JWT_VALIDAUDIENCE }}
         JWT:VALIDISSUER: ${{ secrets.JWT_VALIDISSUER }}
         JWT:TOKENVALIDITYINMINUTES: ${{ secrets.JWT_TOKENVALIDITYINMINUTES}}
