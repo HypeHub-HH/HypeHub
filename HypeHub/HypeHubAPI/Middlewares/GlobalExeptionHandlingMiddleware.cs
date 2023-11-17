@@ -1,5 +1,6 @@
 ﻿using HypeHubDAL.Exeptions;
 using HypeHubLogic.DTOs.Exception;
+using Serilog;
 using System.Net;
 using System.Text.Json;
 
@@ -19,7 +20,12 @@ public class GlobalExeptionHandlingMiddleware
         }
         catch (BaseException ex)
         {
+            Log.Error(ex.Message);
             await HandleExeptionAsync(context, ex);
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex.Message);
         }
     }
     private static Task HandleExeptionAsync(HttpContext context, BaseException ex)

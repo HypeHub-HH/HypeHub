@@ -21,7 +21,7 @@ builder.Services.AddAutoMapper(Assembly.Load("HypeHubLogic"));
 builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssemblies(Assembly.Load("HypeHubLogic")));
 builder.Services.AddValidatorsFromAssembly(Assembly.Load("HypeHubLogic"));
 
-builder.Host.AddSerilog();
+builder.Host.AddSerilog(builder.Configuration);
 
 var app = builder.Build();
 
@@ -44,5 +44,5 @@ try
 }
 catch (Exception ex)
 {
-    Log.Fatal(ex, "Application start-up failed!");
+    Log.Error(ex, "Application start-up failed!");
 }

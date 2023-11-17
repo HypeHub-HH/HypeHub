@@ -149,7 +149,7 @@ public static class ServiceCollectionExtension
         var hypeHubSerielogDatabaseKey = GetSecretAsync(configuration, "HypeHubSerielogDatabaseKey").GetAwaiter().GetResult();
         services.AddSerilogUi(options => options.UseSqlServer(hypeHubSerielogDatabaseKey, "Logs"));
     }
-    private static async Task<string> GetSecretAsync(IConfiguration configuration, string secretName)
+    public static async Task<string> GetSecretAsync(IConfiguration configuration, string secretName)
     {
         var vaultUri = configuration["AzureKeyVault:VaultUri"];
         var client = new SecretClient(new Uri(vaultUri), new DefaultAzureCredential());

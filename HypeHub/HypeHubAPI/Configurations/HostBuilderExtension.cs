@@ -3,11 +3,15 @@
 namespace HypeHubAPI.Configurations;
 public static class HostBuilderExtension
 {
-    public static void AddSerilog(this IHostBuilder hostBuilder)
+    public static void AddSerilog(this IHostBuilder hostBuilder, IConfiguration configuration)
     {
         hostBuilder.UseSerilog((hostingContext, loggerConfig) =>
         {
-            loggerConfig.ReadFrom.Configuration(hostingContext.Configuration);
+            var hypeHubSerielogDatabaseKey = ServiceCollectionExtension.GetSecretAsync(configuration, "HypeHubSerielogDatabaseKey").GetAwaiter().GetResult();
+            loggerConfig.WriteTo.MSSqlServer(
+            connectionString: hypeHubSerielogDatabaseKey,
+            tableName: "Logs",
+            autoCreateSqlTable: true).MinimumLevel.Error();
         });
     }
 }
