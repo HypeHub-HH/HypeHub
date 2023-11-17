@@ -51,7 +51,7 @@ jobs:
         
       - name: Test
         env:
-          IssuerSigningKey: ${{ IssuerSigningKey }}
+          IssuerSigningKey: ${{ ISSUER_SIGNING_KEY }}
           AzureKeyVault:VaultUri: ${{ AzureKeyVaultVaultUri }}
           JWT:VALIDAUDIENCE: ${{ JWT_VALIDAUDIENCE }}
           JWT:VALIDISSUER: ${{ JWT_VALIDISSUER }}
