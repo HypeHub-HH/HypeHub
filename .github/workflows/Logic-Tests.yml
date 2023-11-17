@@ -1,4 +1,5 @@
 name: Logic-Tests
+
 on:
   push:
     branches:
@@ -8,35 +9,51 @@ on:
   pull_request:
     branches: [ "main" ]
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
+  Windows-latest:
+    runs-on: windows-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: OIDC Login to Azure Public Cloud with AzPowershell (enableAzPSSession true)
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          enable-AzPSSession: true
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 7.0.x
+      - name: 'Get resource group with PowerShell action'
+        uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            Get-AzResourceGroup
+          azPSVersion: "latest"
 
-    - name: Restore dependencies
-      run: dotnet restore ./HypeHub/HypeHub.sln
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Build
-      run: dotnet build ./HypeHub/HypeHub.sln --no-restore
-      
-    - name: Authenticate with Azure
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-    
-    - name: Test
-      env:
-        IssuerSigningKey: ${{ secrets.ISSUER_SIGNING_KEY }}
-        AzureKeyVault:VaultUri: ${{ secrets.AZUREKEYVALUT_VAULTURI }}
-        JWT:VALIDAUDIENCE: ${{ secrets.JWT_VALIDAUDIENCE }}
-        JWT:VALIDISSUER: ${{ secrets.JWT_VALIDISSUER }}
-        JWT:TOKENVALIDITYINMINUTES: ${{ secrets.JWT_TOKENVALIDITYINMINUTES}}
-      run: dotnet test ./HypeHub/HypeHubTests/HypeHubTests.csproj --filter FullyQualifiedName~ServicesTests --no-build --verbosity normal
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore ./HypeHub/HypeHub.sln
+
+      - name: Build
+        run: dotnet build ./HypeHub/HypeHub.sln --no-restore
+        
+      - name: Test
+        env:
+          IssuerSigningKey: ${{ ISSUER_SIGNING_KEY }}
+          AzureKeyVault:VaultUri: ${{ AzureKeyVaultVaultUri }}
+          JWT:VALIDAUDIENCE: ${{ JWT_VALIDAUDIENCE }}
+          JWT:VALIDISSUER: ${{ JWT_VALIDISSUER }}
+          JWT:TOKENVALIDITYINMINUTES: ${{ JWT_TOKENVALIDITYINMINUTES}}
+        run: dotnet test ./HypeHub/HypeHubTests/HypeHubTests.csproj --filter FullyQualifiedName~ServicesTests --no-build --verbosity normal
