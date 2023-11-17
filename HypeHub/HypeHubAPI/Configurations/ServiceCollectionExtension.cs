@@ -14,8 +14,6 @@ using HypeHubLogic.Services.Interfaces;
 using HypeHubLogic.Services;
 using HypeHubLogic.Validators;
 using System.Reflection;
-using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
 
 namespace HypeHubAPI.Configurations;
 public static class ServiceCollectionExtension
@@ -58,7 +56,7 @@ public static class ServiceCollectionExtension
     }
     public static async Task AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
-        var issuerSigningKey = await GetSecretAsync(configuration, "IssuerSigningKey");
+        var issuerSigningKey = await AzureKeyVaultService.GetSecretAsync(configuration, "IssuerSigningKey");
         services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -80,8 +78,8 @@ public static class ServiceCollectionExtension
     }
     public static void AddDbContexts(this IServiceCollection services, IConfiguration configuration)
     {
-        var hypeHubDbKey = GetSecretAsync(configuration, "HypeHubEntityDatabaseKey").GetAwaiter().GetResult();
-        var usersDbKey = GetSecretAsync(configuration, "HypeHubIdentityDatabaseKey").GetAwaiter().GetResult();
+        var hypeHubDbKey = AzureKeyVaultService.GetSecretAsync(configuration, "HypeHubEntityDatabaseKey").GetAwaiter().GetResult();
+        var usersDbKey = AzureKeyVaultService.GetSecretAsync(configuration, "HypeHubIdentityDatabaseKey").GetAwaiter().GetResult();
 
         services.AddDbContext<HypeHubContext>(options =>
             options.UseSqlServer(hypeHubDbKey));
@@ -146,14 +144,8 @@ public static class ServiceCollectionExtension
     }
     public static void AddUISerilog(this IServiceCollection services, IConfiguration configuration)
     {
-        var hypeHubSerielogDatabaseKey = GetSecretAsync(configuration, "HypeHubSerielogDatabaseKey").GetAwaiter().GetResult();
+        var hypeHubSerielogDatabaseKey = AzureKeyVaultService.GetSecretAsync(configuration, "HypeHubSerielogDatabaseKey").GetAwaiter().GetResult();
         services.AddSerilogUi(options => options.UseSqlServer(hypeHubSerielogDatabaseKey, "Logs"));
     }
-    public static async Task<string> GetSecretAsync(IConfiguration configuration, string secretName)
-    {
-        var vaultUri = configuration["AzureKeyVault:VaultUri"];
-        var client = new SecretClient(new Uri(vaultUri), new DefaultAzureCredential());
-        KeyVaultSecret secret = await client.GetSecretAsync(secretName);
-        return secret.Value;
-    }
+
 }

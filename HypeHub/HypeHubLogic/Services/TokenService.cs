@@ -22,7 +22,7 @@ public class TokenService : ITokenService
     {
         _ = int.TryParse(_configuration["JWT:TokenValidityInMinutes"], out int expirationMinutes);
         var expiration = DateTime.UtcNow.AddMinutes(expirationMinutes);
-        var token = CreateJwtToken(CreateClaims(user, roles),CreateSigningCredentials(),expiration);
+        var token = CreateJwtToken(CreateClaims(user, roles), CreateSigningCredentials(), expiration);
         var tokenHandler = new JwtSecurityTokenHandler();
         return tokenHandler.WriteToken(token);
     }
@@ -54,8 +54,11 @@ public class TokenService : ITokenService
             throw new InternalIdentityServerException(e.Message);
         }
     }
-    private SigningCredentials CreateSigningCredentials() =>
-       new(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["IssuerSigningKey"])), SecurityAlgorithms.HmacSha256);
+    private SigningCredentials CreateSigningCredentials()
+    {
+        var IssuerSigningKey = AzureKeyVaultService.GetSecretAsync(_configuration, "IssuerSigningKey").GetAwaiter().GetResult();
+        return new(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(IssuerSigningKey)), SecurityAlgorithms.HmacSha256);
+    }
     public string GenerateRefreshToken()
     {
         var randomNumber = new byte[32];
@@ -65,12 +68,13 @@ public class TokenService : ITokenService
     }
     public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
     {
+        var IssuerSigningKey = AzureKeyVaultService.GetSecretAsync(_configuration, "IssuerSigningKey").GetAwaiter().GetResult();
         var tokenValidationParameters = new TokenValidationParameters
         {
             ValidateAudience = false,
             ValidateIssuer = false,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["IssuerSigningKey"])),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(IssuerSigningKey)),
             ValidateLifetime = false
         };
         var tokenHandler = new JwtSecurityTokenHandler();
