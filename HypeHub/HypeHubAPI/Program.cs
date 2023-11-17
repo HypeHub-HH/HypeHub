@@ -3,6 +3,7 @@ using FluentValidation;
 using System.Reflection;
 using Serilog;
 using Serilog.Ui.Web;
+using Serilog.Ui.Web.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,7 +34,9 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSerilogRequestLogging();
-app.UseSerilogUi();
+app.UseSerilogUi(options => {
+    options.Authorization.AuthenticationType = AuthenticationType.Cookie;
+});
 app.MapControllers();
 app.AddGlobalExeptionsHandler();
 
