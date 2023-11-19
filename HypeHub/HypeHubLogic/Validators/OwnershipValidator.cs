@@ -5,7 +5,6 @@ namespace HypeHubLogic.Validators;
 public class OwnershipValidator : IOwnershipValidator
 {
     private readonly IAccountRepository _accountRepository;
-
     public OwnershipValidator(IAccountRepository accountRepository)
     {
         _accountRepository = accountRepository;
