@@ -11,6 +11,7 @@ public static class AzureKeyVaultService
     {
         //var vaultUri = configuration["AzureKeyVault:VaultUri"];
         var vaultUri = "https://hypehubkeys.vault.azure.net/";
+
         var client = new SecretClient(new Uri(vaultUri), new DefaultAzureCredential());
         KeyVaultSecret secret = await client.GetSecretAsync(secretName);
         return secret.Value;
