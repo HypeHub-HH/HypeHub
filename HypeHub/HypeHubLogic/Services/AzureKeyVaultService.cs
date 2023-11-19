@@ -9,8 +9,7 @@ public static class AzureKeyVaultService
 {
     public static async Task<string> GetSecretAsync(IConfiguration configuration, string secretName)
     {
-        //var vaultUri = configuration["AzureKeyVault:VaultUri"];
-        var vaultUri = "https://hypehubkeys.vault.azure.net/";
+        var vaultUri = configuration["AzureKeyVault:VaultUri"];
 
         var client = new SecretClient(new Uri(vaultUri), new DefaultAzureCredential());
         KeyVaultSecret secret = await client.GetSecretAsync(secretName);
