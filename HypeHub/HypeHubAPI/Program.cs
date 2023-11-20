@@ -4,6 +4,8 @@ using System.Reflection;
 using Serilog;
 using Serilog.Ui.Web;
 using Serilog.Ui.Web.Authorization;
+using HypeHubLogic.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,8 +36,15 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSerilogRequestLogging();
-app.UseSerilogUi(options => {
-    options.Authorization.AuthenticationType = AuthenticationType.Cookie;
+app.UseSerilogUi(options =>
+{
+    var serilogUsername = AzureKeyVaultService.GetSecretAsync(builder.Configuration, "serilogUsername").GetAwaiter().GetResult();
+    var serilogPass = AzureKeyVaultService.GetSecretAsync(builder.Configuration, "serilogPass").GetAwaiter().GetResult();
+    options.Authorization.Filters = new IUiAuthorizationFilter[]
+    {
+        new BasicAuthenticationFilter { UserName = serilogUsername, Password = serilogPass }
+    };
+    options.Authorization.RunAuthorizationFilterOnAppRoutes = true;
 });
 app.MapControllers();
 app.AddGlobalExeptionsHandler();
@@ -47,5 +56,5 @@ try
 }
 catch (Exception ex)
 {
-    Log.Error(ex, "Application start-up failed!");
+    Log.Fatal(ex, "Application start-up failed!");
 }

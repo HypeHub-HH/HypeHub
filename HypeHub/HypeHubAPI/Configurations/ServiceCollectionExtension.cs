@@ -54,9 +54,9 @@ public static class ServiceCollectionExtension
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<UsersContext>();
     }
-    public static async Task AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
+    public static void AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
-        var issuerSigningKey = await AzureKeyVaultService.GetSecretAsync(configuration, "IssuerSigningKey");
+        var issuerSigningKey = AzureKeyVaultService.GetSecretAsync(configuration, "IssuerSigningKey").GetAwaiter().GetResult();
         services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -145,7 +145,7 @@ public static class ServiceCollectionExtension
     public static void AddUISerilog(this IServiceCollection services, IConfiguration configuration)
     {
         var hypeHubSerielogDatabaseKey = AzureKeyVaultService.GetSecretAsync(configuration, "HypeHubSerielogDatabaseKey").GetAwaiter().GetResult();
-        services.AddSerilogUi(options => options.UseSqlServer(hypeHubSerielogDatabaseKey, "Logs"));
+        services.AddSerilogUi(options => options.UseSqlServer(hypeHubSerielogDatabaseKey, "Logs","EventLogs"));
     }
 
 }
