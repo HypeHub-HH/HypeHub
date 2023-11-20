@@ -24,7 +24,7 @@ public static class ServiceCollectionExtension
         {
             options.AddDefaultPolicy(builder =>
             {
-                builder.WithOrigins("https://hypehub.azurewebsites.net/")
+                builder.WithOrigins("https://hypehub.azurewebsites.net")
                        .AllowAnyHeader()
                        .AllowAnyMethod();
             });
