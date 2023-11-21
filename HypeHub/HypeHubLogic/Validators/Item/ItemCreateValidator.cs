@@ -13,7 +13,7 @@ public class ItemCreateValidator : AbstractValidator<ItemCreateDTO>
         RuleFor(i => i.Name)
              .NotEmpty()
              .WithMessage("Name must have a value.")
-             .Length(4, 30)
+             .Length(2, 40)
              .WithMessage("Name must not have less than 4 and more than 30 characters.");
 
         RuleFor(i => i.CloathingType)
@@ -21,17 +21,17 @@ public class ItemCreateValidator : AbstractValidator<ItemCreateDTO>
             .WithMessage("CloathingType is not a valid enum value.");
 
         RuleFor(i => i.Brand)
-            .MaximumLength(30)
+            .MaximumLength(40)
             .When(i => i.Brand != null)
             .WithMessage("Brand must not have more than 30 characters.");
 
         RuleFor(i => i.Model)
-            .MaximumLength(30)
+            .MaximumLength(40)
             .When(i => i.Model != null)
             .WithMessage("Model must not have more than 30 characters.");
 
         RuleFor(i => i.Colorway)
-            .MaximumLength(30)
+            .MaximumLength(40)
             .When(i => i.Colorway != null)
             .WithMessage("Colorway must not have more than 30 characters.");
 
