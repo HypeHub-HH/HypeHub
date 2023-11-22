@@ -7,6 +7,7 @@
 Users can add cloathing items to wardrobe, create and share outfits, express opinion and many more.</br>
 - Design based on the CQRS pattern</br>
 - Identity framework, JWT and refresh token were used for authentication and authorization</br>
+- Entity Framework and MS SQL Server for databases management
 - CI/CD was implemented using GithubActions</br>
 - Serilog was used for diagnostic logging</br>
 - Unit tests were performed using NUnit</br>
