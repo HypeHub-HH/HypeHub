@@ -20,7 +20,7 @@ Users can add cloathing items to wardrobe, create and share outfits, express opi
 Nagrac gifa z wygladem i funkcjonalnosciami strony
 -->
 <div align="center">
-  <h2>Tests</h2>
+  <h2>Tests and deploy</h2>
   <p>
     <a href="https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/DAL-Tests.yml"><img src="https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/DAL-Tests.yml/badge.svg?branch=main" alt="DAL-Tests"></a>
     <a href="https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/Logic-Tests.yml"><img src="https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/Logic-Tests.yml/badge.svg?branch=main" alt="Logic-Tests"></a>
