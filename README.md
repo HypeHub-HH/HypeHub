@@ -16,6 +16,9 @@ Users can add cloathing items to wardrobe, create and share outfits, express opi
 </p>
 
 <h2 align="center">Presentation</h2>
+<p align="center">
+<img  alt="Java" width="100%" src="https://github.com/HypeHub-HH/HypeHub-backend/blob/main/PresentationGif.gif" />
+</p>
 <!--
 Nagrac gifa z wygladem i funkcjonalnosciami strony
 -->
