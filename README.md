@@ -17,7 +17,7 @@ Users can add cloathing items to wardrobe, create and share outfits, express opi
 
 <h2 align="center">Presentation</h2>
 <p align="center">
-  <a href="https://www.youtube.com/watch?v=DAm0bH_8FP8"><img src="https://i9.ytimg.com/vi_webp/DAm0bH_8FP8/mqdefault.webp?v=655f6692&sqp=COzK_aoG&rs=AOn4CLCC6vkg4O8Hycur6pDFq2H-Zku-xQ"></a>
+  <a href="https://www.youtube.com/watch?v=DAm0bH_8FP8"><img src="https://i9.ytimg.com/vi_webp/DAm0bH_8FP8/mqdefault.webp?v=655f6692&sqp=CMTcgasG&rs=AOn4CLDBHMvSRA7St0biIDa5AAMpnm9lhQ"></a>
 </p>
 
 <div align="center">
