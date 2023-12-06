@@ -25,7 +25,7 @@ Users can add cloathing items to wardrobe, create and share outfits, express opi
   <p>
     <a href="https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/DAL-Tests.yml"><img src="https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/DAL-Tests.yml/badge.svg?branch=main" alt="DAL-Tests"></a>
     <a href="https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/Logic-Tests.yml"><img src="https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/Logic-Tests.yml/badge.svg?branch=main" alt="Logic-Tests"></a>
-    <a href="https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/main_hypehubbackend.yml"><img src="https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/main_hypehubbackend.yml/badge.svg?branch=main" alt="Build and deploy"></a>
+    <!--<a href="https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/main_hypehubbackend.yml"><img src="https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/main_hypehubbackend.yml/badge.svg?branch=main" alt="Build and deploy"></a>-->
   </p>
 </div>
 <h2 align="center">Technology stack</h2>
