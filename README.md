@@ -24,6 +24,7 @@
 - [Features](#features)
 - [Project Status](#project-tatus)
 - [Tests](#tests)
+- [Documentation](#documentation)
 - [Frontend](#frontend)
 - [Developers](#developers)
 
@@ -76,6 +77,11 @@
     <a href="https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/DAL-Tests.yml"><img src="https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/DAL-Tests.yml/badge.svg?branch=main" alt="DAL-Tests"></a>
     <a href="https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/Logic-Tests.yml"><img src="https://github.com/HypeHub-HH/HypeHub-backend/actions/workflows/Logic-Tests.yml/badge.svg?branch=main" alt="Logic-Tests"></a>
   </p>
+  
+<h2 align="center" id="documentation">Documentation</h2>
+<p align="center">
+  <a align="center" href="https://hypehub-hh.github.io/HypeHub-backend-swaggerDoc/" target="_blank" rel="noreferrer">API</a>
+</p>
 
 <h2 align="center" id="frontend">Frontend</h2>
 <p align="center">https://github.com/HypeHub-HH/HypeHub-frontend</p>
@@ -84,9 +90,3 @@
 <p align="center">https://github.com/MariuszWozniak145</p>
 <p align="center">https://github.com/Meek0hWhy</p>
 
-<!--
-<h2 align="center" id="documentation">Documentation</h2>
-<p align="center">
-  <a align="center" href="https://hypehubbackend.azurewebsites.net/swagger/index.html" target="_blank" rel="noreferrer">API</a>
-</p>
--->
